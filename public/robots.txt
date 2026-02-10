@@ -1,0 +1,15 @@
+# Robots.txt for Booth Marketing
+# Allow all search engines to crawl the site
+
+User-agent: *
+Allow: /
+
+# Block access to admin and configuration files
+Disallow: /.env
+Disallow: /.git/
+
+# Sitemap location
+Sitemap: https://boothmarketing.co.uk/sitemap.xml
+
+# Crawl-delay for polite crawling (optional)
+# Crawl-delay: 1
