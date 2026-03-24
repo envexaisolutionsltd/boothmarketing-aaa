@@ -42,18 +42,18 @@
 **Owner:** Strategy + copy
 
 ### Checklist
-- [ ] Define one canonical offer statement: **"Free Automation Audit"** (single naming standard site-wide).
-- [ ] Create a 1-sentence offer explainer directly under hero headline: what user gets, by when, and in what format.
+- [x] Define one canonical offer statement: **"Free Automation Audit"** (single naming standard site-wide).
+- [x] Create a 1-sentence offer explainer directly under hero headline: what user gets, by when, and in what format.
 - [ ] Add a 3-bullet "What you receive" block above the form:
   - [ ] workflow bottleneck map
   - [ ] prioritized automation opportunities
   - [ ] recommended next-step plan
 - [ ] Add "Ideal for" one-line qualifier near hero CTA (team profile + business stage).
-- [ ] Ensure all CTA labels match intent (no mix of audit/consultation unless defined as same thing).
+- [x] Ensure all CTA labels match intent (no mix of audit/consultation unless defined as same thing).
 
 ### Exit Criteria
-- [ ] Every CTA and section uses the same offer language.
-- [ ] A visitor can answer "What is this offer?" within 5 seconds of landing.
+- [x] Every CTA and section uses the same offer language.
+- [x] A visitor can answer "What is this offer?" within 5 seconds of landing.
 
 ---
 

@@ -150,7 +150,7 @@ const BookingForm: React.FC = () => {
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8 sm:mb-10 lg:mb-12">
             <p className="text-[0.65rem] sm:text-xs tracking-[0.25em] sm:tracking-[0.3em] text-gray-500 mb-4 sm:mb-6 uppercase">
-              Schedule Consultation
+              Free Automation Audit
             </p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white mb-4 px-2">
               CONTACT
@@ -253,7 +253,7 @@ const BookingForm: React.FC = () => {
               {isLoading ? (
                 <div className="animate-spin w-5 h-5 sm:w-6 sm:h-6 border-2 border-white border-t-transparent rounded-full mx-auto" aria-label="Loading"></div>
               ) : (
-                '[ SUBMIT ]'
+                '[ REQUEST FREE AUTOMATION AUDIT ]'
               )}
             </button>
           </form>
