@@ -7,16 +7,16 @@ import './styles/text-effects.css';
 const BookingForm = lazy(() => import('./components/BookingForm'));
 
 const proofProxyCards = [
-  'Automatically captures and responds to every new enquiry instantly',
-  'Books appointments without back-and-forth messaging',
-  'Removes repetitive admin tasks from your daily workflow',
-  'Ensures no lead is missed or forgotten'
+  'New enquiries are captured, qualified, and routed in under 60 seconds',
+  'Appointment booking runs automatically with zero manual back-and-forth',
+  'Follow-up sequences trigger on time so opportunities do not stall',
+  'Repetitive admin is removed from daily operations and reassigned to automation'
 ];
 
 const practicalStatements = [
-  'Every enquiry is handled instantly without manual input',
-  'The system runs in the background, reducing daily workload',
-  'Follow-ups are consistent and automatic'
+  'Lead responses are instant and consistent, even outside business hours',
+  'Follow-up steps run automatically based on pipeline stage and response behavior',
+  'Owners and teams spend less time on admin and more time on sales and delivery'
 ];
 
 const blogPosts = [
@@ -50,6 +50,12 @@ const B2BLandingPage: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [roiInputs, setRoiInputs] = useState({
+    hoursPerWeek: '25',
+    hourlyCost: '30',
+    automationCoverage: '60',
+    setupInvestment: '3000'
+  });
   const controls = useAnimation();
 
   useEffect(() => {
@@ -97,6 +103,30 @@ const B2BLandingPage: React.FC = () => {
     formData.fullName.trim() !== '' &&
     formData.email.trim() !== '' &&
     formData.companyName.trim() !== '';
+
+  const handleRoiInputChange = (field: keyof typeof roiInputs, value: string) => {
+    setRoiInputs(prev => ({ ...prev, [field]: value }));
+  };
+
+  const roiEstimate = useMemo(() => {
+    const hoursPerWeek = Math.max(0, Number(roiInputs.hoursPerWeek) || 0);
+    const hourlyCost = Math.max(0, Number(roiInputs.hourlyCost) || 0);
+    const automationCoverage = Math.min(100, Math.max(0, Number(roiInputs.automationCoverage) || 0)) / 100;
+    const setupInvestment = Math.max(0, Number(roiInputs.setupInvestment) || 0);
+
+    const weeklyTimeSaved = hoursPerWeek * automationCoverage;
+    const monthlyTimeSaved = weeklyTimeSaved * 4.33;
+    const monthlyValueRecovered = monthlyTimeSaved * hourlyCost;
+    const paybackMonths = monthlyValueRecovered > 0 ? setupInvestment / monthlyValueRecovered : 0;
+
+    return {
+      weeklyTimeSaved,
+      monthlyTimeSaved,
+      monthlyValueRecovered,
+      annualValueRecovered: monthlyValueRecovered * 12,
+      paybackMonths
+    };
+  }, [roiInputs]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -532,7 +562,7 @@ const B2BLandingPage: React.FC = () => {
               </span>
             </h2>
             <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto font-light leading-relaxed">
-              Examples of automation outcomes, including where project visuals can be added.
+              Capability proof for how these systems perform in real operating workflows.
             </p>
           </motion.div>
 
@@ -574,6 +604,9 @@ const B2BLandingPage: React.FC = () => {
                 IN PRACTICE
               </span>
             </h2>
+            <p className="text-sm text-gray-500 max-w-2xl mx-auto font-light leading-relaxed">
+              Proof proxy statements based on live automation behavior, not fabricated client endorsements.
+            </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -613,7 +646,7 @@ const B2BLandingPage: React.FC = () => {
               </span>
             </h2>
             <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto font-light leading-relaxed">
-              Simple breakdowns on where time and revenue get lost in manual operations.
+              Simple breakdowns on where time and revenue are lost, and how automation recovers both.
             </p>
           </motion.div>
 
@@ -635,6 +668,135 @@ const B2BLandingPage: React.FC = () => {
                 </button>
               </motion.article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ROI Calculator Section */}
+      <section className="relative z-10 py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <p className="text-xs tracking-[0.3em] text-gray-500 mb-4 uppercase">ROI Estimator</p>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">
+              ESTIMATE YOUR
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-600">
+                TIME + VALUE RECOVERY
+              </span>
+            </h2>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="border border-gray-900 bg-black/40 p-8 backdrop-blur-sm"
+            >
+              <div className="space-y-5">
+                <div>
+                  <label className="block text-xs tracking-[0.2em] text-gray-500 mb-2 uppercase">
+                    Manual hours per week
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={roiInputs.hoursPerWeek}
+                    onChange={(e) => handleRoiInputChange('hoursPerWeek', e.target.value)}
+                    className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs tracking-[0.2em] text-gray-500 mb-2 uppercase">
+                    Average hourly team cost (GBP)
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={roiInputs.hourlyCost}
+                    onChange={(e) => handleRoiInputChange('hourlyCost', e.target.value)}
+                    className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs tracking-[0.2em] text-gray-500 mb-2 uppercase">
+                    Estimated automation coverage (%)
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={roiInputs.automationCoverage}
+                    onChange={(e) => handleRoiInputChange('automationCoverage', e.target.value)}
+                    className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs tracking-[0.2em] text-gray-500 mb-2 uppercase">
+                    Estimated setup investment (GBP)
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={roiInputs.setupInvestment}
+                    onChange={(e) => handleRoiInputChange('setupInvestment', e.target.value)}
+                    className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light"
+                  />
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="border border-cyan-900/40 bg-cyan-900/5 p-8 backdrop-blur-sm"
+            >
+              <h3 className="text-xl font-bold tracking-tight mb-6">Estimated impact</h3>
+              <div className="space-y-4 text-sm">
+                <p className="flex items-center justify-between border-b border-gray-800 pb-3">
+                  <span className="text-gray-400">Weekly time saved</span>
+                  <span className="text-cyan-300 font-semibold">{roiEstimate.weeklyTimeSaved.toFixed(1)} hours</span>
+                </p>
+                <p className="flex items-center justify-between border-b border-gray-800 pb-3">
+                  <span className="text-gray-400">Monthly time saved</span>
+                  <span className="text-cyan-300 font-semibold">{roiEstimate.monthlyTimeSaved.toFixed(1)} hours</span>
+                </p>
+                <p className="flex items-center justify-between border-b border-gray-800 pb-3">
+                  <span className="text-gray-400">Monthly value recovered</span>
+                  <span className="text-cyan-300 font-semibold">£{roiEstimate.monthlyValueRecovered.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                </p>
+                <p className="flex items-center justify-between border-b border-gray-800 pb-3">
+                  <span className="text-gray-400">Annual value recovered</span>
+                  <span className="text-cyan-300 font-semibold">£{roiEstimate.annualValueRecovered.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                </p>
+                <p className="flex items-center justify-between">
+                  <span className="text-gray-400">Estimated payback period</span>
+                  <span className="text-cyan-300 font-semibold">
+                    {roiEstimate.monthlyValueRecovered > 0 ? `${roiEstimate.paybackMonths.toFixed(1)} months` : 'N/A'}
+                  </span>
+                </p>
+              </div>
+              <p className="text-gray-400 text-sm mt-6 font-light leading-relaxed">
+                Use this as a directional estimate. Your audit will provide a process-specific time-saving breakdown.
+              </p>
+              <button
+                onClick={scrollToForm}
+                className="mt-8 w-full relative px-10 py-4 text-xs font-light tracking-[0.25em] uppercase overflow-hidden group"
+              >
+                <span className="relative z-10">GET MY FREE AUTOMATION AUDIT</span>
+                <div className="absolute inset-0 border border-cyan-500/60 group-hover:border-cyan-400 transition-colors" />
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/15 to-cyan-600/15 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </button>
+            </motion.div>
           </div>
         </div>
       </section>
