@@ -1,41 +1,10 @@
 import React, { useState, useEffect, useCallback, useMemo, Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { Building, Users, TrendingUp, Settings, CheckCircle, X, Quote, ArrowRight } from 'lucide-react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Building, Users, TrendingUp, Settings, CheckCircle, X } from 'lucide-react';
 import { motion, useAnimation } from 'framer-motion';
 import './styles/text-effects.css';
 
 const BookingForm = lazy(() => import('./components/BookingForm'));
-
-const proofProxyCards = [
-  'Automatically captures and responds to every new enquiry instantly',
-  'Books appointments without back-and-forth messaging',
-  'Removes repetitive admin tasks from your daily workflow',
-  'Ensures no lead is missed or forgotten'
-];
-
-const practicalStatements = [
-  'Every enquiry is handled instantly without manual input',
-  'The system runs in the background, reducing daily workload',
-  'Follow-ups are consistent and automatic'
-];
-
-const blogPosts = [
-  {
-    title: 'Why Most Businesses Lose Leads Before They Even Reply',
-    description: 'Where response delays and manual bottlenecks silently kill qualified demand.',
-    readTime: 'Insight'
-  },
-  {
-    title: 'The Hidden Cost of Manual Work in Growing Businesses',
-    description: 'How repetitive admin slows growth and reduces operational output.',
-    readTime: 'Insight'
-  },
-  {
-    title: 'How Automation Replaces Repetitive Tasks Without Hiring',
-    description: 'A direct path to higher efficiency using systems that run reliably in the background.',
-    readTime: 'Insight'
-  }
-];
 
 const B2BLandingPage: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -43,13 +12,15 @@ const B2BLandingPage: React.FC = () => {
     fullName: '',
     email: '',
     companyName: '',
+    phone: '',
     teamSize: '',
-    challenge: ''
+    challenge: '',
+    revenueRange: ''
   });
-  const [formStep, setFormStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
   const controls = useAnimation();
 
   useEffect(() => {
@@ -93,11 +64,6 @@ const B2BLandingPage: React.FC = () => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const canGoToStepTwo =
-    formData.fullName.trim() !== '' &&
-    formData.email.trim() !== '' &&
-    formData.companyName.trim() !== '';
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -119,8 +85,10 @@ const B2BLandingPage: React.FC = () => {
           full_name: formData.fullName,
           email: formData.email,
           company_name: formData.companyName,
+          phone: formData.phone || null,
           current_team_size: formData.teamSize || null,
-          biggest_workflow_challenge: formData.challenge
+          biggest_workflow_challenge: formData.challenge,
+          monthly_revenue_range: formData.revenueRange || null
         })
       });
 
@@ -154,11 +122,8 @@ const B2BLandingPage: React.FC = () => {
       <header className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-sm border-b border-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
-            <div className="flex-shrink-0 flex items-center gap-3">
-              <img src="/booth-marketing-logo.png" alt="Booth Marketing" className="h-12 sm:h-14 lg:h-16 w-auto max-w-[170px] sm:max-w-[220px] lg:max-w-[260px]" loading="eager" decoding="async" />
-              <span className="hidden md:block text-[0.62rem] lg:text-[0.68rem] tracking-[0.22em] uppercase text-gray-400 whitespace-nowrap">
-                Booth Marketing
-              </span>
+            <div className="flex-shrink-0">
+              <img src="/chatgpt_image_jan_27,_2026,_04_29_01_am.png" alt="Booth Marketing" className="h-8 lg:h-10 w-auto" loading="eager" decoding="async" />
             </div>
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">
               <button
@@ -176,32 +141,18 @@ const B2BLandingPage: React.FC = () => {
                 Qualification
               </button>
               <button
-                onClick={() => scrollToSection('work')}
+                onClick={() => scrollToSection('approach')}
                 className="text-xs font-light tracking-[0.15em] lg:tracking-[0.2em] text-gray-400 hover:text-cyan-400 transition-colors uppercase"
-                aria-label="Navigate to work section"
+                aria-label="Navigate to our approach section"
               >
-                Work
-              </button>
-              <button
-                onClick={() => scrollToSection('testimonials')}
-                className="text-xs font-light tracking-[0.15em] lg:tracking-[0.2em] text-gray-400 hover:text-cyan-400 transition-colors uppercase"
-                aria-label="Navigate to testimonials section"
-              >
-                Testimonials
-              </button>
-              <button
-                onClick={() => scrollToSection('insights')}
-                className="text-xs font-light tracking-[0.15em] lg:tracking-[0.2em] text-gray-400 hover:text-cyan-400 transition-colors uppercase"
-                aria-label="Navigate to insights section"
-              >
-                Insights
+                Our Approach
               </button>
               <button
                 onClick={scrollToForm}
                 className="px-4 lg:px-6 py-2.5 lg:py-3 text-xs font-light tracking-[0.15em] lg:tracking-[0.2em] border border-gray-800 hover:border-cyan-500/50 transition-colors uppercase"
                 aria-label="Request automation audit form"
               >
-                [ GET MY FREE AUTOMATION AUDIT ]
+                [ REQUEST AUDIT ]
               </button>
             </nav>
             <button
@@ -209,7 +160,7 @@ const B2BLandingPage: React.FC = () => {
               className="md:hidden px-4 py-2 text-[0.65rem] font-light tracking-[0.15em] border border-gray-800 hover:border-cyan-500/50 transition-colors uppercase"
               aria-label="Request automation audit form"
             >
-              [ GET MY FREE AUTOMATION AUDIT ]
+              [ AUDIT ]
             </button>
           </div>
         </div>
@@ -227,14 +178,13 @@ const B2BLandingPage: React.FC = () => {
               className="order-2 lg:order-1 text-center lg:text-left lg:flex-1 w-full max-w-4xl"
             >
               <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-black leading-[1.1] tracking-tighter mb-6 sm:mb-8">
-                REMOVE 20-40 HOURS OF
-                <br />
+                YOUR TEAM SPENDS HOURS{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-600">
-                  MANUAL WORK FROM YOUR BUSINESS
+                  ON WORK THAT COULD RUN ON ITS OWN
                 </span>
               </h1>
               <p className="text-[clamp(1rem,2vw,1.25rem)] text-gray-400 font-light tracking-wide leading-relaxed max-w-3xl mx-auto lg:mx-0 mb-8 sm:mb-10">
-                We build automation systems that capture leads, follow up instantly, and book appointments - without hiring more staff.
+                Manual data entry. Disconnected systems. Repetitive follow-ups. AI automation turns operational friction into systematic efficiency.
               </p>
 
               <motion.button
@@ -244,7 +194,7 @@ const B2BLandingPage: React.FC = () => {
                 className="relative px-8 sm:px-12 py-4 sm:py-5 text-xs sm:text-sm font-light tracking-[0.25em] sm:tracking-[0.3em] uppercase overflow-hidden group"
                 aria-label="Request automation audit form"
               >
-                <span className="relative z-10">GET MY FREE AUTOMATION AUDIT</span>
+                <span className="relative z-10">REQUEST AUDIT</span>
                 <div className="absolute inset-0 border border-cyan-500/50 group-hover:border-cyan-400 transition-colors" />
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-cyan-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <motion.div
@@ -359,7 +309,7 @@ const B2BLandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Who This Is For Section */}
+      {/* Who It's For / Not For Section */}
       <section id="qualification" className="relative z-10 py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -370,11 +320,11 @@ const B2BLandingPage: React.FC = () => {
             className="text-center mb-16"
           >
             <p className="text-xs tracking-[0.3em] text-gray-500 mb-4 uppercase">Qualification</p>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight">
-              WHO THIS
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">
+              THIS IS FOR
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-600">
-                IS FOR
+                YOU IF
               </span>
             </h2>
           </motion.div>
@@ -385,24 +335,32 @@ const B2BLandingPage: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="border border-cyan-900/50 bg-cyan-900/5 p-8 backdrop-blur-sm"
+              className="border border-green-900/50 bg-green-900/5 p-8 backdrop-blur-sm"
             >
               <div className="flex items-center mb-6">
-                <CheckCircle className="w-8 h-8 text-cyan-400 mr-3" />
-                <h3 className="text-2xl font-bold tracking-tight">Who This Is For</h3>
+                <CheckCircle className="w-8 h-8 text-green-500 mr-3" />
+                <h3 className="text-2xl font-bold tracking-tight">You're a fit</h3>
               </div>
               <ul className="space-y-4 text-gray-300 font-light">
                 <li className="flex items-start">
-                  <span className="text-cyan-400 mr-3">•</span>
-                  <span>Businesses handling regular enquiries</span>
+                  <span className="text-green-500 mr-3">•</span>
+                  <span>You manage established operations with real workflows and active customers</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-cyan-400 mr-3">•</span>
-                  <span>Teams doing repetitive admin work</span>
+                  <span className="text-green-500 mr-3">•</span>
+                  <span>Your team handles repetitive tasks that consume valuable time</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-cyan-400 mr-3">•</span>
-                  <span>Owners who want to scale without hiring</span>
+                  <span className="text-green-500 mr-3">•</span>
+                  <span>You want clarity on what automation actually means for your business</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-3">•</span>
+                  <span>You need a systematic approach, not a collection of disconnected tools</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-500 mr-3">•</span>
+                  <span>You make decisions based on understanding, not sales pressure</span>
                 </li>
               </ul>
             </motion.div>
@@ -416,25 +374,30 @@ const B2BLandingPage: React.FC = () => {
             >
               <div className="flex items-center mb-6">
                 <X className="w-8 h-8 text-red-500 mr-3" />
-                <h3 className="text-2xl font-bold tracking-tight">If your business relies on:</h3>
+                <h3 className="text-2xl font-bold tracking-tight">Not a fit</h3>
               </div>
               <ul className="space-y-4 text-gray-300 font-light">
                 <li className="flex items-start">
                   <span className="text-red-500 mr-3">•</span>
-                  <span>replying manually to leads</span>
+                  <span>You're in the idea stage without established business operations</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-red-500 mr-3">•</span>
-                  <span>chasing follow-ups</span>
+                  <span>You're looking for a quick hack or instant solution to complex problems</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-red-500 mr-3">•</span>
-                  <span>booking appointments yourself</span>
+                  <span>You expect a plug-and-play system without understanding how it works</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-red-500 mr-3">•</span>
+                  <span>You want someone to build your business model from scratch</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-red-500 mr-3">•</span>
+                  <span>You're shopping for the lowest price without considering value</span>
                 </li>
               </ul>
-              <p className="mt-6 text-red-300 font-medium">
-                You are losing time, money, and potential customers every day.
-              </p>
             </motion.div>
           </div>
         </div>
@@ -457,7 +420,7 @@ const B2BLandingPage: React.FC = () => {
               </span>
             </h2>
             <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto font-light leading-relaxed">
-              Our approach is built to produce measurable outcomes, not just technical outputs.
+              A systematic methodology focused on understanding your operations before designing solutions
             </p>
           </motion.div>
 
@@ -513,154 +476,40 @@ const B2BLandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Previous Work Section */}
-      <section id="work" className="relative z-10 py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <p className="text-xs tracking-[0.3em] text-gray-500 mb-4 uppercase">Work</p>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">
-              CASE STUDIES /
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-600">
-                PREVIOUS WORK
-              </span>
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto font-light leading-relaxed">
-              Examples of automation outcomes, including where project visuals can be added.
-            </p>
-          </motion.div>
-
-          <div className="grid lg:grid-cols-2 gap-6">
-            {proofProxyCards.map((cardText, index) => (
-              <motion.div
-                key={cardText}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="border border-gray-900 bg-black/40 p-6 backdrop-blur-sm hover:border-cyan-500/50 transition-colors"
-              >
-                <div className="mb-5 h-40 border border-dashed border-gray-800 bg-gradient-to-br from-cyan-500/10 to-transparent flex items-center justify-center">
-                  <span className="text-[0.65rem] tracking-[0.2em] uppercase text-gray-500">Case Study Image Slot</span>
-                </div>
-                <p className="text-lg text-gray-300 font-light leading-relaxed">{cardText}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section id="testimonials" className="relative z-10 py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <p className="text-xs tracking-[0.3em] text-gray-500 mb-4 uppercase">Testimonials</p>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">
-              TESTIMONIALS
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-600">
-                IN PRACTICE
-              </span>
-            </h2>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {practicalStatements.map((statement, index) => (
-              <motion.div
-                key={statement}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="border border-gray-900 bg-black/40 p-8 backdrop-blur-sm"
-              >
-                <Quote className="w-7 h-7 text-cyan-400 mb-5" />
-                <p className="text-gray-300 font-light leading-relaxed">{statement}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Insights Section */}
-      <section id="insights" className="relative z-10 py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <p className="text-xs tracking-[0.3em] text-gray-500 mb-4 uppercase">Blog / Insights</p>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">
-              BLOG /
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-600">
-                INSIGHTS
-              </span>
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto font-light leading-relaxed">
-              Simple breakdowns on where time and revenue get lost in manual operations.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {blogPosts.map((post, index) => (
-              <motion.article
-                key={post.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="group border border-gray-900 bg-black/40 p-8 backdrop-blur-sm hover:border-cyan-500/50 transition-all"
-              >
-                <p className="text-xs tracking-[0.2em] text-gray-500 uppercase mb-3">{post.readTime}</p>
-                <h3 className="text-xl font-bold tracking-tight mb-3 group-hover:text-cyan-300 transition-colors">{post.title}</h3>
-                <p className="text-gray-400 font-light leading-relaxed mb-6">{post.description}</p>
-                <button className="inline-flex items-center text-xs tracking-[0.2em] uppercase text-cyan-400 hover:text-cyan-300 transition-colors">
-                  Read more <ArrowRight className="w-4 h-4 ml-2" />
-                </button>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Authority Block */}
+      {/* Credibility Signals Section */}
       <section className="relative z-10 py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="border border-gray-900 bg-black/40 p-8 md:p-10 backdrop-blur-sm text-center"
-          >
-            <p className="text-xs tracking-[0.3em] text-gray-500 mb-4 uppercase">Authority</p>
-            <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-5">
-              BUILT FOR REAL
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-600">
-                BUSINESS OPERATIONS
-              </span>
-            </h2>
-            <p className="text-lg text-gray-300 font-light leading-relaxed">
-              We focus on installing automation systems that work inside real businesses. No fluff, no unnecessary tools - just systems that save time and increase output.
-            </p>
-          </motion.div>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-12 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="text-5xl font-black mb-3">200+</div>
+              <div className="text-gray-500 tracking-wider uppercase text-sm">Automations in Production</div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+            >
+              <div className="text-5xl font-black mb-3">12+</div>
+              <div className="text-gray-500 tracking-wider uppercase text-sm">Industries Served</div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div className="text-5xl font-black mb-3">8</div>
+              <div className="text-gray-500 tracking-wider uppercase text-sm">Years Systems Expertise</div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -674,25 +523,19 @@ const B2BLandingPage: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <p className="text-xs tracking-[0.3em] text-gray-500 mb-4 uppercase">Free Audit</p>
+            <p className="text-xs tracking-[0.3em] text-gray-500 mb-4 uppercase">Deploy Intelligence</p>
             <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6">
-              GET MY FREE
+              REQUEST FREE
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-600">
                 AUTOMATION AUDIT
               </span>
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-light">
-              Get a direct breakdown of where automation removes manual work and increases output.
+              We review your current workflows, identify automation opportunities, and provide specific recommendations.
+              <br /><br />
+              This audit has value regardless of whether we work together.
             </p>
-            <div className="mt-8 max-w-md mx-auto text-left border border-gray-900 bg-black/40 p-5">
-              <p className="text-sm text-cyan-300 font-medium mb-3">What you get:</p>
-              <ul className="space-y-2 text-gray-300 text-sm font-light">
-                <li className="flex items-start"><span className="text-cyan-400 mr-2">•</span><span>Clear automation opportunities</span></li>
-                <li className="flex items-start"><span className="text-cyan-400 mr-2">•</span><span>Time-saving breakdown</span></li>
-                <li className="flex items-start"><span className="text-cyan-400 mr-2">•</span><span>Simple execution plan</span></li>
-              </ul>
-            </div>
           </motion.div>
 
           {!isSubmitted ? (
@@ -704,88 +547,112 @@ const B2BLandingPage: React.FC = () => {
               onSubmit={handleSubmit}
               className="border border-gray-900 bg-black/40 p-8 md:p-12 backdrop-blur-sm"
             >
-              <p className="text-xs tracking-[0.2em] text-gray-500 mb-6 uppercase">
-                Step {formStep} of 2
-              </p>
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label className="block text-xs font-medium tracking-wider text-gray-500 mb-2 uppercase">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.fullName}
+                    onChange={(e) => handleInputChange('fullName', e.target.value)}
+                    className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light"
+                    required
+                  />
+                </div>
 
-              {formStep === 1 ? (
-                <>
-                  <div className="grid md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <label className="block text-xs font-medium tracking-wider text-gray-500 mb-2 uppercase">
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        value={formData.fullName}
-                        onChange={(e) => handleInputChange('fullName', e.target.value)}
-                        className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light"
-                        required
-                      />
-                    </div>
+                <div>
+                  <label className="block text-xs font-medium tracking-wider text-gray-500 mb-2 uppercase">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light"
+                    required
+                  />
+                </div>
+              </div>
 
-                    <div>
-                      <label className="block text-xs font-medium tracking-wider text-gray-500 mb-2 uppercase">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => handleInputChange('email', e.target.value)}
-                        className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light"
-                        required
-                      />
-                    </div>
-                  </div>
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label className="block text-xs font-medium tracking-wider text-gray-500 mb-2 uppercase">
+                    Company Name
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.companyName}
+                    onChange={(e) => handleInputChange('companyName', e.target.value)}
+                    className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light"
+                    required
+                  />
+                </div>
 
-                  <div className="mb-6">
-                    <label className="block text-xs font-medium tracking-wider text-gray-500 mb-2 uppercase">
-                      Business Name
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.companyName}
-                      onChange={(e) => handleInputChange('companyName', e.target.value)}
-                      className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light"
-                      required
-                    />
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="mb-6">
-                    <label className="block text-xs font-medium tracking-wider text-gray-500 mb-2 uppercase">
-                      Main Challenge
-                    </label>
-                    <textarea
-                      value={formData.challenge}
-                      onChange={(e) => handleInputChange('challenge', e.target.value)}
-                      rows={4}
-                      className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors resize-none font-light"
-                      placeholder="Where are you losing the most time right now?"
-                      required
-                    />
-                  </div>
+                <div>
+                  <label className="block text-xs font-medium tracking-wider text-gray-500 mb-2 uppercase">
+                    Phone (Optional)
+                  </label>
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light"
+                  />
+                </div>
+              </div>
 
-                  <div className="mb-6">
-                    <label className="block text-xs font-medium tracking-wider text-gray-500 mb-2 uppercase">
-                      Team Size
-                    </label>
-                    <select
-                      value={formData.teamSize}
-                      onChange={(e) => handleInputChange('teamSize', e.target.value)}
-                      className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light appearance-none cursor-pointer"
-                    >
-                      <option value="" className="bg-black">Select team size</option>
-                      <option value="1-5" className="bg-black">1-5 employees</option>
-                      <option value="6-20" className="bg-black">6-20 employees</option>
-                      <option value="21-50" className="bg-black">21-50 employees</option>
-                      <option value="51-100" className="bg-black">51-100 employees</option>
-                      <option value="100+" className="bg-black">100+ employees</option>
-                    </select>
-                  </div>
-                </>
-              )}
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label className="block text-xs font-medium tracking-wider text-gray-500 mb-2 uppercase">
+                    Current Team Size (Optional)
+                  </label>
+                  <select
+                    value={formData.teamSize}
+                    onChange={(e) => handleInputChange('teamSize', e.target.value)}
+                    className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light appearance-none cursor-pointer"
+                  >
+                    <option value="" className="bg-black">Select team size</option>
+                    <option value="1-5" className="bg-black">1-5 employees</option>
+                    <option value="6-20" className="bg-black">6-20 employees</option>
+                    <option value="21-50" className="bg-black">21-50 employees</option>
+                    <option value="51-100" className="bg-black">51-100 employees</option>
+                    <option value="100+" className="bg-black">100+ employees</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium tracking-wider text-gray-500 mb-2 uppercase">
+                    Monthly Revenue Range (Optional)
+                  </label>
+                  <select
+                    value={formData.revenueRange}
+                    onChange={(e) => handleInputChange('revenueRange', e.target.value)}
+                    className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors font-light appearance-none cursor-pointer"
+                  >
+                    <option value="" className="bg-black">Select revenue range</option>
+                    <option value="0-10k" className="bg-black">£0 - £10k</option>
+                    <option value="10k-50k" className="bg-black">£10k - £50k</option>
+                    <option value="50k-100k" className="bg-black">£50k - £100k</option>
+                    <option value="100k-500k" className="bg-black">£100k - £500k</option>
+                    <option value="500k+" className="bg-black">£500k+</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <label className="block text-xs font-medium tracking-wider text-gray-500 mb-2 uppercase">
+                  What's your biggest workflow challenge?
+                </label>
+                <textarea
+                  value={formData.challenge}
+                  onChange={(e) => handleInputChange('challenge', e.target.value)}
+                  rows={4}
+                  className="w-full px-4 py-3 bg-transparent border border-gray-800 text-white focus:border-cyan-500/50 focus:outline-none transition-colors resize-none font-light"
+                  placeholder="Describe the manual processes or operational friction that consume your team's time"
+                  required
+                />
+              </div>
 
               {error && (
                 <div className="mb-6 p-4 bg-red-900/20 border border-red-500/50">
@@ -793,40 +660,23 @@ const B2BLandingPage: React.FC = () => {
                 </div>
               )}
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                {formStep === 2 && (
-                  <button
-                    type="button"
-                    onClick={() => setFormStep(1)}
-                    className="w-full sm:w-auto px-8 py-4 text-xs font-light tracking-[0.2em] uppercase border border-gray-700 hover:border-cyan-500/50 transition-colors"
-                  >
-                    Back
-                  </button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="relative w-full px-12 py-5 text-sm font-light tracking-[0.3em] uppercase overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <span className="relative z-10">{isSubmitting ? 'SUBMITTING...' : '[ SUBMIT ]'}</span>
+                <div className="absolute inset-0 border-2 border-cyan-500 transition-colors" />
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-cyan-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+                {!isSubmitting && (
+                  <motion.div
+                    className="absolute inset-0 bg-cyan-400"
+                    initial={{ scale: 0, opacity: 0.5 }}
+                    whileHover={{ scale: 1.5, opacity: 0 }}
+                    transition={{ duration: 0.6 }}
+                  />
                 )}
-
-                {formStep === 1 ? (
-                  <button
-                    type="button"
-                    onClick={() => setFormStep(2)}
-                    disabled={!canGoToStepTwo}
-                    className="relative w-full px-12 py-5 text-sm font-light tracking-[0.3em] uppercase overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <span className="relative z-10">CONTINUE</span>
-                    <div className="absolute inset-0 border-2 border-cyan-500 transition-colors" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-cyan-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    disabled={isSubmitting || formData.challenge.trim() === ''}
-                    className="relative w-full px-12 py-5 text-sm font-light tracking-[0.3em] uppercase overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <span className="relative z-10">{isSubmitting ? 'SUBMITTING...' : 'GET MY FREE AUTOMATION AUDIT'}</span>
-                    <div className="absolute inset-0 border-2 border-cyan-500 transition-colors" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-cyan-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-                  </button>
-                )}
-              </div>
+              </button>
             </motion.form>
           ) : (
             <motion.div
@@ -968,15 +818,15 @@ const B2BLandingPage: React.FC = () => {
                 </p>
 
                 <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">
-                  TURN OPERATIONAL
+                  GET CLARITY ON
                   <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-600">
-                    CHAOS INTO GROWTH
+                    YOUR AUTOMATION
                   </span>
                 </h2>
 
                 <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto font-light">
-                  Get clear priorities, realistic ROI expectations, and a roadmap your team can actually execute.
+                  Request your free audit. Understand your options. Make an informed decision on your timeline.
                 </p>
 
                 <motion.button
@@ -985,7 +835,7 @@ const B2BLandingPage: React.FC = () => {
                   whileTap={{ scale: 0.95 }}
                   className="relative px-12 py-5 text-sm font-light tracking-[0.3em] uppercase overflow-hidden group"
                 >
-                  <span className="relative z-10">GET MY FREE AUTOMATION AUDIT</span>
+                  <span className="relative z-10">SCHEDULE CONSULTATION</span>
                   <div className="absolute inset-0 border-2 border-cyan-500 transition-colors" />
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-cyan-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
                   <motion.div
