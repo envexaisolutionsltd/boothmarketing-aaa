@@ -63,6 +63,7 @@ export default function Home(){
 
     <section className="anime-hero cinematic-hero">
       <div className="cinematic-hero-media" aria-hidden="true">
+        <Image src="/anime-gym-hero.svg" alt="" fill priority sizes="100vw" style={{objectFit:"cover",objectPosition:"center"}} />
         <div className="cinematic-hero-overlay" />
         <div className="cinematic-hero-vignette" />
         <div className="hero-speed-overlay" />
