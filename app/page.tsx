@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import "./bm2.css";
+import "./hero-hotfix.css";
 
 const funnel = [
   ["87", "Website visitors"], ["24", "Enquiries"], ["11", "Followed up"],
