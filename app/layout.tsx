@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./production-refresh.css";
+import "./hero-hotfix.css";
+import "./hero-exact.css";
 
 export const metadata: Metadata = {
   title: "Booth Marketing | Automation Systems for Gyms",
