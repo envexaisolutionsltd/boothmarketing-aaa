@@ -61,8 +61,30 @@ export default function Home(){
 
     <header className="site-header-wrap"><div className="site-header shell"><a className="brand" href="#top" aria-label="Booth Marketing home"><Brand/></a><nav className="desktop-nav" aria-label="Primary"><a href="#attacks">Growth Systems</a><a href="#transformation">Transformations</a><a href="#method">Method</a><a href="#audit">Gym Audit</a></nav><a className="header-cta" href="#audit">Power Up My Gym <Arrow/></a><button className="menu-button" type="button" aria-label="Open menu" aria-expanded={menu} onClick={()=>setMenu(!menu)}><span/><span/></button></div>{menu&&<nav className="mobile-nav shell" aria-label="Mobile"><a onClick={close} href="#attacks">Growth Systems</a><a onClick={close} href="#transformation">Transformations</a><a onClick={close} href="#method">Method</a><a onClick={close} href="#audit">Power Up My Gym <Arrow/></a></nav>}</header>
 
-    <section className="hero shell anime-hero"><div className="hero-copy-wrap"><p className="eyebrow"><span className="status-dot"/> GYM GROWTH SYSTEMS // POWER LEVEL 01</p><h1>Take your gym to its <span>final form.</span></h1><p className="hero-copy">Booth Marketing builds member acquisition and automation systems for independent gyms — helping you capture more enquiries, book more trials and follow up without relying on staff memory.</p><p className="hero-subcopy">Your coaches train members. We train the system behind the gym.</p><a className="primary-cta" href="#audit">Unlock My Gym&apos;s Final Form <Arrow/></a><div className="hero-trust"><span>Gym-focused</span><span>Practical systems</span><span>No sales pressure</span></div></div>
-      <div className="anime-hero-art" aria-label="Anime-inspired gym growth system"><div className="aura-ring ring-one"/><div className="aura-ring ring-two"/><div className="hero-silhouette"><span className="hero-head"/><span className="hero-body"/><span className="hero-arm arm-left"/><span className="hero-arm arm-right"/></div><div className="speed-lines"/><div className="power-hud"><span>POWER LEVEL</span><strong>ASCENDING</strong><small>ENQUIRIES → TRIALS → MEMBERS</small></div><div className="energy-core"><i/><i/><i/></div></div>
+    <section className="anime-hero cinematic-hero">
+      <div className="cinematic-hero-media" aria-hidden="true">
+        <Image src="/anime-gym-hero.webp" alt="" fill priority sizes="100vw" className="cinematic-hero-image" />
+        <div className="cinematic-hero-overlay" />
+        <div className="cinematic-hero-vignette" />
+        <div className="hero-speed-overlay" />
+        <span className="energy-lightning lightning-one"/><span className="energy-lightning lightning-two"/><span className="energy-lightning lightning-three"/>
+      </div>
+      <div className="shell cinematic-hero-content">
+        <div className="hero-copy-wrap">
+          <p className="eyebrow"><span className="status-dot"/> GYM GROWTH SYSTEMS // POWER LEVEL 01</p>
+          <h1>Take your gym to its <span>final form.</span></h1>
+          <p className="hero-copy">Booth Marketing builds member acquisition and automation systems for independent gyms — helping you capture more enquiries, book more trials and follow up without relying on staff memory.</p>
+          <p className="hero-subcopy">Your coaches train members. We train the system behind the gym.</p>
+          <a className="primary-cta" href="#audit">Unlock My Gym&apos;s Final Form <Arrow/></a>
+          <div className="hero-trust"><span>Gym-focused</span><span>Practical systems</span><span>No sales pressure</span></div>
+        </div>
+        <aside className="battle-hud" aria-label="Gym growth system status">
+          <div className="battle-hud-top"><span>CURRENT POWER LEVEL</span><i>● LIVE</i></div>
+          <strong>ASCENDING</strong>
+          <div className="battle-power-bar"><i/></div>
+          <small>ENQUIRIES → TRIALS → MEMBERS</small>
+        </aside>
+      </div>
     </section>
 
     <section className="proof-strip section-line"><div className="shell"><span>More enquiries</span><span>Better follow-up</span><span>Less front-desk admin</span></div></section>
