@@ -1,6 +1,6 @@
-# Booth Marketing — Automation Audit Landing Page
+# Booth Marketing — Gym Growth Automation
 
-A frontend-only Next.js landing page designed for lead capture rather than direct sales.
+A Next.js landing page for Booth Marketing, focused on independent gym owners and member-growth automation systems.
 
 ## Run locally
 
@@ -9,14 +9,18 @@ npm install
 npm run dev
 ```
 
-## Deploy to Vercel
+## Production
 
-Import this folder into Vercel or push it to a Git repository and deploy normally.
+The site is deployed through Vercel from the `main` branch.
 
-## Important before production
+## Current direction
 
-The audit form is intentionally frontend-only because the brief explicitly excludes a backend. It validates and shows a local success state, but it does not send data anywhere. Connect the form to your preferred inbox/form endpoint before publishing.
+- Anime-inspired gym growth visual system
+- Booth Marketing wordmark and rose branding
+- Full-bleed cinematic hero artwork
+- Gym enquiry, trial, follow-up and admin automation positioning
+- Free Gym Growth Audit as the primary conversion goal
 
-## Brand note
+## Audit form
 
-The page uses the Booth Marketing name/wordmark treatment from the current public site. The existing website exposes very little crawlable asset markup, so no invented client logos or fabricated trust marks are included.
+The site includes a server-side `/api/audit` route for storing audit requests when the required Supabase environment variables are configured in Vercel.
