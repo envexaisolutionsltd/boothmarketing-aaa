@@ -6,8 +6,9 @@ export default function Home() {
     <main style={{ margin: 0, background: "#020305", minHeight: "100vh", overflowX: "hidden" }}>
       <style>{`
         *{box-sizing:border-box} html{scroll-behavior:smooth;background:#020305} body{margin:0;background:#020305}
-        .visual-page{position:relative;width:100%;max-width:1600px;margin:0 auto;background:#020305}
-        .visual-page img{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none}
+        .visual-page{position:relative;width:100%;max-width:1600px;margin:0 auto;background:#020305;min-height:100vh}
+        .visual-page img{display:block;width:100%;height:auto;min-height:100vh;object-fit:cover;object-position:top center;user-select:none;-webkit-user-drag:none}
+        .fallback-message{position:absolute;left:24px;bottom:24px;z-index:4;color:#fff;font:700 12px/1.4 Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;background:#050505cc;border-left:3px solid #ff5722;padding:12px 14px;display:none}
         .hotspot{position:absolute;z-index:5;border:0;background:transparent;cursor:pointer;color:transparent;font-size:0}
         .hotspot:focus-visible{outline:3px solid #00e5ff;outline-offset:3px}
         .top-cta{top:1.3%;right:2.2%;width:18%;height:3.3%}
@@ -19,7 +20,7 @@ export default function Home() {
         #systems{top:45%} #results{top:63%} #process{top:88%} #audit{top:70%}
         @media(max-width:700px){
           .visual-page{width:100%;overflow:hidden}
-          .visual-page img{width:170%;max-width:none;transform:translateX(-1.5%);transform-origin:top left}
+          .visual-page img{width:170%;max-width:none;min-height:100svh;transform:translateX(-1.5%);transform-origin:top left;object-fit:contain;object-position:top left}
           .top-cta{top:.9%;right:2%;width:32%;height:2.2%}
           .hero-cta{top:17.9%;left:3%;width:35%;height:2%}
           .how-cta{top:17.9%;left:40%;width:30%;height:2%}
@@ -28,7 +29,22 @@ export default function Home() {
         }
       `}</style>
       <div className="visual-page">
-        <img src="/booth-visual-reference.webp" alt="Booth Marketing gym growth systems — attract, convert and grow with websites, automation, CRM and follow-up systems." />
+        <img
+          src="/booth-visual-reference.webp?v=2"
+          alt="Booth Marketing gym growth systems — attract, convert and grow with websites, automation, CRM and follow-up systems."
+          width="1600"
+          height="2400"
+          fetchPriority="high"
+          onError={(event) => {
+            const image = event.currentTarget;
+            if (!image.src.includes("anime-gym-hero.svg")) {
+              image.src = "/anime-gym-hero.svg";
+              const note = document.querySelector<HTMLElement>(".fallback-message");
+              if (note) note.style.display = "block";
+            }
+          }}
+        />
+        <div className="fallback-message" aria-live="polite">Visual asset fallback loaded</div>
         <button className="hotspot top-cta" onClick={() => go("audit")} aria-label="Get more members">Get more members</button>
         <button className="hotspot hero-cta" onClick={() => go("audit")} aria-label="Get more members">Get more members</button>
         <button className="hotspot how-cta" onClick={() => go("systems")} aria-label="See how it works">See how it works</button>
