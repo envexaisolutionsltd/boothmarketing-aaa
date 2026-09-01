@@ -12,36 +12,25 @@ export default function WhoWeHelp() {
       <div className="site-container">
         <div className="eyebrow">You are probably a good fit if</div>
         <h2 className="content-heading">The business works, but keeping everything moving takes more effort than it should.</h2>
-        <p className="content-copy">Most of the companies we are best suited to are not starting from scratch. They have real operations, real customers and real pressure. The friction appears between the systems and people already in place.</p>
         <NumberedRows items={[
-          ['Your team repeats the same admin every day', 'People spend useful time copying details, creating the same documents, sending routine updates, checking statuses and chasing information.'],
-          ['Important work depends on someone noticing', 'Leads, client requests and internal tasks can sit still until the right person sees them and remembers what should happen next.'],
-          ['The same information lives in several places', 'Email, spreadsheets, CRM records, project tools and shared folders all contain parts of the same story, so people become the connection between systems.'],
-          ['Certain processes rely on one person knowing everything', 'When that person is busy or away, the process slows because ownership, context or the next step is not visible enough.'],
-          ['Growth keeps creating more back-office work', 'More clients and jobs create more administration, and you can see that scaling the current process will eventually become expensive or fragile.'],
+          ['Your team repeats the same admin', 'People spend useful time copying details, creating the same documents, checking statuses and chasing information.'],
+          ['Important work depends on someone noticing', 'Leads, client requests and internal tasks can sit still until the right person sees them and remembers what happens next.'],
+          ['Your systems do not work together cleanly', 'Email, CRM, spreadsheets, project tools and shared folders all contain parts of the same process, so people become the connection between them.'],
+          ['One person knows how the process really works', 'When that person is busy or away, progress slows because ownership, context or the next step is not visible enough.'],
+          ['Growth is creating more back-office work', 'More clients and jobs create more administration, and you want capacity to scale without adding the same amount of coordination overhead.'],
         ]} />
       </div>
     </section>
 
     <section className="content-section">
       <div className="site-container">
-        <div className="eyebrow">What you probably do not want</div>
-        <h2 className="content-heading">You do not need another tool that creates more work for the team.</h2>
-        <p className="content-copy">You need the operation to become easier to run. That means using the systems you already have where possible, simplifying the process first and only introducing automation when there is a clear reason.</p>
+        <div className="eyebrow">Probably not the right fit</div>
+        <h2 className="content-heading">The answer is not always more automation.</h2>
         <NumberedRows items={[
-          ['No unnecessary software replacement', 'If your current systems can support a better workflow, the answer should not be to replace them for the sake of a new technology stack.'],
-          ['No automation for the sake of AI', 'The business problem comes first. AI is useful only when it improves a defined part of the workflow.'],
-          ['No black-box process your team cannot understand', 'The people using the workflow should know what happens automatically, what still needs human judgment and what happens when something unusual occurs.'],
-          ['No forcing every step to become automated', 'Commercial decisions, sensitive conversations, exceptions and relationship-heavy work often belong with people.'],
+          ['You want AI because it sounds impressive', 'The business problem has to come first. Technology is only useful when it improves a clearly understood workflow.'],
+          ['The process changes every day', 'If there is no stable way of working yet, simplifying and clarifying ownership may matter more than automating it.'],
+          ['The real problem is unclear management', 'Automation can improve a process, but it cannot replace clear responsibility and decision-making.'],
         ]} />
-      </div>
-    </section>
-
-    <section className="content-section">
-      <div className="site-container">
-        <div className="eyebrow">The buying question</div>
-        <h2 className="content-heading">You do not need to know what you want built. You only need to know where the business keeps getting stuck.</h2>
-        <p className="content-copy">A useful starting point might be one process that always needs chasing, one workflow that falls apart when somebody is away, or one area where the same information keeps being entered twice.</p>
       </div>
     </section>
 
