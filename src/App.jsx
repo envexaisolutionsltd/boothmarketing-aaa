@@ -51,6 +51,29 @@ const capabilities = [
   },
 ];
 
+const frictionSignals = [
+  {
+    number: "01",
+    title: "Follow-up depends on someone noticing",
+    copy: "Enquiries, client requests, or internal tasks wait until the right person sees them and moves them forward.",
+  },
+  {
+    number: "02",
+    title: "The same information gets entered twice",
+    copy: "Details are copied between inboxes, spreadsheets, and systems because the process is not connected.",
+  },
+  {
+    number: "03",
+    title: "Work slows when one person is away",
+    copy: "A key process relies on one person knowing what happens next, where information lives, or who needs an update.",
+  },
+  {
+    number: "04",
+    title: "Reporting is assembled by hand",
+    copy: "Your team spends useful time collecting updates and rebuilding a picture the business should already have.",
+  },
+];
+
 const nextSteps = [
   {
     title: "Submit the form below",
@@ -89,6 +112,10 @@ const initialForm = {
 
 function scrollToAudit() {
   document.getElementById("audit-form")?.scrollIntoView({ behavior: "smooth" });
+}
+
+function scrollToSection(sectionId) {
+  document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
 }
 
 function ArrowIcon({ className = "h-4 w-4" }) {
@@ -267,13 +294,31 @@ function App() {
           <a href="#top" aria-label="Booth Marketing — back to top" className="rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-[#be2e3d]">
             <BrandLogo priority className="w-[112px] sm:w-[150px]" />
           </a>
-          <button
-            type="button"
-            onClick={scrollToAudit}
-            className="rounded-md border border-[#f1e8d8]/20 bg-[#f1e8d8]/[0.06] px-4 py-2.5 text-xs font-semibold text-[#f1e8d8] transition hover:border-[#f1e8d8]/35 hover:bg-[#f1e8d8]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#be2e3d] sm:px-5 sm:text-sm"
-          >
-            Request an Audit
-          </button>
+          <div className="flex items-center gap-5 lg:gap-7">
+            <div className="hidden items-center gap-5 md:flex lg:gap-7">
+              {[
+                ["The friction", "friction"],
+                ["Process", "process"],
+                ["Audit example", "audit-example"],
+              ].map(([label, sectionId]) => (
+                <button
+                  key={sectionId}
+                  type="button"
+                  onClick={() => scrollToSection(sectionId)}
+                  className="text-xs font-medium text-zinc-500 transition hover:text-zinc-200 focus:outline-none focus-visible:text-zinc-100 lg:text-sm"
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={scrollToAudit}
+              className="rounded-md border border-[#f1e8d8]/20 bg-[#f1e8d8]/[0.06] px-4 py-2.5 text-xs font-semibold text-[#f1e8d8] transition hover:border-[#f1e8d8]/35 hover:bg-[#f1e8d8]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#be2e3d] sm:px-5 sm:text-sm"
+            >
+              Request an Audit
+            </button>
+          </div>
         </nav>
       </header>
 
@@ -288,31 +333,84 @@ function App() {
             <div className="mx-auto max-w-5xl text-center">
               <FadeInSection>
                 <div className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-[#f1e8d8]/15 bg-[#f1e8d8]/[0.045] px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#d9cdb9] sm:text-[11px]">
-                  <RoseMark className="h-5" />
-                  Systems for real operations
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#be2e3d]" />
+                  For established businesses with real operations
                 </div>
                 <h1 className="text-balance text-[2.75rem] font-semibold leading-[0.98] tracking-[-0.055em] text-zinc-50 sm:text-6xl md:text-7xl lg:text-[5.5rem]">
-                  Your business runs on manual work it <span className="text-zinc-500">shouldn't have to.</span>
+                  Your business has grown. <span className="text-zinc-500">Too much of the work is still moved forward by hand.</span>
                 </h1>
                 <p className="mx-auto mt-7 max-w-3xl text-base leading-7 text-zinc-400 sm:mt-8 sm:text-lg sm:leading-8 md:text-xl">
-                  We build automation systems that remove the repetitive, connect the disconnected, and give your team back its time. No gimmicks. No magic buttons. Just systems that work.
+                  If leads, client requests, or internal work depend on copying details, chasing updates, and someone remembering the next step, the process is costing your team time. We help you find what is genuinely worth fixing.
                 </p>
                 <PrimaryButton onClick={scrollToAudit} className="mt-9 w-full sm:w-auto">
                   Request an Automation Audit
                 </PrimaryButton>
               </FadeInSection>
             </div>
-            <FadeInSection delay={180} className="mx-auto mt-14 max-w-4xl sm:mt-20">
-              <div className="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-2 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-4 sm:gap-4 sm:p-6">
-                {["Manual task", "Clear workflow", "More time"].map((label, index) => (
-                  <div key={label} className="contents">
-                    <div className="rounded-lg border border-white/[0.07] bg-[#101114] px-2 py-4 text-center text-[10px] font-medium text-zinc-400 sm:px-4 sm:text-sm">
-                      {label}
+            <FadeInSection delay={180} className="mx-auto mt-14 max-w-5xl sm:mt-20">
+              <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d0e11]/95 shadow-2xl shadow-black/20">
+                <div className="flex flex-col gap-2 border-b border-white/[0.07] px-5 py-4 text-left sm:flex-row sm:items-center sm:justify-between sm:px-7">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#d9cdb9]">A common operational pattern</p>
+                  <p className="text-xs text-zinc-600">Illustrative workflow — not a client result</p>
+                </div>
+                <div className="grid gap-px bg-white/[0.07] md:grid-cols-2">
+                  {[
+                    {
+                      label: "Manual handling",
+                      tone: "text-zinc-500",
+                      items: ["Enquiry arrives", "Details copied", "Follow-up assigned", "Spreadsheet updated"],
+                    },
+                    {
+                      label: "Clearer operational flow",
+                      tone: "text-[#d9cdb9]",
+                      items: ["One clear intake", "Context organised", "Right person notified", "Progress stays visible"],
+                    },
+                  ].map((column) => (
+                    <div key={column.label} className="bg-[#0d0e11] p-5 text-left sm:p-7">
+                      <p className={`text-[10px] font-semibold uppercase tracking-[0.22em] ${column.tone}`}>{column.label}</p>
+                      <ol className="mt-5 space-y-2.5">
+                        {column.items.map((item, index) => (
+                          <li key={item} className="flex items-center gap-3 rounded-lg border border-white/[0.065] bg-white/[0.02] px-3.5 py-3 text-xs text-zinc-400 sm:text-sm">
+                            <span className="font-mono text-[10px] text-zinc-700">0{index + 1}</span>
+                            <span className="h-px w-3 bg-[#be2e3d]/70" />
+                            {item}
+                          </li>
+                        ))}
+                      </ol>
                     </div>
-                    {index < 2 && <ArrowIcon className="h-4 w-4 shrink-0 text-[#c9bca7] sm:h-5 sm:w-5" />}
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <div className="border-t border-white/[0.07] px-5 py-4 text-left text-xs leading-5 text-zinc-500 sm:px-7">
+                  The aim is not to automate every step. It is to remove unnecessary handling while keeping human judgment where it matters.
+                </div>
               </div>
+            </FadeInSection>
+          </div>
+        </section>
+
+        {/* Operational friction */}
+        <section id="friction" className="scroll-mt-20 border-b border-white/[0.06] bg-[#0b0c0f] py-20 sm:py-24 lg:py-32">
+          <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+            <FadeInSection>
+              <SectionHeading
+                label="Does this sound familiar?"
+                title="The business is growing. The process is still being held together manually."
+                body="The problem often appears in ordinary moments: an enquiry waiting, an update being chased, or the same information being moved from one place to another."
+              />
+            </FadeInSection>
+            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
+              {frictionSignals.map((signal, index) => (
+                <FadeInSection key={signal.title} delay={index * 70}>
+                  <article className="h-full rounded-2xl border border-white/[0.08] bg-[#101114] p-6 sm:p-7">
+                    <p className="font-mono text-[10px] text-[#c9bca7]">{signal.number}</p>
+                    <h3 className="mt-7 text-lg font-semibold leading-6 tracking-[-0.02em] text-zinc-200">{signal.title}</h3>
+                    <p className="mt-4 text-sm leading-6 text-zinc-500">{signal.copy}</p>
+                  </article>
+                </FadeInSection>
+              ))}
+            </div>
+            <FadeInSection className="mt-8 rounded-xl border-l-2 border-[#be2e3d] bg-[#be2e3d]/[0.055] px-5 py-4 text-sm leading-6 text-zinc-300 sm:px-6 sm:text-base">
+              These are usually process problems before they are technology problems.
             </FadeInSection>
           </div>
         </section>
@@ -321,14 +419,14 @@ function App() {
         <section className="py-20 sm:py-24 lg:py-32">
           <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
             <FadeInSection>
-              <SectionHeading label="A clear fit" title="Built for businesses with real moving parts." body="The right automation starts with a repeatable process, a real constraint, and a reason to improve it." />
+              <SectionHeading label="A clear fit" title="Built for established businesses with real operational pressure." body="You do not need to know which system you need. You need a repeatable process, a real constraint, and a reason to improve it." />
             </FadeInSection>
             <div className="mt-12 grid gap-5 md:grid-cols-2 lg:mt-16">
               <FadeInSection>
                 <article className="h-full rounded-2xl border border-[#f1e8d8]/15 bg-[#f1e8d8]/[0.035] p-6 sm:p-8 lg:p-10">
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#d9cdb9]">This is for you if:</p>
                   <ul className="mt-8 space-y-5 text-sm leading-6 text-zinc-300 sm:text-base">
-                    {["You run a real business with real operations", "Your team spends time on repetitive, manual tasks", "You use multiple tools that don't talk to each other", "You want clarity on what's actually worth automating before spending money"].map((item) => (
+                    {["You run an established business with recurring operational work", "Your team spends time moving information and requests manually", "Leads, clients, or internal work depend on someone following up", "You want clarity on what's worth improving before investing in a build"].map((item) => (
                       <li key={item} className="flex gap-4"><span className="mt-2.5 h-px w-4 shrink-0 bg-[#be2e3d]" />{item}</li>
                     ))}
                   </ul>
@@ -338,7 +436,7 @@ function App() {
                 <article className="h-full rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6 sm:p-8 lg:p-10">
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">This isn't for you if:</p>
                   <ul className="mt-8 space-y-5 text-sm leading-6 text-zinc-400 sm:text-base">
-                    {["You're looking for a magic button or overnight transformation", "You're running a hobby project or early experiment", "You expect results without process or collaboration", "You want someone to just ‘set it and forget it’"].map((item) => (
+                    {["You're looking for a magic button or overnight transformation", "You want to automate something simply because it sounds impressive", "You're running a hobby project with no real operational workflow", "You're unwilling to examine a broken process before building around it"].map((item) => (
                       <li key={item} className="flex gap-4"><span className="mt-2.5 h-px w-4 shrink-0 bg-zinc-700" />{item}</li>
                     ))}
                   </ul>
@@ -349,7 +447,7 @@ function App() {
         </section>
 
         {/* How it works */}
-        <section className="border-y border-white/[0.06] bg-[#0b0c0f] py-20 sm:py-24 lg:py-32">
+        <section id="process" className="scroll-mt-20 border-y border-white/[0.06] bg-[#0b0c0f] py-20 sm:py-24 lg:py-32">
           <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
             <FadeInSection>
               <SectionHeading label="How it works" title="Understand the operation before designing the system." />
@@ -372,7 +470,7 @@ function App() {
         <section className="py-20 sm:py-24 lg:py-32">
           <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
             <FadeInSection>
-              <SectionHeading label="What we focus on" title="Practical capability, built around the business." body="The goal is not to add more technology. It is to make a useful process simpler, clearer, and easier to run." />
+              <SectionHeading label="What we focus on" title="Less technology to manage. More control over the process." body="The goal is to reduce unnecessary handling and make important work easier to see, move, and manage." />
             </FadeInSection>
             <div className="mt-12 grid gap-5 md:grid-cols-3 lg:mt-16">
               {capabilities.map((capability, index) => (
@@ -407,9 +505,10 @@ function App() {
                   <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#d9cdb9]">Free Automation Audit</p>
                   <h2 className="mt-5 text-4xl font-semibold tracking-[-0.045em] text-zinc-50 sm:text-5xl">Clarity before commitment.</h2>
                   <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg sm:leading-8">In a focused 45-minute session, we review how your business currently operates, identify where automation would have the highest impact, and give you a clear picture of what's possible — and what isn't. You walk away with real recommendations, whether or not we work together.</p>
+                  <p className="mt-4 max-w-2xl text-sm leading-6 text-zinc-500 sm:text-base">You do not need to arrive with a solution in mind. The audit is designed to uncover whether there is a worthwhile problem to solve.</p>
                 </div>
                 <ul className="space-y-4">
-                  {["No cost, no commitment", "Specific to your workflows, not generic advice", "Honest assessment — including what's not worth automating"].map((point) => (
+                  {["Review one real workflow in your business", "Identify unnecessary handling and weak handoffs", "Separate worthwhile improvements from distractions", "Be told what should stay manual"].map((point) => (
                     <li key={point} className="flex items-start gap-4 rounded-xl border border-white/[0.07] bg-white/[0.025] p-4 text-sm leading-6 text-zinc-300 sm:p-5 sm:text-base">
                       <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#be2e3d] shadow-[0_0_16px_rgba(190,46,61,0.65)]" />{point}
                     </li>
@@ -418,6 +517,51 @@ function App() {
               </div>
             </div>
           </FadeInSection>
+        </section>
+
+        {/* Illustrative audit output */}
+        <section id="audit-example" className="scroll-mt-20 border-y border-white/[0.06] bg-[#0b0c0f] py-20 sm:py-24 lg:py-32">
+          <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+            <FadeInSection>
+              <SectionHeading
+                label="Example audit output"
+                title="What clarity can look like after the conversation."
+                body="This is an illustrative example of the thinking an audit produces — not a client case study, performance result, or claim."
+              />
+            </FadeInSection>
+            <FadeInSection delay={100} className="mt-12 lg:mt-16">
+              <div className="overflow-hidden rounded-2xl border border-white/[0.09] bg-[#0e0f12] shadow-2xl shadow-black/20">
+                <div className="grid gap-px bg-white/[0.07] lg:grid-cols-[0.82fr_1.18fr]">
+                  <div className="bg-[#101216] p-6 sm:p-8 lg:p-10">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#d9cdb9]">Workflow snapshot</p>
+                    <h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-zinc-100">New business enquiry handling</h3>
+                    <p className="mt-4 text-sm leading-6 text-zinc-500">A prospective client submits an enquiry, the details are qualified, and the right person follows up.</p>
+                    <ol className="mt-8 space-y-3">
+                      {["Enquiry received", "Details reviewed", "Owner assigned", "Follow-up tracked"].map((item, index) => (
+                        <li key={item} className="flex items-center gap-3 text-sm text-zinc-400">
+                          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.025] font-mono text-[9px] text-zinc-600">0{index + 1}</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                  <dl className="divide-y divide-white/[0.07] bg-[#0e0f12]">
+                    {[
+                      ["Friction", "Enquiry details are copied manually, ownership is unclear, and follow-up visibility depends on a separate spreadsheet."],
+                      ["Practical recommendation", "Create one structured intake, route the context to the right person, and keep progress visible in the existing operating workflow."],
+                      ["Keep human", "Qualification judgment, the commercial conversation, and the final decision should remain with the team."],
+                    ].map(([term, description]) => (
+                      <div key={term} className="p-6 sm:p-8 lg:px-10">
+                        <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c9bca7]">{term}</dt>
+                        <dd className="mt-3 text-sm leading-6 text-zinc-400 sm:text-base sm:leading-7">{description}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+                <p className="border-t border-white/[0.07] px-6 py-5 text-sm font-medium text-zinc-300 sm:px-8 lg:px-10">The outcome is a clear decision — not a technology shopping list.</p>
+              </div>
+            </FadeInSection>
+          </div>
         </section>
 
         {/* What happens next */}
@@ -447,13 +591,16 @@ function App() {
           <div className="mx-auto max-w-3xl px-5 sm:px-8 lg:px-10">
             <FadeInSection>
               <RoseMark className="mx-auto mb-5 h-10" />
-              <SectionHeading align="center" label="Request your audit" title="Tell us where the work is getting stuck." body="Share a little context about the business and the process you want to improve." />
+              <SectionHeading align="center" label="Request your audit" title="Tell us where the work is getting stuck." body="Share a little context about the business and the process you want to improve. You do not need to know the solution." />
             </FadeInSection>
             <FadeInSection delay={100} className="mt-10 sm:mt-12">
               <div className="rounded-2xl border border-white/[0.09] bg-[#0e0f12] p-5 shadow-2xl shadow-black/30 sm:p-8 lg:p-10">
                 {!submitted ? (
                   <form onSubmit={handleSubmit} noValidate>
                     <div className="grid gap-6 sm:grid-cols-2">
+                      <div className="border-b border-white/[0.07] pb-3 sm:col-span-2">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#d9cdb9]">01 — Your details</p>
+                      </div>
                       <div>
                         <label htmlFor="name" className="text-sm font-medium text-zinc-300">Full Name <span className="text-[#c94a57]">*</span></label>
                         <input id="name" name="name" type="text" autoComplete="name" value={form.name} onChange={updateField} aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "name-error" : undefined} className={inputClasses} placeholder="Your name" />
@@ -463,6 +610,9 @@ function App() {
                         <label htmlFor="email" className="text-sm font-medium text-zinc-300">Business Email <span className="text-[#c94a57]">*</span></label>
                         <input id="email" name="email" type="email" inputMode="email" autoComplete="email" value={form.email} onChange={updateField} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "email-error" : undefined} className={inputClasses} placeholder="you@company.com" />
                         <FieldError id="email-error" message={errors.email} />
+                      </div>
+                      <div className="mt-2 border-b border-white/[0.07] pb-3 sm:col-span-2">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#d9cdb9]">02 — Business context</p>
                       </div>
                       <div className="sm:col-span-2">
                         <label htmlFor="company" className="text-sm font-medium text-zinc-300">Company / Business Name <span className="text-[#c94a57]">*</span></label>
@@ -484,6 +634,9 @@ function App() {
                           {["Just me", "2–10", "11–50", "51–200", "200+"].map((option) => <option key={option}>{option}</option>)}
                         </select>
                         <FieldError id="team-size-error" message={errors.teamSize} />
+                      </div>
+                      <div className="mt-2 border-b border-white/[0.07] pb-3 sm:col-span-2">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#d9cdb9]">03 — Current challenge</p>
                       </div>
                       <div className="sm:col-span-2">
                         <label htmlFor="challenge" className="text-sm font-medium text-zinc-300">In a sentence or two, what's the main thing slowing your team down? <span className="text-xs font-normal text-zinc-600">Optional</span></label>
@@ -516,9 +669,8 @@ function App() {
         {/* Final CTA */}
         <section className="border-y border-white/[0.06] bg-[#0d0e11] py-20 sm:py-24 lg:py-28">
           <FadeInSection className="mx-auto max-w-4xl px-5 text-center sm:px-8">
-            <RoseMark className="mx-auto mb-7 h-12" />
             <h2 className="text-balance text-3xl font-semibold tracking-[-0.04em] text-zinc-50 sm:text-5xl">See what's actually worth automating in your business.</h2>
-            <p className="mt-5 text-base text-zinc-500 sm:text-lg">One conversation. No commitment. Real answers.</p>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-zinc-500 sm:text-lg">You do not need a solution in mind. Start with the process that is slowing the business down.</p>
             <PrimaryButton onClick={scrollToAudit} className="mt-8 w-full sm:w-auto">Request an Automation Audit</PrimaryButton>
           </FadeInSection>
         </section>
