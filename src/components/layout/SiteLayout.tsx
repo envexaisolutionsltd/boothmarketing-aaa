@@ -45,16 +45,32 @@ export function SiteLayout() {
 
     <footer className="site-footer">
       <div className="site-container">
-        <div className="footer-top">
-          <div className="footer-brand">
+        <div className="footer-grid">
+          <div className="footer-brand-block">
             <img src="/booth-marketing-logo.png" alt="Booth Marketing" />
             <p>Automation systems built around real businesses.</p>
+            <span>B2B AI automation for established companies with real operational friction.</span>
           </div>
-          <nav className="footer-nav" aria-label="Footer navigation">
-            {links.map(([to, label]) => <Link key={to} to={to}>{label}</Link>)}
-          </nav>
+
+          <div className="footer-links-block">
+            <div className="footer-label">Navigate</div>
+            <nav className="footer-nav" aria-label="Footer navigation">
+              {links.map(([to, label]) => <Link key={to} to={to}>{label}</Link>)}
+            </nav>
+          </div>
+
+          <div className="footer-start-block">
+            <div className="footer-label">Start here</div>
+            <h3>Bring us one workflow that should not still take this much manual effort.</h3>
+            <p>You do not need to know the solution before you contact us.</p>
+            <Link to="/automation-audit" className="footer-audit-link">Request an Automation Audit <span>→</span></Link>
+          </div>
         </div>
-        <div className="footer-bottom">© 2026 Booth Marketing</div>
+
+        <div className="footer-bottom">
+          <span>© 2026 Booth Marketing</span>
+          <span>Practical automation. Human judgment where it matters.</span>
+        </div>
       </div>
     </footer>
   </>
