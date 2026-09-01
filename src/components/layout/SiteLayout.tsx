@@ -5,8 +5,8 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 
 const links = [
   ['/who-we-help', 'Who We Help'],
+  ['/what-we-automate', 'What We Automate'],
   ['/how-it-works', 'How We Work'],
-  ['/automation-audit', 'Automation Audit'],
   ['/about', 'About'],
 ]
 
@@ -48,8 +48,7 @@ export function SiteLayout() {
         <div className="footer-grid">
           <div className="footer-brand-block">
             <img src="/booth-marketing-logo.png" alt="Booth Marketing" />
-            <p>Automation systems built around real businesses.</p>
-            <span>B2B AI automation for established companies with real operational friction.</span>
+            <p>Helping established B2B companies reduce the manual work behind everyday operations.</p>
           </div>
 
           <div className="footer-links-block">
@@ -60,8 +59,8 @@ export function SiteLayout() {
           </div>
 
           <div className="footer-start-block">
-            <div className="footer-label">Start here</div>
-            <h3>Bring us one workflow that should not still take this much manual effort.</h3>
+            <div className="footer-label">Start with one process</div>
+            <h3>Bring us the workflow your team is tired of doing manually.</h3>
             <p>You do not need to know the solution before you contact us.</p>
             <Link to="/automation-audit" className="footer-audit-link">Request an Automation Audit <span>→</span></Link>
           </div>
