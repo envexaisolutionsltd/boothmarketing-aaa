@@ -1,6 +1,6 @@
-# Booth Marketing — Gym Growth Automation
+# Booth Marketing Automation Audit
 
-A Next.js landing page for Booth Marketing, focused on independent gym owners and member-growth automation systems.
+A responsive, frontend-only lead capture landing page built with Vite, React, and Tailwind CSS.
 
 ## Run locally
 
@@ -9,18 +9,16 @@ npm install
 npm run dev
 ```
 
-## Production
+## Production build
 
-The site is deployed through Vercel from the `main` branch.
+```bash
+npm run build
+```
 
-## Current direction
+The calendar URL is stored in `CALENDAR_BOOKING_URL` near the top of `src/App.jsx`.
 
-- Anime-inspired gym growth visual system
-- Booth Marketing wordmark and rose branding
-- Full-bleed cinematic hero artwork
-- Gym enquiry, trial, follow-up and admin automation positioning
-- Free Gym Growth Audit as the primary conversion goal
+The audit form intentionally performs client-side validation only. It does not transmit or store form data.
 
-## Audit form
+## Brand assets
 
-The site includes a server-side `/api/audit` route for storing audit requests when the required Supabase environment variables are configured in Vercel.
+The approved transparent logo is stored at `public/booth-marketing-logo.png`. The reusable `BrandLogo` and `RoseMark` components in `src/App.jsx` crop the same master asset non-destructively for full-wordmark and rose-only placements.

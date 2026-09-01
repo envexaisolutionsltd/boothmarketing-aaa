@@ -1,21 +1,21 @@
 {
-  "name": "booth-marketing-automation-audit",
-  "version": "1.0.0",
+  "name": "booth-marketing-audit",
   "private": true,
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "next": "16.3.1",
-    "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "@vitejs/plugin-react": "latest",
+    "autoprefixer": "latest",
+    "postcss": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "tailwindcss": "3.4.17",
+    "vite": "latest"
   },
-  "devDependencies": {
-    "typescript": "5.9.3",
-    "@types/node": "20.19.43",
-    "@types/react": "19.1.16",
-    "@types/react-dom": "19.1.9"
-  }
+  "devDependencies": {}
 }
