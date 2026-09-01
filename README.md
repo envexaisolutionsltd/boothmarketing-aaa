@@ -1,24 +1,13 @@
-# Booth Marketing
+# Booth Marketing B2B Automation Rebuild
 
-A responsive multi-page agency website built with Next.js App Router, TypeScript, React, and Tailwind CSS.
+Static multi-page website ready for Vercel or any static host.
 
-## Run locally
+Pages:
+- Home
+- Who We Help
+- What We Improve
+- How We Work
+- Automation Audit
+- About
 
-```bash
-npm install
-npm run dev
-```
-
-## Production build
-
-```bash
-npm run build
-```
-
-The calendar URL is stored in `lib/constants.ts`.
-
-The audit form intentionally performs client-side validation only. It does not transmit or store form data.
-
-## Brand assets
-
-The approved transparent logo is stored at `public/booth-marketing-logo.png`. The reusable brand components crop the same master asset non-destructively for full-wordmark and rose-only placements.
+Forms are intentionally frontend-only in this prototype and show a local success state. Connect the audit form to your preferred backend, CRM, webhook, or booking flow before production use.
