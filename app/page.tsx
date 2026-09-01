@@ -1,383 +1,437 @@
 'use client'
 
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import {
   ArrowRight,
-  BadgeCheck,
-  CalendarDays,
+  BarChart3,
+  BriefcaseBusiness,
   Check,
-  ChevronDown,
+  ChevronRight,
   Clock3,
-  LineChart,
-  MailCheck,
-  MessageSquareText,
+  FileText,
+  Gauge,
+  Layers3,
+  Mail,
   ShieldCheck,
   Sparkles,
-  Star,
-  Target,
   Users,
   X,
 } from 'lucide-react'
-import { useState } from 'react'
+import { FormEvent, ReactNode, useMemo, useState } from 'react'
 
-const CTA = 'Book Your 15-Minute Pipeline Audit'
+const CTA = 'Request an Automation Audit'
+const CALENDAR_URL = 'https://cal.com/your-agency/audit'
 
-const metrics = [
-  ['£3.8M+', 'Pipeline Generated for UK B2B Firms'],
-  ['14 Days', 'Average Time to First Booked Sales Call'],
-  ['3.8x', 'Average Return on Campaign Spend'],
-  ['85%+', 'Qualified Lead Acceptance Rate'],
+const frictionPoints = [
+  ['The same information gets entered twice', 'Details move between email, spreadsheets, CRM records and internal tools by hand.'],
+  ['People keep chasing the next step', 'Work moves because somebody remembers to follow up, check a status or remind another person.'],
+  ['Reporting has to be rebuilt manually', 'Management visibility depends on somebody collecting information before you can see what is happening.'],
+  ['Onboarding repeats the same admin', 'Every new client creates familiar emails, folders, forms, documents and internal setup tasks.'],
+  ['One person knows how the process really works', 'When that person is busy or away, the workflow slows down and context becomes harder to find.'],
 ]
 
-const painRows = [
-  ['Your sales team spends hours prospecting', 'Your team focuses on closing while outreach runs in the background.'],
-  ['Pipeline depends on referrals and inconsistent activity', 'A defined outbound system creates a steadier flow of qualified conversations.'],
-  ['Generic agencies report clicks, opens and impressions', 'The target outcome is qualified B2B sales calls booked directly into your calendar.'],
-  ['Internal outreach stops when priorities shift', 'Prospecting continues without relying on somebody finding time for cold outreach.'],
-]
-
-const steps = [
+const approach = [
   {
-    icon: Target,
-    title: 'Define the right buyers',
-    copy: 'We narrow the market, identify the companies worth pursuing, and define the decision-makers most likely to have a real reason to speak with you.',
+    title: 'Understand the current system',
+    copy: 'We map how the business actually operates today, including the people, handoffs, decisions and exceptions involved.',
   },
   {
-    icon: MessageSquareText,
-    title: 'Run targeted outreach',
-    copy: 'We build and manage focused outbound campaigns designed around relevance, timing and genuine commercial pain rather than mass-volume spam.',
+    title: 'Find the friction',
+    copy: 'We separate useful human judgment from copying, chasing, updating, checking and other repetitive handling.',
   },
   {
-    icon: CalendarDays,
-    title: 'Book qualified conversations',
-    copy: 'Interested prospects are qualified against the agreed criteria and moved into your calendar so your team can focus on sales conversations, not prospecting admin.',
+    title: 'Design practical automations',
+    copy: 'We propose specific changes that fit the real workflow instead of forcing technology into places it does not belong.',
+  },
+  {
+    title: 'You decide what happens next',
+    copy: 'You get a clear view of what is worth changing and what should stay human. There is no pressure to continue into a build.',
   },
 ]
 
-const testimonials = [
-  {
-    initials: 'MV',
-    name: 'Marcus Vance',
-    role: 'Founder & MD',
-    company: 'Apex Tech Consulting',
-    outcome: '+11 Enterprise Calls / Month',
-    quote: 'We stopped asking senior salespeople to spend half their week prospecting. The biggest difference was not just more conversations, it was having a pipeline we could actually plan around.',
-  },
-  {
-    initials: 'SJ',
-    name: 'Sarah Jenkins',
-    role: 'Commercial Director',
-    company: 'Vanguard Advisory',
-    outcome: '£420k Contract Value Generated',
-    quote: 'Previous agencies gave us activity reports. Booth focused on whether the people entering our calendar were genuinely relevant to what we sell. That changed the conversation internally.',
-  },
-  {
-    initials: 'JT',
-    name: 'James Thorne',
-    role: 'CRO',
-    company: 'CloudScale Solutions',
-    outcome: '4.2x Pipeline ROI in 90 Days',
-    quote: 'The value was predictability. Instead of waiting for referrals or hoping reps made time for outbound, qualified meetings started appearing in the calendar every week.',
-  },
+const automationFit = [
+  ['Strong candidates', ['Repeated data entry', 'Routine follow-up and reminders', 'Document creation from known information', 'Rules-based handoffs', 'Recurring reporting and status updates']],
+  ['Usually stays human', ['Commercial judgment', 'Sensitive conversations', 'Relationship-heavy decisions', 'Unusual exceptions', 'Work where context changes constantly']],
 ]
 
-const faqs = [
-  {
-    q: 'How do you ensure the booked calls are actually qualified?',
-    a: 'We agree qualification criteria before outreach starts, including company profile, decision-maker role, commercial relevance and any non-negotiable fit criteria. The goal is not to maximise meeting volume. It is to create conversations your sales team would genuinely want to take.',
-  },
-  {
-    q: 'How long does it take to see the first booked appointments?',
-    a: 'Outbound performance varies by market, offer, deal size and audience. The prototype benchmark shown on this page is 14 days, but a real engagement would set expectations only after reviewing your market, current offer and sales process.',
-  },
-  {
-    q: "We've been burned by marketing agencies before. How are you different?",
-    a: 'The system is built around a commercial outcome: qualified sales conversations. We care about targeting, message relevance, qualification and booked meetings rather than hiding behind vanity metrics such as impressions or email opens.',
-  },
-  {
-    q: 'How much time will this require from my team?',
-    a: 'The aim is to remove prospecting workload, not create more of it. We need enough input upfront to understand your offer, strongest buyers and qualification criteria. After that, your team should primarily spend time on the qualified conversations that reach the calendar.',
-  },
-  {
-    q: 'What actually happens during the 15-Minute Pipeline Audit?',
-    a: 'We look at how you currently generate B2B opportunities, where pipeline is unpredictable, who your strongest buyers are and where outbound could realistically fit. You leave with a clearer view of the gaps in the current pipeline and what a more predictable system would need to address.',
-  },
+const nextSteps = [
+  ['Submit your details', 'Tell us about the business and the process that feels more manual than it should.'],
+  ['We review the workflow', 'We look at the context before the conversation so the discussion starts in the right place.'],
+  ['Short fit call', 'A brief call confirms whether the process is suitable for a deeper Automation Audit.'],
+  ['Audit and recommendations', 'We work through the workflow and give you a clear view of what is worth automating, what is not, and where to start.'],
 ]
 
-function AuditLink({ compact = false }: { compact?: boolean }) {
+const industries = [
+  'Professional Services',
+  'E-commerce',
+  'Healthcare',
+  'Logistics',
+  'Financial Services',
+  'SaaS / Tech',
+  'Real Estate',
+  'Agency / Consulting',
+  'Other',
+]
+
+function FadeIn({ children, className = '', delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.55, delay, ease: 'easeOut' }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+function PrimaryLink({ href = '#audit-form', compact = false, children = CTA }: { href?: string; compact?: boolean; children?: ReactNode }) {
   return (
     <a
-      href="#book-audit"
-      className={`group inline-flex items-center justify-center rounded-xl bg-emerald-500 font-semibold text-slate-950 shadow-[0_0_32px_rgba(16,185,129,0.18)] transition duration-200 hover:-translate-y-0.5 hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-950 ${compact ? 'min-h-11 px-5 text-sm' : 'min-h-14 px-6 text-sm sm:px-7 sm:text-base'}`}
+      href={href}
+      className={`group inline-flex items-center justify-center rounded-xl bg-amber-400 font-semibold text-zinc-950 transition duration-200 hover:-translate-y-0.5 hover:bg-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-zinc-950 ${compact ? 'min-h-11 px-5 text-sm' : 'min-h-14 px-6 text-sm sm:px-7 sm:text-base'}`}
     >
-      {compact ? 'Book Audit' : CTA}
+      {children}
       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
     </a>
   )
 }
 
-function SectionTitle({ eyebrow, title, copy }: { eyebrow: string; title: string; copy?: string }) {
+function SectionHeading({ eyebrow, title, copy }: { eyebrow: string; title: string; copy?: string }) {
   return (
     <div className="max-w-3xl">
-      <div className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-emerald-400">{eyebrow}</div>
-      <h2 className="text-3xl font-semibold tracking-[-0.035em] text-white sm:text-4xl lg:text-5xl">{title}</h2>
-      {copy && <p className="mt-5 max-w-2xl text-base leading-7 text-slate-400 sm:text-lg">{copy}</p>}
+      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-300">{eyebrow}</p>
+      <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl">{title}</h2>
+      {copy && <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg">{copy}</p>}
     </div>
   )
 }
 
 export default function Page() {
-  const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const [teamMembers, setTeamMembers] = useState(4)
+  const [hourlyCost, setHourlyCost] = useState(22)
+  const [hoursPerWeek, setHoursPerWeek] = useState(7)
+  const [weeksPerYear, setWeeksPerYear] = useState(48)
+  const [reduction, setReduction] = useState(50)
+  const [submitted, setSubmitted] = useState(false)
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const calculator = useMemo(() => {
+    const weeklyHours = teamMembers * hoursPerWeek
+    const annualHours = weeklyHours * weeksPerYear
+    const annualCost = annualHours * hourlyCost
+    const monthlyCost = annualCost / 12
+    const recoveredHours = annualHours * (reduction / 100)
+    const recoveredCapacity = annualCost * (reduction / 100)
+
+    return { weeklyHours, annualHours, annualCost, monthlyCost, recoveredHours, recoveredCapacity }
+  }, [teamMembers, hourlyCost, hoursPerWeek, weeksPerYear, reduction])
+
+  const currency = (value: number) => new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 }).format(value)
+  const number = (value: number) => new Intl.NumberFormat('en-GB', { maximumFractionDigits: 0 }).format(value)
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const form = new FormData(event.currentTarget)
+    const nextErrors: Record<string, string> = {}
+
+    for (const field of ['name', 'email', 'company', 'industry', 'teamSize']) {
+      if (!String(form.get(field) || '').trim()) nextErrors[field] = 'Required'
+    }
+
+    const email = String(form.get('email') || '')
+    if (email && !/^\S+@\S+\.\S+$/.test(email)) nextErrors.email = 'Enter a valid email'
+
+    setErrors(nextErrors)
+    if (Object.keys(nextErrors).length === 0) setSubmitted(true)
+  }
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-slate-950 text-slate-100 selection:bg-emerald-400 selection:text-slate-950">
-      <div className="fixed inset-0 -z-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.06),transparent_34%),radial-gradient(circle_at_75%_8%,rgba(255,255,255,0.035),transparent_24%)]" />
-
-      <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-xl">
-        <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
-          <a href="#top" className="flex items-center gap-3" aria-label="Booth Marketing home">
-            <span className="grid h-9 w-9 place-items-center rounded-lg border border-slate-700 bg-slate-900 text-sm font-black tracking-tight text-white">BM</span>
-            <span className="text-sm font-semibold tracking-[-0.02em] text-white sm:text-base">Booth Marketing</span>
-          </a>
-          <AuditLink compact />
+    <main className="min-h-screen overflow-x-hidden bg-zinc-950 text-zinc-100 selection:bg-amber-300 selection:text-zinc-950">
+      <header className="sticky top-0 z-50 border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur-xl">
+        <div className="mx-auto flex min-h-16 w-full max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-10">
+          <a href="#top" className="text-base font-semibold tracking-[-0.03em] text-white" aria-label="Booth Marketing home">Booth Marketing</a>
+          <PrimaryLink compact />
         </div>
       </header>
 
-      <section id="top" className="relative z-10 border-b border-slate-800/80">
-        <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28 lg:px-10 lg:py-32">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="max-w-4xl"
-          >
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/70 px-4 py-2 text-xs font-medium text-slate-300">
-              <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
-              Done-for-you B2B lead generation for UK firms
-            </div>
-            <h1 className="max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.055em] text-white sm:text-6xl lg:text-7xl">
-              Predictable B2B pipeline. <span className="text-slate-400">Zero manual cold outreach.</span>
+      <section id="top" className="relative border-b border-zinc-800/80">
+        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32 lg:px-10 lg:py-36">
+          <FadeIn className="mx-auto max-w-4xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-300">AI automation for established businesses</p>
+            <h1 className="mt-6 text-5xl font-semibold leading-[0.98] tracking-[-0.055em] text-white sm:text-6xl lg:text-7xl">
+              Your business has grown. <span className="text-zinc-400">Too much of the operation is still being held together manually.</span>
             </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-400 sm:text-xl">
-              Booth Marketing builds and runs targeted outbound campaigns that put qualified B2B sales conversations directly into your calendar, without adding more prospecting workload to your internal team.
+            <p className="mx-auto mt-7 max-w-2xl text-lg leading-8 text-zinc-400 sm:text-xl">
+              Booth Marketing helps established businesses identify where repetitive work, disconnected processes and manual handoffs are consuming capacity, then shows you what is actually worth automating.
             </p>
-            <div className="mt-9 flex flex-col items-start gap-4">
-              <AuditLink />
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500 sm:text-sm">
-                <span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-emerald-400" />No sales pitch</span>
-                <span className="flex items-center gap-1.5"><Clock3 className="h-3.5 w-3.5 text-emerald-400" />15-min strategy call</span>
-                <span className="flex items-center gap-1.5"><LineChart className="h-3.5 w-3.5 text-emerald-400" />100% actionable pipeline roadmap</span>
-              </div>
+            <div className="mt-9 flex flex-col items-center gap-4">
+              <PrimaryLink />
+              <p className="text-sm text-zinc-500">No technical brief needed. No commitment. Start with one real workflow.</p>
             </div>
-          </motion.div>
+          </FadeIn>
         </div>
       </section>
 
-      <section className="relative z-10 border-b border-slate-800/80 bg-slate-900/25">
-        <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-10">
-          <div className="mb-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">
-            <ShieldCheck className="h-3.5 w-3.5" /> Prototype proof placeholders
-          </div>
-          <div className="grid gap-px overflow-hidden rounded-2xl border border-slate-800 bg-slate-800 sm:grid-cols-2 lg:grid-cols-4">
-            {metrics.map(([value, label]) => (
-              <div key={label} className="bg-slate-950 px-6 py-7">
-                <div className="text-2xl font-bold tracking-[-0.04em] text-emerald-400 sm:text-3xl">{value}</div>
-                <p className="mt-2 text-sm leading-6 text-slate-500">{label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative z-10 border-b border-slate-800/80 py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-          <SectionTitle
-            eyebrow="The problem"
-            title="Your sales team should be closing opportunities, not spending hours trying to create them."
-            copy="Most growing B2B firms do not have a sales talent problem. They have an inconsistent pipeline-generation system."
-          />
-          <div className="mt-12 overflow-hidden rounded-2xl border border-slate-800">
-            <div className="grid border-b border-slate-800 bg-slate-900/45 text-xs font-bold uppercase tracking-[0.18em] sm:grid-cols-2">
-              <div className="border-b border-slate-800 px-5 py-4 text-slate-500 sm:border-b-0 sm:border-r">What happens now</div>
-              <div className="px-5 py-4 text-emerald-400">What changes</div>
-            </div>
-            {painRows.map(([pain, solution]) => (
-              <div key={pain} className="grid border-b border-slate-800 last:border-b-0 sm:grid-cols-2">
-                <div className="flex gap-3 bg-slate-950 px-5 py-5 text-sm leading-6 text-slate-400 sm:border-r sm:border-slate-800">
-                  <X className="mt-0.5 h-4 w-4 shrink-0 text-slate-600" />{pain}
-                </div>
-                <div className="flex gap-3 bg-slate-900/25 px-5 py-5 text-sm leading-6 text-slate-300">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />{solution}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative z-10 border-b border-slate-800/80 bg-slate-900/20 py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-          <SectionTitle
-            eyebrow="The Booth Pipeline System"
-            title="Three steps between inconsistent outreach and qualified calls in your calendar."
-            copy="The system is intentionally simple: choose the right market, create relevant conversations, and move qualified interest into a sales meeting."
-          />
-          <div className="mt-12 grid gap-5 lg:grid-cols-3">
-            {steps.map(({ icon: Icon, title, copy }, index) => (
-              <motion.article
-                key={title}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.4, delay: index * 0.06 }}
-                className="rounded-2xl border border-slate-800 bg-slate-950 p-6 sm:p-7"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="grid h-11 w-11 place-items-center rounded-xl border border-emerald-500/20 bg-emerald-500/10"><Icon className="h-5 w-5 text-emerald-400" /></div>
-                  <span className="text-xs font-bold tracking-[0.18em] text-slate-700">0{index + 1}</span>
-                </div>
-                <h3 className="mt-7 text-xl font-semibold tracking-[-0.025em] text-white">{title}</h3>
-                <p className="mt-3 text-sm leading-7 text-slate-500">{copy}</p>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative z-10 border-b border-slate-800/80 py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-            <SectionTitle
-              eyebrow="Results"
-              title="Proven-results layout for UK B2B leaders."
-              copy="The cards below are frontend placeholders for the production case studies and verified client evidence that will replace them."
+      <section className="border-b border-zinc-800/80 py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+          <FadeIn>
+            <SectionHeading
+              eyebrow="Does this sound familiar?"
+              title="The problems rarely look dramatic. They repeat quietly across the whole operation."
+              copy="One copied field or one forgotten follow-up is small. The real cost appears when the same friction happens across every lead, client, job and internal handoff."
             />
-            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-slate-800 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
-              <ShieldCheck className="h-3.5 w-3.5" /> Placeholder proof
-            </div>
+          </FadeIn>
+          <div className="mt-12 grid gap-4 md:grid-cols-2">
+            {frictionPoints.map(([title, copy], index) => (
+              <FadeIn key={title} delay={index * 0.04} className={index === frictionPoints.length - 1 ? 'md:col-span-2' : ''}>
+                <article className="h-full rounded-2xl border border-zinc-800 bg-zinc-900/45 p-6 sm:p-7">
+                  <div className="flex items-start gap-4">
+                    <span className="mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-zinc-700 text-xs font-semibold text-zinc-500">0{index + 1}</span>
+                    <div><h3 className="text-lg font-semibold tracking-[-0.025em] text-white">{title}</h3><p className="mt-2 text-sm leading-7 text-zinc-400">{copy}</p></div>
+                  </div>
+                </article>
+              </FadeIn>
+            ))}
           </div>
-          <div className="mt-12 grid gap-5 lg:grid-cols-3">
-            {testimonials.map((item) => (
-              <article key={item.name} className="flex min-h-[360px] flex-col rounded-2xl border border-slate-800 bg-slate-900/30 p-6 sm:p-7">
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="grid h-11 w-11 place-items-center rounded-full border border-slate-700 bg-slate-800 text-xs font-bold text-slate-300">{item.initials}</div>
-                    <div>
-                      <div className="flex items-center gap-1.5 text-sm font-semibold text-white">{item.name}<BadgeCheck className="h-4 w-4 text-slate-600" /></div>
-                      <div className="mt-0.5 text-xs text-slate-500">{item.role}, {item.company}</div>
-                    </div>
+        </div>
+      </section>
+
+      <section className="border-b border-zinc-800/80 bg-zinc-900/20 py-20 sm:py-24">
+        <div className="mx-auto grid max-w-6xl gap-10 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">
+          <FadeIn>
+            <SectionHeading eyebrow="Why this happens" title="Your software may be fine. The gaps between it are where people lose time." />
+          </FadeIn>
+          <FadeIn delay={0.08}>
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6 sm:p-8">
+              <div className="space-y-4">
+                {[
+                  ['Information arrives', 'Email, forms, calls, documents'],
+                  ['Someone interprets it', 'Reads, sorts, decides, copies'],
+                  ['Another system gets updated', 'CRM, spreadsheet, folder, project tool'],
+                  ['Someone remembers the next step', 'Assign, chase, notify, report'],
+                ].map(([title, copy], index) => (
+                  <div key={title} className="flex gap-4 border-b border-zinc-800 pb-4 last:border-b-0 last:pb-0">
+                    <span className="text-xs font-bold tracking-[0.18em] text-amber-300">0{index + 1}</span>
+                    <div><p className="font-medium text-zinc-100">{title}</p><p className="mt-1 text-sm text-zinc-500">{copy}</p></div>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-7 border-t border-zinc-800 pt-6 text-base leading-7 text-zinc-300">Your people should use judgment where it matters. They should not have to be the connection between every system and next step.</p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      <section className="border-b border-zinc-800/80 py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+          <FadeIn><SectionHeading eyebrow="How we approach it" title="Understand the process before touching the technology." copy="The quickest way to build the wrong automation is to automate a workflow nobody has properly understood first." /></FadeIn>
+          <div className="mt-12 grid gap-4 lg:grid-cols-4">
+            {approach.map((step, index) => (
+              <FadeIn key={step.title} delay={index * 0.05}>
+                <article className="h-full rounded-2xl border border-zinc-800 bg-zinc-900/35 p-6">
+                  <span className="text-xs font-bold tracking-[0.18em] text-amber-300">0{index + 1}</span>
+                  <h3 className="mt-6 text-lg font-semibold tracking-[-0.025em] text-white">{step.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-zinc-500">{step.copy}</p>
+                </article>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-zinc-800/80 bg-zinc-900/20 py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+          <FadeIn><SectionHeading eyebrow="Operational Cost Calculator" title="See what repetitive work may already be costing the business." copy="Use your own numbers to estimate how much staff capacity is tied up in repetitive operational work. This is an illustrative scenario, not a savings guarantee." /></FadeIn>
+          <div className="mt-12 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
+            <FadeIn>
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6 sm:p-8">
+                <div className="space-y-7">
+                  <CalculatorInput label="Team members doing repetitive admin" value={teamMembers} min={1} max={50} suffix="people" onChange={setTeamMembers} />
+                  <CalculatorInput label="Average loaded hourly staff cost" value={hourlyCost} min={10} max={100} prefix="£" suffix="/ hr" onChange={setHourlyCost} />
+                  <CalculatorInput label="Hours per person spent on repetitive work each week" value={hoursPerWeek} min={1} max={30} suffix="hrs" onChange={setHoursPerWeek} />
+                  <CalculatorInput label="Working weeks per year" value={weeksPerYear} min={40} max={52} suffix="weeks" onChange={setWeeksPerYear} />
+                  <CalculatorInput label="Reduction scenario" value={reduction} min={10} max={80} suffix="%" onChange={setReduction} />
+                </div>
+              </div>
+            </FadeIn>
+            <FadeIn delay={0.08}>
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">Based on your inputs</p>
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  <ResultCard icon={Clock3} label="Repetitive work" value={`${number(calculator.weeklyHours)} hrs / week`} />
+                  <ResultCard icon={Gauge} label="Estimated monthly staff cost" value={currency(calculator.monthlyCost)} />
+                  <ResultCard icon={BarChart3} label="Estimated annual staff cost" value={currency(calculator.annualCost)} accent />
+                  <ResultCard icon={Users} label="Annual hours consumed" value={`${number(calculator.annualHours)} hrs`} />
+                </div>
+                <div className="mt-5 rounded-xl border border-amber-300/20 bg-amber-300/[0.06] p-5">
+                  <p className="text-sm font-medium text-amber-200">At a {reduction}% reduction scenario</p>
+                  <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                    <div><p className="text-2xl font-semibold tracking-[-0.04em] text-white">{currency(calculator.recoveredCapacity)}</p><p className="mt-1 text-xs text-zinc-500">potential annual staff capacity released</p></div>
+                    <div><p className="text-2xl font-semibold tracking-[-0.04em] text-white">{number(calculator.recoveredHours)} hrs</p><p className="mt-1 text-xs text-zinc-500">potential annual time returned to the team</p></div>
                   </div>
                 </div>
-                <div className="mt-6 flex gap-1 text-emerald-400">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-3.5 w-3.5 fill-current" />)}</div>
-                <p className="mt-5 flex-1 text-sm leading-7 text-slate-400">“{item.quote}”</p>
-                <div className="mt-6 rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-4 py-3 text-sm font-semibold text-emerald-400">{item.outcome}</div>
-              </article>
+                <p className="mt-5 text-xs leading-5 text-zinc-600">Illustrative estimate based solely on the figures you entered. It does not represent guaranteed savings or assume every part of the work can or should be automated.</p>
+                <div className="mt-6 border-t border-zinc-800 pt-6">
+                  <p className="text-sm leading-6 text-zinc-300">The useful question is not how much of this cost can disappear. It is which parts of the process actually require a person.</p>
+                  <div className="mt-4"><PrimaryLink /></div>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-zinc-800/80 py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+          <FadeIn><SectionHeading eyebrow="What is worth automating" title="Automate repetition. Keep judgment, context and relationships human." copy="A good automation strategy is selective. Some work becomes more reliable when the process handles it. Other work still needs a person." /></FadeIn>
+          <div className="mt-12 grid gap-5 md:grid-cols-2">
+            {automationFit.map(([title, items], index) => (
+              <FadeIn key={title as string} delay={index * 0.06}>
+                <div className="h-full rounded-2xl border border-zinc-800 bg-zinc-900/35 p-6 sm:p-8">
+                  <div className="flex items-center gap-3"><span className={`grid h-9 w-9 place-items-center rounded-lg ${index === 0 ? 'bg-amber-300/10 text-amber-300' : 'bg-zinc-800 text-zinc-400'}`}>{index === 0 ? <Layers3 className="h-4 w-4" /> : <ShieldCheck className="h-4 w-4" />}</span><h3 className="text-xl font-semibold text-white">{title}</h3></div>
+                  <div className="mt-6 space-y-3">{(items as string[]).map(item => <div key={item} className="flex items-start gap-3 text-sm leading-6 text-zinc-400">{index === 0 ? <Check className="mt-1 h-4 w-4 shrink-0 text-amber-300" /> : <X className="mt-1 h-4 w-4 shrink-0 text-zinc-600" />}{item}</div>)}</div>
+                </div>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="relative z-10 border-b border-slate-800/80 bg-slate-900/20 py-20 sm:py-24">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:px-10">
-          <div>
-            <SectionTitle
-              eyebrow="Frequently Asked Questions"
-              title="Everything you need to know before booking your audit."
-              copy="The goal is to make the first conversation useful, not to make you sit through a generic agency pitch."
-            />
-          </div>
-          <div className="border-t border-slate-800">
-            {faqs.map((item, index) => {
-              const open = openFaq === index
-              return (
-                <div key={item.q} className="border-b border-slate-800">
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(open ? null : index)}
-                    className="flex w-full items-center justify-between gap-6 py-6 text-left text-sm font-semibold text-white sm:text-base"
-                    aria-expanded={open}
-                  >
-                    <span>{item.q}</span>
-                    <ChevronDown className={`h-4 w-4 shrink-0 text-slate-500 transition-transform ${open ? 'rotate-180' : ''}`} />
-                  </button>
-                  <AnimatePresence initial={false}>
-                    {open && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.22 }}
-                        className="overflow-hidden"
-                      >
-                        <p className="max-w-2xl pb-6 pr-8 text-sm leading-7 text-slate-500">{item.a}</p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              )
-            })}
-            <p className="mt-6 text-sm text-slate-500">Have a specific question not covered here? Ask us directly on your audit call.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="book-audit" className="relative z-10 scroll-mt-20 border-b border-slate-800/80 py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-          <div className="overflow-hidden rounded-3xl border border-emerald-500/20 bg-[linear-gradient(135deg,rgba(16,185,129,0.09),rgba(15,23,42,0.75)_45%,rgba(2,6,23,1))] p-6 sm:p-10 lg:p-12">
-            <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+      <section className="border-b border-zinc-800/80 bg-zinc-900/20 py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+          <FadeIn className="rounded-3xl border border-zinc-800 bg-zinc-950 p-7 sm:p-10 lg:p-12">
+            <div className="grid gap-10 lg:grid-cols-[1fr_0.8fr] lg:items-center">
               <div>
-                <div className="text-xs font-bold uppercase tracking-[0.22em] text-emerald-400">Book your pipeline audit</div>
-                <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl">Ready to fill your pipeline with qualified B2B buyers?</h2>
-                <p className="mt-5 max-w-xl text-base leading-7 text-slate-400">Use the calendar to choose a 15-minute slot. We will look at your current lead flow, target market and where a more predictable outbound system could fit.</p>
-                <div className="mt-7 grid gap-3 text-sm text-slate-400">
-                  <span className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400" />No pitch-heavy discovery call</span>
-                  <span className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400" />Clear 15-minute structure</span>
-                  <span className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-400" />Actionable next-step recommendations</span>
-                </div>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-300">Free Automation Audit</p>
+                <h2 className="mt-4 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl">Leave knowing what is worth automating, what is not, and where to start.</h2>
+                <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-400">In a focused session, we review how a real process currently works, identify where unnecessary handling is happening, and give you a clear picture of what could realistically change.</p>
               </div>
-
-              <div className="rounded-2xl border border-slate-700 bg-slate-950/90 p-5 shadow-2xl shadow-black/20 sm:p-6">
-                <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                  <div>
-                    <div className="text-sm font-semibold text-white">15-Minute Pipeline Audit</div>
-                    <div className="mt-1 text-xs text-slate-500">Calendar embed placeholder</div>
-                  </div>
-                  <CalendarDays className="h-5 w-5 text-emerald-400" />
-                </div>
-                <div className="mt-5 grid grid-cols-3 gap-2">
-                  {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Mon', 'Tue', 'Wed', 'Thu'].map((day, index) => (
-                    <button key={`${day}-${index}`} type="button" className="rounded-lg border border-slate-800 bg-slate-900 px-2 py-3 text-center transition hover:border-emerald-500/40 hover:bg-emerald-500/5">
-                      <span className="block text-[10px] uppercase tracking-wider text-slate-600">{day}</span>
-                      <span className="mt-1 block text-sm font-semibold text-slate-300">{index + 7}</span>
-                    </button>
-                  ))}
-                </div>
-                <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                  {['10:00', '11:30', '14:00', '15:30'].map((time) => <button key={time} type="button" className="rounded-lg border border-slate-800 px-3 py-2.5 text-xs font-medium text-slate-400 transition hover:border-emerald-500/40 hover:text-emerald-400">{time}</button>)}
-                </div>
-                <button type="button" className="mt-5 flex min-h-12 w-full items-center justify-center rounded-xl bg-emerald-500 px-5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400">{CTA}<ArrowRight className="ml-2 h-4 w-4" /></button>
-                <p className="mt-3 text-center text-[11px] leading-5 text-slate-600">Replace this block with Calendly, Cal.com or your preferred booking embed.</p>
+              <div className="space-y-3">
+                {['No cost and no commitment', 'Specific to your workflows, not generic advice', 'Honest assessment, including what is not worth automating'].map(item => <div key={item} className="flex items-start gap-3 rounded-xl border border-zinc-800 bg-zinc-900/35 px-4 py-4 text-sm text-zinc-300"><Check className="mt-0.5 h-4 w-4 shrink-0 text-amber-300" />{item}</div>)}
               </div>
             </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      <section className="border-b border-zinc-800/80 py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+          <FadeIn><SectionHeading eyebrow="What happens next" title="A clear route from operational frustration to useful recommendations." /></FadeIn>
+          <div className="mt-12 max-w-3xl">
+            {nextSteps.map(([title, copy], index) => (
+              <FadeIn key={title} delay={index * 0.04}>
+                <div className="grid grid-cols-[48px_1fr] gap-5 border-b border-zinc-800 py-6 first:pt-0 last:border-b-0">
+                  <span className="grid h-10 w-10 place-items-center rounded-full border border-zinc-700 text-xs font-semibold text-amber-300">0{index + 1}</span>
+                  <div><h3 className="font-semibold text-white">{title}</h3><p className="mt-2 text-sm leading-7 text-zinc-500">{copy}</p></div>
+                </div>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>
 
-      <footer className="relative z-10 bg-slate-950">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-9 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-10">
-          <div>
-            <div className="flex items-center gap-3">
-              <span className="grid h-8 w-8 place-items-center rounded-lg border border-slate-800 bg-slate-900 text-[11px] font-black text-white">BM</span>
-              <span className="text-sm font-semibold text-white">Booth Marketing</span>
+      <section id="audit-form" className="scroll-mt-24 border-b border-zinc-800/80 bg-zinc-900/20 py-20 sm:py-24">
+        <div className="mx-auto grid max-w-6xl gap-10 px-5 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:px-10">
+          <FadeIn>
+            <div className="lg:sticky lg:top-28">
+              <SectionHeading eyebrow="Request your audit" title="Describe the friction, not the solution." copy="You do not need to know what technology you need. Tell us what the team keeps doing manually, where work gets stuck, and which process feels harder to run than it should." />
+              <div className="mt-8 space-y-3 text-sm text-zinc-500">
+                <p className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-amber-300" />No commitment to a project</p>
+                <p className="flex items-center gap-2"><BriefcaseBusiness className="h-4 w-4 text-amber-300" />Built for established businesses with real operations</p>
+                <p className="flex items-center gap-2"><FileText className="h-4 w-4 text-amber-300" />Start with one process, not a technical brief</p>
+              </div>
             </div>
-            <p className="mt-3 text-xs text-slate-600">© 2026 Booth Marketing. All rights reserved.</p>
-          </div>
-          <div className="flex items-center gap-5 text-xs text-slate-600">
-            <a href="#" className="transition hover:text-slate-300">Privacy Policy</a>
-            <a href="#" className="transition hover:text-slate-300">Terms of Service</a>
-          </div>
+          </FadeIn>
+          <FadeIn delay={0.08}>
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6 sm:p-8">
+              {submitted ? (
+                <div className="py-8 text-center sm:py-12">
+                  <div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-amber-300/10 text-amber-300"><Check className="h-5 w-5" /></div>
+                  <h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-white">Your details are ready for the next step.</h3>
+                  <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-zinc-400">This frontend does not send data to a backend yet. When the enquiry workflow is connected, submissions can be delivered automatically. You can use the calendar placeholder below in the meantime.</p>
+                  <a href={CALENDAR_URL} target="_blank" rel="noreferrer" className="mt-6 inline-flex min-h-12 items-center justify-center rounded-xl bg-amber-400 px-6 text-sm font-semibold text-zinc-950 transition hover:bg-amber-300">Book Your Intro Call<ArrowRight className="ml-2 h-4 w-4" /></a>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} noValidate className="grid gap-5 sm:grid-cols-2">
+                  <FormField label="Full Name" name="name" error={errors.name} />
+                  <FormField label="Business Email" name="email" type="email" error={errors.email} />
+                  <FormField label="Company / Business Name" name="company" error={errors.company} />
+                  <SelectField label="Industry" name="industry" options={industries} error={errors.industry} />
+                  <SelectField label="Team Size" name="teamSize" options={['Just me', '2 to 10', '11 to 50', '51 to 200', '200+']} error={errors.teamSize} />
+                  <SelectField label="Which process feels most manual right now?" name="processType" options={['Lead handling', 'Client onboarding', 'Reporting', 'Documents and admin', 'Internal handoffs', 'Approvals', 'Something else']} />
+                  <div className="sm:col-span-2">
+                    <label htmlFor="challenge" className="mb-2 block text-sm font-medium text-zinc-300">Biggest operational challenge right now</label>
+                    <textarea id="challenge" name="challenge" rows={4} placeholder="In a sentence or two, what is the main thing slowing your team down?" className="w-full resize-none rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-amber-300/60 focus:ring-2 focus:ring-amber-300/10" />
+                  </div>
+                  <div className="sm:col-span-2"><button type="submit" className="group flex min-h-13 w-full items-center justify-center rounded-xl bg-amber-400 px-6 text-sm font-semibold text-zinc-950 transition hover:bg-amber-300">Request My Free Audit<ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" /></button></div>
+                </form>
+              )}
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      <section className="py-20 sm:py-24">
+        <FadeIn className="mx-auto max-w-4xl px-5 text-center sm:px-8">
+          <Sparkles className="mx-auto h-5 w-5 text-amber-300" />
+          <h2 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl">See what is actually worth automating in your business.</h2>
+          <p className="mx-auto mt-4 max-w-xl text-base text-zinc-500">One conversation. No commitment. Real answers.</p>
+          <div className="mt-8"><PrimaryLink /></div>
+        </FadeIn>
+      </section>
+
+      <footer className="border-t border-zinc-800 bg-zinc-950">
+        <div className="mx-auto flex max-w-6xl flex-col gap-5 px-5 py-8 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-10">
+          <div><p className="font-semibold text-white">Booth Marketing</p><p className="mt-1 text-sm text-zinc-600">AI automation for serious operations.</p></div>
+          <p className="text-xs text-zinc-700">© 2026 Booth Marketing. All rights reserved.</p>
         </div>
       </footer>
     </main>
+  )
+}
+
+function CalculatorInput({ label, value, min, max, prefix, suffix, onChange }: { label: string; value: number; min: number; max: number; prefix?: string; suffix?: string; onChange: (value: number) => void }) {
+  return (
+    <div>
+      <div className="flex items-end justify-between gap-4"><label className="text-sm font-medium text-zinc-300">{label}</label><span className="text-sm font-semibold text-white">{prefix}{value}{suffix ? ` ${suffix}` : ''}</span></div>
+      <input aria-label={label} type="range" min={min} max={max} value={value} onChange={(event) => onChange(Number(event.target.value))} className="mt-4 h-1.5 w-full cursor-pointer accent-amber-300" />
+      <div className="mt-2 flex justify-between text-[11px] text-zinc-700"><span>{prefix}{min}{suffix ? ` ${suffix}` : ''}</span><span>{prefix}{max}{suffix ? ` ${suffix}` : ''}</span></div>
+    </div>
+  )
+}
+
+function ResultCard({ icon: Icon, label, value, accent = false }: { icon: typeof Clock3; label: string; value: string; accent?: boolean }) {
+  return (
+    <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-5">
+      <Icon className={`h-4 w-4 ${accent ? 'text-amber-300' : 'text-zinc-600'}`} />
+      <p className={`mt-4 text-xl font-semibold tracking-[-0.035em] ${accent ? 'text-amber-200' : 'text-white'}`}>{value}</p>
+      <p className="mt-1 text-xs leading-5 text-zinc-600">{label}</p>
+    </div>
+  )
+}
+
+function FormField({ label, name, type = 'text', error }: { label: string; name: string; type?: string; error?: string }) {
+  return (
+    <div>
+      <label htmlFor={name} className="mb-2 block text-sm font-medium text-zinc-300">{label}</label>
+      <input id={name} name={name} type={type} className="w-full rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-amber-300/60 focus:ring-2 focus:ring-amber-300/10" />
+      {error && <p className="mt-1.5 text-xs text-amber-300">{error}</p>}
+    </div>
+  )
+}
+
+function SelectField({ label, name, options, error }: { label: string; name: string; options: string[]; error?: string }) {
+  return (
+    <div>
+      <label htmlFor={name} className="mb-2 block text-sm font-medium text-zinc-300">{label}</label>
+      <select id={name} name={name} defaultValue="" className="w-full rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3 text-sm text-white outline-none transition focus:border-amber-300/60 focus:ring-2 focus:ring-amber-300/10">
+        <option value="" disabled>Select an option</option>
+        {options.map(option => <option key={option} value={option}>{option}</option>)}
+      </select>
+      {error && <p className="mt-1.5 text-xs text-amber-300">{error}</p>}
+    </div>
   )
 }
