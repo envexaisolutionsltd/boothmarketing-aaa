@@ -23,6 +23,9 @@ export default function AboutPage() {
               <p>The aim is not to automate everything. It is to reduce unnecessary handling, improve visibility, and protect the human judgment that the business still needs.</p>
               <p>Recommendations should be clear enough for an owner or operator to understand without needing to become a technical specialist.</p>
             </div>
+            <div className="mt-8 rounded-xl border-l-2 border-[#be2e3d] bg-[#be2e3d]/[0.055] px-5 py-4 text-sm leading-6 text-zinc-300 sm:px-6 sm:text-base">
+              The rose in Booth Marketing&apos;s identity is a personal tribute to my late grandad, for whom roses held a special meaning.
+            </div>
           </FadeInSection>
         </div>
       </section>
