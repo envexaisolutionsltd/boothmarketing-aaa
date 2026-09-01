@@ -4,40 +4,35 @@ export default function HowItWorks() {
   return <>
     <PageHero
       eyebrow="How we work"
-      title="We do not start with AI. We start with the process that keeps wasting your team's time."
-      copy="The quickest way to build the wrong system is to automate a messy workflow without understanding it first. We map what happens today, simplify it, then automate only the parts that genuinely benefit from it."
+      title="We understand the process before we touch the technology."
+      copy="You should not end up with another complicated system your team hates using. We start with the workflow, simplify it, then automate only the parts that genuinely benefit from it."
     />
 
-    <section className="page-section">
-      <div className="site-container rule-grid">
+    <section className="content-section">
+      <div className="site-container">
         <div className="eyebrow">The process</div>
-        <div>
-          <h2 className="section-title">From operational friction to a workflow your team can actually rely on.</h2>
-          <NumberedRows items={[
-            ['Identify the friction', 'Start with a process that is repetitive, slow, inconsistent, difficult to track or too dependent on one person.'],
-            ['Map what happens now', 'We document the people, systems, inputs, decisions, handoffs and exceptions involved today.'],
-            ['Find the unnecessary handling', 'We separate useful human judgment from copying, chasing, updating and routine administration.'],
-            ['Simplify before automating', 'If a step can be removed or ownership can be clarified, that should happen before technology is added.'],
-            ['Design the improved flow', 'We define what should happen automatically, where people still intervene and how exceptions become visible.'],
-            ['Build and test carefully', 'The workflow is implemented in controlled stages and tested against the normal path as well as important exceptions.'],
-            ['Handover with clarity', 'Your team should know what the system does, where humans remain responsible and what happens when something needs attention.'],
-          ]} />
-        </div>
+        <h2 className="content-heading">A practical path from operational friction to a clearer workflow.</h2>
+        <NumberedRows items={[
+          ['Find the friction', 'Choose one workflow that is repetitive, slow, difficult to track or too dependent on one person.'],
+          ['Map what happens today', 'We look at the people, systems, handoffs, decisions and exceptions involved in the current process.'],
+          ['Remove unnecessary steps', 'We simplify before automating so technology is not built on top of avoidable complexity.'],
+          ['Decide what should happen automatically', 'We define which repeatable steps can run reliably and which decisions should stay human.'],
+          ['Test the normal path and the exceptions', 'A useful workflow should handle predictable work and make unusual situations visible to the right person.'],
+          ['Make it understandable', 'Your team should know what happens automatically, where they intervene and what to do when something needs attention.'],
+        ]} />
       </div>
     </section>
 
-    <section className="page-section">
-      <div className="site-container rule-grid">
-        <div className="eyebrow">What this avoids</div>
-        <div>
-          <h2 className="section-title">The goal is fewer operational headaches, not another complicated system to manage.</h2>
-          <NumberedRows items={[
-            ['No technology-first recommendations', 'A tool is only useful if it solves a clearly understood problem in the workflow.'],
-            ['No replacing systems unnecessarily', 'Where possible, we improve how your existing tools work together rather than forcing a complete rebuild.'],
-            ['No automating judgment-heavy work', 'Sensitive decisions, commercial judgment, relationships and unusual exceptions stay with people.'],
-            ['No invisible failures', 'Important exceptions should be surfaced clearly so somebody knows when the workflow needs human attention.'],
-          ]} />
-        </div>
+    <section className="content-section">
+      <div className="site-container">
+        <div className="eyebrow">What we try to avoid</div>
+        <h2 className="content-heading">Less complexity, not more.</h2>
+        <NumberedRows items={[
+          ['Replacing software unnecessarily', 'If your existing systems can support a better process, keeping them may be the better answer.'],
+          ['Automating an unstable workflow', 'A process that changes constantly may need simplifying and clarifying before it is ready for automation.'],
+          ['Removing judgment where it matters', 'Sensitive decisions, relationships, exceptions and commercial judgment remain with people.'],
+          ['Creating a black box', 'The workflow should be clear enough that your team understands how it works and when it needs human attention.'],
+        ]} />
       </div>
     </section>
 
