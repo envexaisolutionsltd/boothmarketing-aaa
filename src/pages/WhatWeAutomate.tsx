@@ -1,0 +1,8 @@
+import { CTA, NumberedRows, PageHero } from '../components/sections/CommonSections'
+import { useCases } from '../data/content'
+
+export default function WhatWeAutomate() {
+  return <><PageHero eyebrow="What we automate" title="The repetitive work between your systems, people and next steps." copy="Most businesses do not need a dramatic transformation. They need the routine movement of information to stop depending on someone remembering, copying, chasing and checking." />
+  <section className="page-section"><div className="site-container rule-grid"><div className="eyebrow">Common opportunities</div><div><h2 className="section-title">Processes we typically examine first.</h2><div className="mt-12"><NumberedRows items={useCases}/></div></div></div></section>
+  <section className="page-section"><div className="site-container rule-grid"><div className="eyebrow">A useful filter</div><div><h2 className="section-title">The best automation candidates usually share a few traits.</h2><div className="mt-12"><NumberedRows items={[["Repeated often","The same sequence happens daily, weekly or every time a lead, client or job reaches a certain point."],["Rules are reasonably clear","The next action can usually be determined from information already available."],["Manual handling adds little value","People are copying, formatting, routing or checking rather than using judgment."],["Mistakes or delays matter","A missed handoff, late reply or incorrect update creates avoidable operational cost."],["The process touches multiple tools","Information moves between email, CRM, spreadsheets, forms, documents and internal systems."]]}/></div></div></div></section><CTA/></>
+}
