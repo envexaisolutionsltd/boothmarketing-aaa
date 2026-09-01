@@ -17,11 +17,14 @@ type FormData = z.infer<typeof schema>
 export default function AutomationAudit() {
   const [sent, setSent] = useState(false)
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({ resolver: zodResolver(schema) })
+
   return <>
     <PageHero eyebrow="Automation Audit" title="Start with the process that should not still take this much human effort." copy="You do not need to know what technology you need. Tell us where the business is repetitive, slow, difficult to track or overly dependent on someone remembering the next step." />
+
     <section className="page-section"><div className="site-container rule-grid"><div className="eyebrow">What happens</div><div><h2 className="section-title">The audit is designed to create clarity before a project exists.</h2><div className="mt-12"><NumberedRows items={[["Bring one real workflow","Choose something your team does repeatedly, chases manually or struggles to keep visible."],["We understand the current process","The people, tools, inputs, decisions and handoffs matter more than the buzzwords."],["We identify the opportunity","We separate what could be simplified, automated, connected or deliberately left human."],["You decide what happens next","An audit is not a commitment to a build. If there is a worthwhile project, it can be scoped afterwards."]]}/></div></div></div></section>
+
     <section id="request" className="page-section"><div className="site-container rule-grid"><div><div className="eyebrow">Request your audit</div><h2 className="section-title mt-5">Describe the operational friction, not the solution.</h2><p className="body-copy mt-6">This prototype is frontend-only. The form validates locally and shows the intended completion state without sending your data anywhere.</p></div><div>
-      {sent ? <div className="border border-[#8b4246] bg-[#fbf8f2] p-8"><div className="eyebrow">Request captured</div><h3 className="mt-4 text-3xl font-bold tracking-[-.04em]">That is enough to start the conversation.</h3><p className="body-copy mt-4">In production, this submission can route to your CRM, n8n workflow, email or calendar flow.</p></div> :
+      {sent ? <div className="audit-success"><div className="eyebrow">Request captured</div><h3 className="mt-4 font-serif text-3xl font-medium tracking-[-.03em] text-[#f5f1ea]">That is enough to start the conversation.</h3><p className="mt-4 text-[#aaa6a0]">In production, this submission can route to your CRM, n8n workflow, email or calendar flow.</p></div> :
       <form className="form-grid" onSubmit={handleSubmit(() => setSent(true))} noValidate>
         <div className="field"><label>Name</label><input {...register('name')} placeholder="Daniel Mercer" />{errors.name && <span className="error">{errors.name.message}</span>}</div>
         <div className="field"><label>Company</label><input {...register('company')} placeholder="Mercer Commercial Services" />{errors.company && <span className="error">{errors.company.message}</span>}</div>
