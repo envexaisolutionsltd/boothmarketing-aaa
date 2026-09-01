@@ -5,34 +5,28 @@ export default function About() {
     <PageHero
       eyebrow="About Booth Marketing"
       title="The business problem comes before the technology."
-      copy="Booth Marketing is a B2B AI automation agency focused on helping established companies reduce repetitive handling, weak handoffs, duplicated work and unnecessary dependence on individual memory."
+      copy="Booth Marketing helps established B2B companies reduce the repetitive handling, weak handoffs and disconnected processes that quietly make growth harder to manage."
     />
 
-    <section className="page-section">
-      <div className="site-container rule-grid">
+    <section className="content-section">
+      <div className="site-container">
         <div className="eyebrow">What we believe</div>
-        <div>
-          <h2 className="section-title">A useful system should make the business easier to run, not give the team another thing to manage.</h2>
-          <p className="lead">Established businesses rarely need more software for the sake of it. They need fewer unnecessary steps, clearer ownership, better visibility and less time spent moving information around manually.</p>
-          <NumberedRows items={[
-            ['Understand the existing workflow first', 'We look at how the team actually works today before deciding what should change.'],
-            ['Fix the process before adding technology', 'If unnecessary steps or unclear ownership are causing the problem, those issues should be addressed first.'],
-            ['Use automation where repetition adds no value', 'Copying information, sending routine updates, triggering reminders and performing structured checks are often better handled by the workflow itself.'],
-            ['Keep people where judgment matters', 'Relationships, sensitive conversations, commercial decisions and unusual exceptions remain with the people best placed to handle them.'],
-            ['Build something the team can understand', 'People should know what happens automatically, where they still intervene and what happens when a process needs attention.'],
-          ]} />
-        </div>
+        <h2 className="content-heading">A useful system should make the business easier to run, not give the team another thing to manage.</h2>
+        <NumberedRows items={[
+          ['Understand the workflow first', 'We look at how the team actually works today before deciding what should change.'],
+          ['Simplify before automating', 'If unnecessary steps or unclear ownership are causing the problem, those issues should be addressed first.'],
+          ['Use what already works where possible', 'Existing software should not be replaced simply because a newer tool exists.'],
+          ['Keep people where judgment matters', 'Relationships, commercial decisions and unusual exceptions remain with the people best placed to handle them.'],
+        ]} />
       </div>
     </section>
 
-    <section className="page-section">
-      <div className="site-container rule-grid">
+    <section className="content-section">
+      <div className="site-container">
         <div className="eyebrow">Why Booth Marketing exists</div>
-        <div>
-          <h2 className="section-title">Too many capable teams are spending their day keeping systems and processes stitched together by hand.</h2>
-          <p className="lead">The opportunity is not to automate everything. It is to remove the repetitive operational work that quietly consumes capacity, slows response times and makes growth more difficult than it needs to be.</p>
-          <p className="body-copy">The rose in the Booth Marketing identity is a personal tribute to the founder's late grandad, for whom roses held a special meaning.</p>
-        </div>
+        <h2 className="content-heading">Capable teams should not spend their day holding systems and processes together by hand.</h2>
+        <p className="content-copy">The opportunity is not to automate everything. It is to remove the repetitive operational work that consumes capacity, slows response times and makes the company more dependent on individual memory than it needs to be.</p>
+        <p className="body-copy">The rose in the Booth Marketing identity is a personal tribute to the founder's late grandad, for whom roses held a special meaning.</p>
       </div>
     </section>
 
