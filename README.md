@@ -1,26 +1,24 @@
-# Booth Marketing Frontend V2
+# Booth Marketing Frontend
 
-Frontend-only rebuild for Booth Marketing, a B2B AI automation agency.
+Frontend-only website for Booth Marketing, a B2B AI automation agency.
 
 ## Positioning
-The site is designed around an established B2B owner whose company works but has accumulated manual processes, repeated admin, weak handoffs, duplicated data and disconnected software.
+The site is built around established B2B owners whose companies work but have accumulated manual processes, repeated admin, weak handoffs, duplicated information, and disconnected systems.
 
-Internal prototype persona: Daniel Mercer, 42, Managing Director of a 28-person Manchester B2B facilities and compliance company. He uses normal business software already. His problem is that people manually connect the systems and keep the operation moving.
+Internal prototype persona: Daniel Mercer, 42, Managing Director of a 28-person Manchester B2B facilities and compliance company. He already uses normal business software. His problem is that people manually connect the systems and keep the operation moving.
 
-## Design direction
-Preserves the visual language of the approved Booth Marketing version:
-- warm neutral background
-- deep editorial typography
-- muted burgundy accents
-- thin rules and generous whitespace
+## Approved design
+The supplied September 2026 screenshots are the visual source of truth:
+- near-black background
+- bold modern sans-serif typography
+- muted grey copy
+- cream rectangular CTA buttons
+- subtle red accent
+- thin low-contrast borders
+- generous vertical whitespace
+- restrained dark cards
+- real Booth script logo with rose
 - operational diagrams instead of stereotypical AI graphics
-- restrained motion
-- no AI grid backgrounds
-- no fake testimonials, client logos or ROI claims
-- no pricing
-- founder section near the end
-- 75% mobile navigation drawer
-- single-open FAQ accordion
 
 ## Stack
 - React 19
@@ -47,4 +45,4 @@ npm run build
 Vercel is configured to deploy the `dist` output with SPA rewrites.
 
 ## Frontend only
-The Automation Audit form validates and displays a success state locally. It does not currently transmit or store data.
+The Automation Audit form validates locally and currently does not transmit or store data.

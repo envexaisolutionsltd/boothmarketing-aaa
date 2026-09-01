@@ -1,39 +1,75 @@
 import { motion } from 'framer-motion'
 import { ButtonLink } from '../components/ui/ButtonLink'
-import { FAQ } from '../components/ui/FAQ'
-import { CTA, NumberedRows } from '../components/sections/CommonSections'
-import { faqs, painPoints, useCases } from '../data/content'
+import { painPoints } from '../data/content'
+
+const manualSteps = ['Enquiry arrives', 'Details copied', 'Follow-up assigned', 'Spreadsheet updated']
+const clearerSteps = ['One clear intake', 'Context organised', 'Right person notified', 'Progress stays visible']
+
+const approach = [
+  ['Built Around Your Workflow', 'We start with the way your business operates and identify where a practical change would genuinely improve it.'],
+  ['Practical Over Flashy', 'The goal is not to add more technology. It is to reduce unnecessary work and make the process easier to run.'],
+  ['Clear Before Complex', 'You should understand what is changing, why it matters, and how it fits the business before anything is built.'],
+]
 
 export default function Home() {
   return <>
-    <section className="page-section !pt-[88px] md:!pt-[118px]">
-      <div className="site-container grid gap-14 lg:grid-cols-[1.25fr_.75fr] lg:items-stretch">
-        <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{duration:.5}}>
-          <div className="eyebrow">B2B AI automation for established businesses</div>
-          <h1 className="display mt-5">Your business works. Too much of the work still depends on someone doing it by hand.</h1>
-          <p className="lead mt-8">We help B2B teams reduce repetitive admin, weak handoffs, manual follow-up and disconnected processes without forcing unnecessary technology into the business.</p>
-          <div className="mt-9 flex flex-wrap gap-3"><ButtonLink to="/automation-audit">Request an Automation Audit</ButtonLink><ButtonLink to="/what-we-automate" secondary>See What We Automate</ButtonLink></div>
-          <p className="mt-5 max-w-2xl text-sm text-[#68635b]">You do not need to know what should be automated. Start with the process that keeps wasting time.</p>
+    <section className="home-hero">
+      <div className="site-container">
+        <motion.div className="hero-copy" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .45 }}>
+          <div className="hero-pill"><span />For established businesses with real operations</div>
+          <h1>Your business has grown. <span>Too much of the work is still moved forward by hand.</span></h1>
+          <p>If leads, client requests, or internal work depend on copying details, chasing updates, and someone remembering the next step, the process is costing your team time.</p>
+          <ButtonLink to="/automation-audit">Request an Automation Audit</ButtonLink>
         </motion.div>
-        <div className="signal-panel">
-          {['Leads need manually assigning or chasing','Information is copied between inboxes, sheets and systems','Client onboarding creates the same admin every time','Important work slows when one person is unavailable'].map((x,i)=><div className="signal-item" key={x}><span>{String(i+1).padStart(2,'0')}</span><strong>{x}</strong></div>)}
+      </div>
+    </section>
+
+    <section className="workflow-section">
+      <div className="site-container">
+        <div className="workflow-box">
+          <div className="workflow-head"><span>A common operational pattern</span><small>Illustrative workflow, not a client result</small></div>
+          <div className="workflow-columns">
+            <div className="workflow-col">
+              <div className="eyebrow">Manual handling</div>
+              <div className="workflow-list">{manualSteps.map((step, index) => <div className="workflow-item" key={step}><small>{String(index + 1).padStart(2, '0')}</small><i /><span>{step}</span></div>)}</div>
+            </div>
+            <div className="workflow-col">
+              <div className="eyebrow">Clearer operational flow</div>
+              <div className="workflow-list">{clearerSteps.map((step, index) => <div className="workflow-item" key={step}><small>{String(index + 1).padStart(2, '0')}</small><i /><span>{step}</span></div>)}</div>
+            </div>
+          </div>
+          <div className="workflow-foot">The aim is not to automate every step. It is to remove unnecessary handling while keeping human judgment where it matters.</div>
         </div>
       </div>
     </section>
 
-    <section className="page-section"><div className="site-container rule-grid"><div className="eyebrow">Does this sound familiar?</div><div><h2 className="section-title">The company has grown faster than the process behind it.</h2><p className="lead mt-6">Operational friction usually looks small in isolation. It becomes expensive when those small tasks repeat across every lead, client, job and internal handoff.</p><div className="mt-12"><NumberedRows items={painPoints}/></div></div></div></section>
+    <section className="familiar-section">
+      <div className="site-container">
+        <div className="eyebrow">Does this sound familiar?</div>
+        <h2 className="section-title">The business is growing. The process is still being held together manually.</h2>
+        <p className="section-copy">Operational friction usually appears in ordinary moments: an enquiry waiting, an update being chased, or the same information being moved twice.</p>
+        <div className="pain-grid">{painPoints.slice(0, 4).map(([title, copy], index) => <article className="pain-card" key={title}><small>{String(index + 1).padStart(2, '0')}</small><h3>{title}</h3><p>{copy}</p></article>)}</div>
+        <div className="process-note">These are usually process problems before they are technology problems.</div>
+      </div>
+    </section>
 
-    <section className="page-section"><div className="site-container"><div className="rule-grid"><div className="eyebrow">Before and after</div><div><h2 className="section-title">Automation should remove handling, not remove control.</h2><p className="lead mt-6">The point is not to replace people. It is to stop using people as the connection between systems when a reliable workflow can handle the movement of information.</p></div></div><div className="workflow-wrap"><div className="workflow-panel"><div className="eyebrow">Manual handling</div><h3 className="mt-4 text-2xl font-bold">One enquiry, six small jobs</h3>{['Enquiry arrives','Details copied','CRM updated','Owner assigned','Follow-up sent','Progress checked'].map((x,i)=><div className="workflow-step" key={x}><span>{x}</span><small>{String(i+1).padStart(2,'0')}</small></div>)}</div><div className="workflow-arrow">→</div><div className="workflow-panel"><div className="eyebrow">Clearer operational flow</div><h3 className="mt-4 text-2xl font-bold">One intake, visible progress</h3>{['Enquiry captured once','Context organised','CRM updated','Right person notified','Follow-up triggered','Status stays visible'].map((x,i)=><div className="workflow-step" key={x}><span>{x}</span><small>{String(i+1).padStart(2,'0')}</small></div>)}</div></div><p className="outcome-line">Automation handles the movement of information. Your team keeps the judgment, relationships and decisions that actually need people.</p></div></section>
+    <section className="approach-section">
+      <div className="site-container">
+        <div className="eyebrow">Our approach</div>
+        <h2 className="section-title">Less technology to manage.<br />More control over the process.</h2>
+        <p className="section-copy">We understand the operation first, then decide what should be improved, what could be automated, and what should stay human.</p>
+        <div className="approach-grid">{approach.map(([title, copy], index) => <article className="approach-card" key={title}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
+        <div className="approach-cta"><p>See the full process, including how opportunities are assessed before anything is built.</p><ButtonLink to="/how-it-works">How We Work</ButtonLink></div>
+      </div>
+    </section>
 
-    <section className="page-section"><div className="site-container rule-grid"><div className="eyebrow">What we automate</div><div><h2 className="section-title">Start with the operational bottleneck, not the technology.</h2><p className="lead mt-6">We look for work that is repeated, rules-based, time-consuming or easy to miss, then decide whether automation is actually the right answer.</p><div className="mt-12"><NumberedRows items={useCases.slice(0,6)}/></div><div className="mt-8"><ButtonLink to="/what-we-automate" secondary>Explore All Use Cases</ButtonLink></div></div></div></section>
-
-    <section className="quote-band"><div className="site-container"><div className="eyebrow !text-[#c48b8e]">Our principle</div><blockquote>We redesign the process, then automate the repetitive parts.</blockquote></div></section>
-
-    <section className="page-section"><div className="site-container rule-grid"><div className="eyebrow">What we do not automate</div><div><h2 className="section-title">Not everything should be automated.</h2><p className="lead mt-6">Good automation makes the business easier to run. If a process depends on judgment, relationships or changing context, the right answer may be to keep that part human.</p><div className="mt-12"><NumberedRows items={[["Automate repetition","Routine movement of information, structured checks, reminders, updates and rules-based steps."],["Keep judgment human","Commercial decisions, sensitive conversations, exceptions and work where context genuinely matters."],["Avoid unnecessary complexity","If simplifying the process is better than building a system, that is the recommendation we should make."]]}/></div></div></div></section>
-
-    <section className="page-section"><div className="site-container rule-grid"><div className="eyebrow">How it works</div><div><h2 className="section-title">Clarity before commitment.</h2><p className="lead mt-6">You do not need a technical brief. We start by understanding the workflow that is causing pressure and work forward from there.</p><div className="mt-12"><NumberedRows items={[["Show us the friction","Bring one real process that is repetitive, slow, difficult to track or too dependent on one person."],["We map what happens now","We look at the people, systems, handoffs and decisions involved before suggesting any technology."],["We identify what is worth changing","You get a practical view of what could be automated, simplified, connected or left alone."],["You decide what happens next","If there is a worthwhile project, we can scope it. If there is not, you still leave with clearer operational thinking."]]}/></div></div></div></section>
-
-    <section className="page-section"><div className="site-container rule-grid"><div className="eyebrow">Questions owners ask</div><div><h2 className="section-title">Before you hand us a process, you should know how we think.</h2><div className="mt-10"><FAQ items={faqs}/></div></div></div></section>
-    <CTA />
+    <section className="audit-home-cta">
+      <div className="site-container audit-home-inner">
+        <div className="eyebrow">Free automation audit</div>
+        <h2>Find out what is actually worth improving.</h2>
+        <p>Review one real workflow, identify unnecessary handling, and leave with clearer recommendations, including what should remain manual.</p>
+        <ButtonLink to="/automation-audit">Explore the Automation Audit</ButtonLink>
+      </div>
+    </section>
   </>
 }
