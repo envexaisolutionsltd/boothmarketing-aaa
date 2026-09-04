@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Business Automation: How It Works | Booth Marketing',
-  description: 'See how Booth Marketing assesses workflows, keeps human judgment where it matters and identifies where automation can reduce unnecessary manual work.',
+  title: 'How We Build Conversion-Focused Websites | Booth Marketing',
+  description: 'See how Booth Marketing turns buyer intent, positioning, proof and mobile experience into a clearer website decision path.',
   alternates: { canonical: '/how-it-works' },
   openGraph: {
-    title: 'Business Automation: How It Works | Booth Marketing',
-    description: 'See how Booth Marketing assesses workflows, keeps human judgment where it matters and identifies where automation can reduce unnecessary manual work.',
+    title: 'How We Build Conversion-Focused Websites | Booth Marketing',
+    description: 'See how Booth Marketing turns buyer intent, positioning, proof and mobile experience into a clearer website decision path.',
     url: '/how-it-works',
   },
 }
