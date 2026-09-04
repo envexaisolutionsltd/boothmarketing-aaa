@@ -1,16 +1,16 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ArrowRight, Check, ChevronDown, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
-import { FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { FormEvent, ReactNode, useEffect, useRef, useState } from 'react'
 
 const CTA = 'Request an Automation Audit'
 const CALENDAR_URL = 'https://cal.com/your-agency/audit'
 
 const symptoms = [
   ['The same information gets entered more than once', 'People copy details between forms, inboxes and systems because the workflow does not carry the context forward.'],
-  ['Someone has to chase the next step', 'Work keeps moving because a good employee remembers to ask, check or follow up.'],
+  ['Someone has to chase the next step', 'Work keeps moving because somebody remembers to ask, check or follow up.'],
   ['Reporting has to be assembled manually', 'The information exists, but somebody has to rebuild the picture before management can use it.'],
   ['One person seems to know how everything really works', 'When they are away, the process slows down because part of the operating system lives in their head.'],
 ]
@@ -33,19 +33,8 @@ const processOptions = [
   'Not sure',
 ]
 
-function FadeIn({ children, className = '', delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
-  const reduceMotion = useReducedMotion()
-  return (
-    <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: 0.5, delay, ease: 'easeOut' }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  )
+function FadeIn({ children, className = '' }: { children: ReactNode; className?: string; delay?: number }) {
+  return <div className={className}>{children}</div>
 }
 
 function PrimaryLink({ href, children, compact = false, className = '' }: { href: string; children: ReactNode; compact?: boolean; className?: string }) {
@@ -72,7 +61,7 @@ function SectionHeading({ eyebrow, title, copy }: { eyebrow: string; title: stri
 
 function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#090a0b]/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#090a0b]/95 supports-[backdrop-filter]:bg-[#090a0b]/80 supports-[backdrop-filter]:backdrop-blur-xl">
       <div className="mx-auto flex min-h-[64px] w-[min(1160px,calc(100%-24px))] items-center justify-between gap-3">
         <Link href="/" aria-label="Booth Marketing home" className="flex h-[52px] w-[112px] items-center overflow-hidden sm:w-[148px]">
           <img src="/booth-marketing-logo.png" alt="Booth Marketing" className="w-[112px] object-contain sm:w-[148px]" />
@@ -136,14 +125,13 @@ export default function Page() {
     <main className="min-h-screen overflow-x-hidden bg-[#090a0b] pb-20 text-[#f4f4f3] selection:bg-[#efe3cf] selection:text-[#151515] md:pb-0">
       <Header />
 
-      {/* Hero */}
       <section className="relative border-b border-white/[0.055]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_12%,rgba(217,47,60,0.09),transparent_28%),radial-gradient(circle_at_22%_12%,rgba(239,227,207,0.025),transparent_30%)]" />
         <div className="relative mx-auto grid w-[min(1160px,calc(100%-28px))] gap-7 py-9 sm:py-11 lg:min-h-[520px] lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-14">
           <FadeIn>
-            <div className="inline-flex min-h-8 items-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-3.5 text-[8.5px] font-extrabold uppercase tracking-[0.22em] text-[#d8cbb7] backdrop-blur-md sm:text-[9.5px]">
+            <div className="inline-flex min-h-8 items-center gap-2.5 rounded-full border border-white/[0.08] bg-[#0d0f10] px-3.5 text-[8.5px] font-extrabold uppercase tracking-[0.22em] text-[#d8cbb7] supports-[backdrop-filter]:bg-white/[0.03] supports-[backdrop-filter]:backdrop-blur-md sm:text-[9.5px]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#d92f3c] shadow-[0_0_14px_rgba(217,47,60,0.7)]" />
-              For established businesses with real operations
+              AI Automation Agency for Established Businesses
             </div>
             <h1 className="mt-5 max-w-[720px] text-[clamp(39px,10.4vw,64px)] font-semibold leading-[0.99] tracking-[-0.058em]">
               Your business has grown. <span className="text-[#c8c8cc]">Your processes may not have grown with it.</span>
@@ -156,8 +144,8 @@ export default function Page() {
             <p className="mt-3 text-[12px] leading-5 text-[#73747a]">No technical brief needed. Start with one process that feels harder to run than it should.</p>
           </FadeIn>
 
-          <FadeIn delay={0.08}>
-            <div className="relative overflow-hidden rounded-[18px] border border-white/[0.08] bg-white/[0.035] p-4 shadow-[0_20px_70px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:p-5">
+          <FadeIn>
+            <div className="relative overflow-hidden rounded-[18px] border border-white/[0.08] bg-[#0d0f10] p-4 shadow-[0_20px_70px_rgba(0,0,0,0.28)] supports-[backdrop-filter]:bg-white/[0.035] supports-[backdrop-filter]:backdrop-blur-xl sm:p-5">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_10%,rgba(217,47,60,0.13),transparent_35%)]" />
               <div className="relative flex items-center justify-between border-b border-white/[0.07] pb-3">
                 <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#a8a9ae]">Operational flow</span>
@@ -177,14 +165,13 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Recognition + fit */}
       <section className="border-b border-white/[0.055] bg-[#0b0d0e] py-11 sm:py-14">
         <div className="mx-auto w-[min(1160px,calc(100%-28px))]">
           <FadeIn><SectionHeading eyebrow="Recognise the friction" title="If this feels normal inside your business, the process may be doing too much manually." copy="You are probably not looking for AI. You are looking for a business that needs less manual intervention to operate." /></FadeIn>
 
           <div className="mt-7 grid border-t border-white/[0.07] md:grid-cols-2">
             {symptoms.map(([title, copy], index) => (
-              <FadeIn key={title} delay={(index % 2) * 0.03}>
+              <FadeIn key={title}>
                 <article className={`grid grid-cols-[34px_1fr] gap-3 border-b border-white/[0.07] py-4 md:min-h-[124px] md:px-5 ${index % 2 === 0 ? 'md:border-r' : ''}`}>
                   <span className="pt-1 text-[8.5px] font-bold tracking-[0.16em] text-[#77787e]">0{index + 1}</span>
                   <div><h3 className="text-[15px] font-semibold leading-6 text-[#e3e3e5]">{title}</h3><p className="mt-1.5 text-[13px] leading-6 text-[#7f8086]">{copy}</p></div>
@@ -219,6 +206,10 @@ export default function Page() {
                 ))}
               </div>
               <p className="mt-5 text-[15px] font-semibold leading-6 text-[#e0dcdd]">Do not automate the judgment. Remove unnecessary handling around it.</p>
+              <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                <p className="rounded-lg border border-white/[0.065] bg-[#0b0d0e]/65 p-3.5 text-[12px] leading-6 text-[#9b9ca2]"><span className="font-semibold text-[#dedee0]">The goal is not to replace people.</span> It is to stop people spending time on work a system can reliably handle.</p>
+                <p className="rounded-lg border border-white/[0.065] bg-[#0b0d0e]/65 p-3.5 text-[12px] leading-6 text-[#9b9ca2]"><span className="font-semibold text-[#dedee0]">AI does not need the final say.</span> Sensitive customer, financial or commercial decisions can stay under human control.</p>
+              </div>
             </div>
           </FadeIn>
 
@@ -227,19 +218,19 @@ export default function Page() {
               <p className="text-[15px] font-semibold text-[#e1e1e3]">Keep what already works.</p>
               <p className="mt-2 text-[13px] leading-6 text-[#85868c]">We start with your current workflow and existing systems before recommending anything new.</p>
               <div className="mt-4 flex flex-wrap gap-2">{['Keep useful systems', 'Reduce unnecessary employee actions', 'Avoid unnecessary new dashboards'].map(item => <span key={item} className="rounded-full border border-white/[0.07] bg-[#0b0d0e] px-3 py-2 text-[11px] text-[#97989e]">{item}</span>)}</div>
+              <p className="mt-4 border-t border-white/[0.065] pt-4 text-[12px] leading-6 text-[#8d8e94]"><span className="font-semibold text-[#dedee0]">If an automation creates more work for your team, it is the wrong design.</span></p>
               <Link href="/how-it-works" className="mt-4 inline-flex items-center gap-2 text-[12px] font-semibold text-[#d8cbb7] hover:text-white">See how the full process works<ArrowRight className="h-3.5 w-3.5" /></Link>
             </div>
           </FadeIn>
         </div>
       </section>
 
-      {/* Capacity snapshot */}
       <section className="border-b border-white/[0.055] py-11 sm:py-14">
         <div className="mx-auto w-[min(1160px,calc(100%-28px))]">
           <FadeIn><SectionHeading eyebrow="Operational Capacity Snapshot" title="See what repetitive work may already be costing the business." copy="Use three simple inputs for a quick estimate. The full calculator lets you model working weeks and different reduction scenarios." /></FadeIn>
 
-          <FadeIn delay={0.05}>
-            <div className="relative mt-7 overflow-hidden rounded-[20px] border border-white/[0.08] bg-white/[0.035] shadow-[0_22px_80px_rgba(0,0,0,0.25)] backdrop-blur-xl">
+          <FadeIn>
+            <div className="relative mt-7 overflow-hidden rounded-[20px] border border-white/[0.08] bg-[#0d0f10] shadow-[0_22px_80px_rgba(0,0,0,0.25)] supports-[backdrop-filter]:bg-white/[0.035] supports-[backdrop-filter]:backdrop-blur-xl">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_88%_15%,rgba(217,47,60,0.11),transparent_30%)]" />
               <div className="relative grid lg:grid-cols-[0.9fr_1.1fr]">
                 <div className="border-b border-white/[0.07] p-5 sm:p-6 lg:border-b-0 lg:border-r">
@@ -251,7 +242,7 @@ export default function Page() {
                 </div>
                 <div className="p-5 sm:p-6">
                   <p className="text-[11px] leading-5 text-[#898a90]">Estimated annual staff capacity tied to repetitive work</p>
-                  <motion.p key={annualCapacity} initial={{ opacity: 0.7, y: 3 }} animate={{ opacity: 1, y: 0 }} className="mt-3 text-[clamp(42px,11vw,66px)] font-semibold leading-none tracking-[-0.06em] text-[#efe3cf]">{currency(annualCapacity)}</motion.p>
+                  <motion.p key={annualCapacity} initial={false} animate={{ opacity: 1 }} className="mt-3 text-[clamp(42px,11vw,66px)] font-semibold leading-none tracking-[-0.06em] text-[#efe3cf]">{currency(annualCapacity)}</motion.p>
                   <p className="mt-3 text-[13px] text-[#85868c]">{annualHours.toLocaleString('en-GB')} working hours across 48 weeks</p>
                   <div className="mt-5 rounded-xl border border-white/[0.07] bg-[#0b0d0e]/72 p-4"><p className="text-[12px] font-semibold text-[#d9d9dc]">This is not guaranteed savings.</p><p className="mt-1.5 text-[12px] leading-6 text-[#7f8086]">It is an estimate of the staff capacity currently being consumed by the process.</p></div>
                   <Link href="/calculator" className="mt-5 inline-flex min-h-11 items-center justify-center rounded-lg border border-[#efe3cf] bg-[#efe3cf] px-4 text-[13px] font-semibold text-[#151515] transition hover:bg-[#f8edda]">Explore the Full Calculator<ArrowRight className="ml-2.5 h-4 w-4" /></Link>
@@ -262,7 +253,6 @@ export default function Page() {
         </div>
       </section>
 
-      {/* How Booth works */}
       <section className="border-b border-white/[0.055] bg-[#0b0d0e] py-11 sm:py-14">
         <div className="mx-auto w-[min(1160px,calc(100%-28px))]">
           <FadeIn><SectionHeading eyebrow="How Booth Marketing works" title="Understand the operation before touching the technology." /></FadeIn>
@@ -271,8 +261,8 @@ export default function Page() {
               ['01', 'Understand', 'See how the workflow actually operates today.'],
               ['02', 'Diagnose', 'Find repetitive handling, delays and broken handoffs.'],
               ['03', 'Design', 'Decide what should change, what should stay human and whether automation is worthwhile.'],
-            ].map(([number, title, copy], index) => (
-              <FadeIn key={number} delay={index * 0.03}>
+            ].map(([number, title, copy]) => (
+              <FadeIn key={number}>
                 <div className="grid grid-cols-[36px_1fr] gap-3 border-b border-white/[0.07] p-4 last:border-b-0 sm:grid-cols-[52px_170px_1fr] sm:items-center sm:p-5">
                   <span className="text-[9px] font-bold tracking-[0.17em] text-[#77787e]">{number}</span>
                   <div><p className="text-[15px] font-semibold text-[#e0e0e2]">{title}</p><p className="mt-1 text-[13px] leading-6 text-[#808187] sm:hidden">{copy}</p></div>
@@ -289,14 +279,18 @@ export default function Page() {
               <Link href="/how-it-works" className="mt-4 inline-flex items-center gap-2 text-[12px] font-semibold text-[#d8cbb7] hover:text-white">Explore the full approach<ArrowRight className="h-3.5 w-3.5" /></Link>
             </div>
           </FadeIn>
+          <FadeIn>
+            <div className="mt-5 rounded-[15px] border border-[#d92f3c]/16 bg-[#190f11]/42 px-5 py-4 text-[12px] leading-6 text-[#989296]">
+              <span className="font-semibold text-[#ded9db]">Best suited to established businesses with a team, recurring processes and existing software already in place.</span> You do not need to know what you want automated before speaking with us.
+            </div>
+          </FadeIn>
         </div>
       </section>
 
-      {/* Audit + form */}
       <section id="audit-form" ref={auditRef} className="scroll-mt-20 border-b border-white/[0.055] py-11 sm:py-14">
         <div className="mx-auto w-[min(1160px,calc(100%-28px))]">
           <FadeIn>
-            <div className="relative overflow-hidden rounded-[22px] border border-white/[0.09] bg-white/[0.045] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.32)] backdrop-blur-2xl sm:p-7 lg:p-9">
+            <div className="relative overflow-hidden rounded-[22px] border border-white/[0.09] bg-[#0d0f10] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.32)] supports-[backdrop-filter]:bg-white/[0.045] supports-[backdrop-filter]:backdrop-blur-2xl sm:p-7 lg:p-9">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_90%_10%,rgba(217,47,60,0.15),transparent_30%)]" />
               <div className="relative grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-10">
                 <div>
@@ -352,13 +346,13 @@ export default function Page() {
 
       <footer className="bg-[#090a0b]">
         <div className="mx-auto flex w-[min(1160px,calc(100%-28px))] flex-col gap-4 py-7 sm:flex-row sm:items-center sm:justify-between">
-          <div><img src="/booth-marketing-logo.png" alt="Booth Marketing" className="w-[138px] object-contain" /><p className="mt-1.5 text-[11px] text-[#707177]">Automation systems built around real businesses.</p></div>
+          <div><img src="/booth-marketing-logo.png" alt="Booth Marketing" className="w-[138px] object-contain" /><p className="mt-1.5 max-w-md text-[11px] leading-5 text-[#707177]">Booth Marketing is an AI automation agency helping established businesses reduce unnecessary manual work and improve how their operations run.</p></div>
           <p className="text-[10.5px] text-[#66676d]">© {new Date().getFullYear()} Booth Marketing. All rights reserved.</p>
         </div>
       </footer>
 
-      <motion.div initial={false} animate={{ y: showSticky ? 0 : 90, opacity: showSticky ? 1 : 0 }} transition={{ duration: 0.22 }} className="fixed inset-x-0 bottom-0 z-50 border-t border-white/[0.08] bg-[#090a0b]/90 p-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] backdrop-blur-xl md:hidden pointer-events-none">
-        <a href="#audit-form" className="pointer-events-auto mx-auto flex min-h-[50px] w-full max-w-md items-center justify-center rounded-lg border border-[#efe3cf] bg-[#efe3cf] px-5 text-[13px] font-semibold text-[#151515]">Free Automation Audit<ArrowRight className="ml-2.5 h-4 w-4" /></a>
+      <motion.div initial={false} animate={{ y: showSticky ? 0 : 90, opacity: showSticky ? 1 : 0 }} transition={{ duration: 0.22 }} aria-hidden={!showSticky} className="pointer-events-none fixed inset-x-0 bottom-0 z-50 border-t border-white/[0.08] bg-[#090a0b]/96 p-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] supports-[backdrop-filter]:bg-[#090a0b]/90 supports-[backdrop-filter]:backdrop-blur-xl md:hidden">
+        <a href="#audit-form" tabIndex={showSticky ? 0 : -1} className="pointer-events-auto mx-auto flex min-h-[50px] w-full max-w-md items-center justify-center rounded-lg border border-[#efe3cf] bg-[#efe3cf] px-5 text-[13px] font-semibold text-[#151515]">Free Automation Audit<ArrowRight className="ml-2.5 h-4 w-4" /></a>
       </motion.div>
     </main>
   )
