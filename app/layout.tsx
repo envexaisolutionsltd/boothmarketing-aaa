@@ -5,28 +5,21 @@ const SITE_URL = 'https://boothmarketing.co.uk'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'Booth Marketing | AI Automation Agency for Established Businesses',
-  description: 'Booth Marketing helps established businesses reduce repetitive admin, improve workflows and identify what is genuinely worth automating. Request a free Automation Audit.',
-  alternates: {
-    canonical: '/',
-  },
+  title: 'Booth Marketing | Conversion-Focused Websites for Established Businesses',
+  description: 'Booth Marketing builds conversion-focused websites for established businesses, designed for faster trust, clearer positioning and stronger action in an AI-first buying environment.',
+  alternates: { canonical: '/' },
   openGraph: {
-    title: 'Booth Marketing | AI Automation Agency for Established Businesses',
-    description: 'Reduce repetitive admin, improve workflows and identify what is genuinely worth automating with Booth Marketing.',
+    title: 'Booth Marketing | Conversion-Focused Websites for Established Businesses',
+    description: 'Conversion infrastructure built for faster trust, clearer positioning and stronger action in an AI-first buying environment.',
     url: SITE_URL,
     siteName: 'Booth Marketing',
     type: 'website',
-    images: [
-      {
-        url: '/booth-marketing-logo.png',
-        alt: 'Booth Marketing',
-      },
-    ],
+    images: [{ url: '/booth-marketing-logo.png', alt: 'Booth Marketing' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Booth Marketing | AI Automation Agency for Established Businesses',
-    description: 'Reduce repetitive admin, improve workflows and identify what is genuinely worth automating with Booth Marketing.',
+    title: 'Booth Marketing | Conversion-Focused Websites for Established Businesses',
+    description: 'Conversion infrastructure built for faster trust, clearer positioning and stronger action in an AI-first buying environment.',
     images: ['/booth-marketing-logo.png'],
   },
   icons: {
@@ -42,7 +35,7 @@ const organizationSchema = {
   name: 'Booth Marketing',
   url: SITE_URL,
   logo: `${SITE_URL}/booth-marketing-logo.png`,
-  description: 'AI automation agency helping established businesses reduce unnecessary manual work, improve workflows and identify where automation genuinely makes sense.',
+  description: 'Booth Marketing builds conversion-focused websites and AI automation systems for established businesses.',
 }
 
 const websiteSchema = {
@@ -52,23 +45,21 @@ const websiteSchema = {
   url: SITE_URL,
 }
 
-const serviceSchema = {
+const websiteServiceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Conversion-Focused Website Design and Development',
+  provider: { '@type': 'Organization', name: 'Booth Marketing', url: SITE_URL },
+  serviceType: ['Conversion-Focused Websites', 'Website Strategy', 'Landing Pages', 'Website Conversion Audits', 'Mobile-First Web Development'],
+  areaServed: 'Worldwide',
+}
+
+const automationServiceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: 'AI Automation and Workflow Automation',
-  provider: {
-    '@type': 'Organization',
-    name: 'Booth Marketing',
-    url: SITE_URL,
-  },
-  serviceType: [
-    'AI Automation',
-    'Workflow Automation',
-    'Business Process Automation',
-    'Automation Audits',
-    'Workflow Diagnosis',
-    'Automation Implementation',
-  ],
+  provider: { '@type': 'Organization', name: 'Booth Marketing', url: SITE_URL },
+  serviceType: ['AI Automation', 'Workflow Automation', 'Business Process Automation', 'Automation Audits'],
   areaServed: 'Worldwide',
 }
 
@@ -79,7 +70,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {children}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteServiceSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(automationServiceSchema) }} />
       </body>
     </html>
   )
