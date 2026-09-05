@@ -14,18 +14,18 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: 'Booth Marketing',
     type: 'website',
-    images: [{ url: '/booth-marketing-logo.png', alt: 'Booth Marketing' }],
+    images: [{ url: '/booth-marketing-logo.svg', alt: 'Booth Marketing' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Booth Marketing | Conversion-Focused Websites for Established Businesses',
     description: 'Conversion-focused websites built for faster trust, clearer positioning and stronger action in an AI-assisted buying environment.',
-    images: ['/booth-marketing-logo.png'],
+    images: ['/booth-marketing-logo.svg'],
   },
   icons: {
-    icon: '/booth-marketing-logo.png',
-    shortcut: '/booth-marketing-logo.png',
-    apple: '/booth-marketing-logo.png',
+    icon: '/booth-marketing-mark.svg',
+    shortcut: '/booth-marketing-mark.svg',
+    apple: '/booth-marketing-mark.svg',
   },
 }
 
@@ -34,7 +34,7 @@ const organizationSchema = {
   '@type': 'Organization',
   name: 'Booth Marketing',
   url: SITE_URL,
-  logo: `${SITE_URL}/booth-marketing-logo.png`,
+  logo: `${SITE_URL}/booth-marketing-logo.svg`,
   description: 'Booth Marketing builds conversion-focused websites and AI automation systems for established businesses.',
 }
 
