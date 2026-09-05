@@ -34,9 +34,9 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#090a0b] supports-[backdrop-filter]:bg-[#090a0b]/96 supports-[backdrop-filter]:backdrop-blur-xl">
-      <div className="mx-auto flex min-h-[68px] w-[min(1160px,calc(100%-24px))] items-center justify-between gap-2 sm:gap-3">
-        <Link href="/" aria-label="Booth Marketing home" className="flex h-[56px] w-[116px] items-center sm:w-[158px]">
-          <img src="/booth-marketing-logo.svg" alt="Booth Marketing" className="block w-[116px] object-contain sm:w-[158px]" />
+      <div className="mx-auto flex min-h-[64px] w-[min(1160px,calc(100%-24px))] items-center justify-between gap-2 sm:gap-3">
+        <Link href="/" aria-label="Booth Marketing home" className="flex h-[52px] w-[108px] items-center overflow-hidden sm:w-[148px]">
+          <img src="/booth-marketing-logo.png" alt="Booth Marketing" className="w-[108px] object-contain sm:w-[148px]" />
         </Link>
 
         <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary navigation">
@@ -81,7 +81,7 @@ export default function SiteHeader() {
             className="absolute right-0 top-0 z-10 flex h-[100dvh] w-[86%] max-w-[370px] flex-col border-l border-white/[0.12] bg-[#0b0d0e] px-5 pb-[calc(20px+env(safe-area-inset-bottom))] pt-[calc(20px+env(safe-area-inset-top))] shadow-[-36px_0_90px_rgba(0,0,0,0.65)]"
           >
             <div className="flex items-center justify-between gap-4 border-b border-white/[0.09] pb-5">
-              <img src="/booth-marketing-logo.svg" alt="Booth Marketing" className="block w-[146px] object-contain" />
+              <img src="/booth-marketing-logo.png" alt="Booth Marketing" className="w-[130px] object-contain" />
               <button
                 ref={closeButtonRef}
                 type="button"
