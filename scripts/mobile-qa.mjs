@@ -75,11 +75,11 @@ async function checkMenu(page, width, label) {
   assert(panelState.centerInsidePanel, `${label}: backdrop or another layer is covering the drawer`)
 
   for (const text of ['Websites', 'How It Works', 'Automation', 'About', 'Website Audit']) {
-    await page.getByRole('link', { name: text, exact: true }).waitFor({ state: 'visible' })
+    await panel.getByRole('link', { name: text, exact: true }).waitFor({ state: 'visible' })
   }
 
   await page.screenshot({ path: `${outDir}/${label}-menu.png`, fullPage: false })
-  await page.getByRole('button', { name: 'Close menu' }).click()
+  await panel.getByRole('button', { name: 'Close menu' }).click()
   await panel.waitFor({ state: 'hidden' })
 }
 
