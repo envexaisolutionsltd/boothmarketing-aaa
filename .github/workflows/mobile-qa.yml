@@ -1,0 +1,42 @@
+name: Mobile QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - 'components/**'
+      - 'scripts/mobile-qa.mjs'
+      - '.github/workflows/mobile-qa.yml'
+
+jobs:
+  mobile-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Run live mobile QA
+        env:
+          QA_BASE_URL: https://www.boothmarketing.co.uk
+        run: node scripts/mobile-qa.mjs
+
+      - name: Upload QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-qa-screenshots
+          path: qa-artifacts
+          if-no-files-found: ignore
