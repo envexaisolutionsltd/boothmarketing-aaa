@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://boothmarketing.co.uk/sitemap.xml',
-    host: 'https://boothmarketing.co.uk',
+    sitemap: 'https://www.boothmarketing.co.uk/sitemap.xml',
+    host: 'https://www.boothmarketing.co.uk',
   }
 }
