@@ -1,16 +1,16 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
-const SITE_URL = 'https://boothmarketing.co.uk'
+const SITE_URL = 'https://www.boothmarketing.co.uk'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: 'Booth Marketing | Conversion-Focused Websites for Established Businesses',
-  description: 'Booth Marketing builds conversion-focused websites for established businesses, designed for faster trust, clearer positioning and stronger action in an AI-first buying environment.',
+  description: 'Booth Marketing builds conversion-focused websites for established businesses, designed for faster trust, clearer positioning and stronger action in an AI-assisted buying environment.',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'Booth Marketing | Conversion-Focused Websites for Established Businesses',
-    description: 'Conversion infrastructure built for faster trust, clearer positioning and stronger action in an AI-first buying environment.',
+    description: 'Conversion-focused websites built for faster trust, clearer positioning and stronger action in an AI-assisted buying environment.',
     url: SITE_URL,
     siteName: 'Booth Marketing',
     type: 'website',
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Booth Marketing | Conversion-Focused Websites for Established Businesses',
-    description: 'Conversion infrastructure built for faster trust, clearer positioning and stronger action in an AI-first buying environment.',
+    description: 'Conversion-focused websites built for faster trust, clearer positioning and stronger action in an AI-assisted buying environment.',
     images: ['/booth-marketing-logo.png'],
   },
   icons: {
