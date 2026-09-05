@@ -11,7 +11,7 @@ export default function V2Page() {
 
         <div className="relative">
           <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] pb-5">
-            <img src="/booth-marketing-logo.svg" alt="Booth Marketing" className="w-[154px] object-contain sm:w-[178px]" />
+            <img src="/booth-marketing-logo.png" alt="Booth Marketing" className="w-[138px] object-contain sm:w-[154px]" />
             <div className="inline-flex min-h-8 items-center gap-2 rounded-full border border-[#d92f3c]/20 bg-[#190f11] px-3 text-[9px] font-bold uppercase tracking-[0.18em] text-[#d6b9bc]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#d92f3c] shadow-[0_0_12px_rgba(217,47,60,0.7)]" />
               V2 Configuration
