@@ -140,3 +140,5 @@ try {
 } finally {
   await browser.close()
 }
+
+// This file is intentionally committed as a repeatable live-production QA check.
