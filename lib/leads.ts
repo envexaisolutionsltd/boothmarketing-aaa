@@ -12,6 +12,16 @@ export type Lead = {
   challenge?: string
   status: LeadStatus
   notes?: string
+  websiteUrl?: string
+  opportunityScore?: string
+  firstImpression?: string
+  trustIssues?: string
+  conversionIssues?: string
+  uxIssues?: string
+  technicalIssues?: string
+  aiSearchIssues?: string
+  recommendedChanges?: string
+  outreachAngle?: string
   createdAt: string
   updatedAt?: string
 }
@@ -19,30 +29,27 @@ export type Lead = {
 export async function saveLead(lead: Lead) {
   await sql`
     INSERT INTO leads (
-      id, name, email, company, industry, team_size, challenge, status, notes, created_at
+      id, name, email, company, industry, team_size, challenge, status, notes,
+      website_url, opportunity_score, first_impression, trust_issues,
+      conversion_issues, ux_issues, technical_issues, ai_search_issues,
+      recommended_changes, outreach_angle, created_at
     ) VALUES (
-      ${lead.id},
-      ${lead.name},
-      ${lead.email},
-      ${lead.company},
-      ${lead.industry ?? ''},
-      ${lead.teamSize ?? ''},
-      ${lead.challenge ?? ''},
-      ${lead.status},
-      ${lead.notes ?? ''},
-      ${lead.createdAt}
+      ${lead.id}, ${lead.name}, ${lead.email}, ${lead.company},
+      ${lead.industry ?? ''}, ${lead.teamSize ?? ''}, ${lead.challenge ?? ''},
+      ${lead.status}, ${lead.notes ?? ''}, ${lead.websiteUrl ?? ''},
+      ${lead.opportunityScore ?? ''}, ${lead.firstImpression ?? ''},
+      ${lead.trustIssues ?? ''}, ${lead.conversionIssues ?? ''},
+      ${lead.uxIssues ?? ''}, ${lead.technicalIssues ?? ''},
+      ${lead.aiSearchIssues ?? ''}, ${lead.recommendedChanges ?? ''},
+      ${lead.outreachAngle ?? ''}, ${lead.createdAt}
     )
   `
 
   return lead
 }
 
-export async function getLeads(): Promise<Lead[]> {
-  const { rows } = await sql`
-    SELECT * FROM leads ORDER BY created_at DESC
-  `
-
-  return rows.map((lead) => ({
+function mapLead(lead: any): Lead {
+  return {
     id: lead.id,
     name: lead.name,
     email: lead.email,
@@ -52,9 +59,27 @@ export async function getLeads(): Promise<Lead[]> {
     challenge: lead.challenge,
     status: lead.status,
     notes: lead.notes,
+    websiteUrl: lead.website_url,
+    opportunityScore: lead.opportunity_score,
+    firstImpression: lead.first_impression,
+    trustIssues: lead.trust_issues,
+    conversionIssues: lead.conversion_issues,
+    uxIssues: lead.ux_issues,
+    technicalIssues: lead.technical_issues,
+    aiSearchIssues: lead.ai_search_issues,
+    recommendedChanges: lead.recommended_changes,
+    outreachAngle: lead.outreach_angle,
     createdAt: lead.created_at,
     updatedAt: lead.updated_at,
-  })) as Lead[]
+  }
+}
+
+export async function getLeads(): Promise<Lead[]> {
+  const { rows } = await sql`
+    SELECT * FROM leads ORDER BY created_at DESC
+  `
+
+  return rows.map(mapLead)
 }
 
 export async function getLeadById(id: string): Promise<Lead | null> {
@@ -62,32 +87,27 @@ export async function getLeadById(id: string): Promise<Lead | null> {
     SELECT * FROM leads WHERE id = ${id} LIMIT 1
   `
 
-  if (!rows[0]) return null
-
-  return {
-    id: rows[0].id,
-    name: rows[0].name,
-    email: rows[0].email,
-    company: rows[0].company,
-    industry: rows[0].industry,
-    teamSize: rows[0].team_size,
-    challenge: rows[0].challenge,
-    status: rows[0].status,
-    notes: rows[0].notes,
-    createdAt: rows[0].created_at,
-    updatedAt: rows[0].updated_at,
-  } as Lead
+  return rows[0] ? mapLead(rows[0]) : null
 }
 
 export async function updateLead(
   id: string,
-  updates: Partial<Pick<Lead, 'status' | 'notes'>>
+  updates: Partial<Lead>
 ) {
   await sql`
-    UPDATE leads
-    SET
+    UPDATE leads SET
       status = COALESCE(${updates.status ?? null}, status),
       notes = COALESCE(${updates.notes ?? null}, notes),
+      website_url = COALESCE(${updates.websiteUrl ?? null}, website_url),
+      opportunity_score = COALESCE(${updates.opportunityScore ?? null}, opportunity_score),
+      first_impression = COALESCE(${updates.firstImpression ?? null}, first_impression),
+      trust_issues = COALESCE(${updates.trustIssues ?? null}, trust_issues),
+      conversion_issues = COALESCE(${updates.conversionIssues ?? null}, conversion_issues),
+      ux_issues = COALESCE(${updates.uxIssues ?? null}, ux_issues),
+      technical_issues = COALESCE(${updates.technicalIssues ?? null}, technical_issues),
+      ai_search_issues = COALESCE(${updates.aiSearchIssues ?? null}, ai_search_issues),
+      recommended_changes = COALESCE(${updates.recommendedChanges ?? null}, recommended_changes),
+      outreach_angle = COALESCE(${updates.outreachAngle ?? null}, outreach_angle),
       updated_at = CURRENT_TIMESTAMP
     WHERE id = ${id}
   `
