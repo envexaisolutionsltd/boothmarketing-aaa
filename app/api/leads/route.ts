@@ -5,14 +5,11 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
 
-    const required = ['name', 'email', 'company', 'industry', 'teamSize']
+    const required = ['name', 'email', 'company']
     const missing = required.filter((field) => !body[field])
 
     if (missing.length) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
     const lead = await saveLead({
@@ -20,7 +17,10 @@ export async function POST(request: Request) {
       name: body.name,
       email: body.email,
       company: body.company,
+      industry: body.industry || '',
+      teamSize: body.teamSize || '',
       challenge: body.challenge || '',
+      websiteUrl: body.websiteUrl || '',
       status: 'NEW',
       createdAt: new Date().toISOString(),
     })
