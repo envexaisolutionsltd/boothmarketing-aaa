@@ -1,11 +1,40 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-  const session = request.cookies.get('booth_admin_session')
+const encoder = new TextEncoder()
 
-  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login') && !session) {
-    return NextResponse.redirect(new URL('/admin/login', request.url))
+async function validSession(token: string | undefined, secret: string | undefined) {
+  if (!token || !secret) return false
+  const parts = token.split('.')
+  if (parts.length !== 3 || parts[0] !== 'authenticated') return false
+
+  const expiresAt = Number(parts[1])
+  if (!Number.isFinite(expiresAt) || expiresAt <= Math.floor(Date.now() / 1000)) return false
+
+  const payload = `${parts[0]}.${parts[1]}`
+  const key = await crypto.subtle.importKey(
+    'raw',
+    encoder.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['verify']
+  )
+
+  const signature = new Uint8Array(parts[2].match(/.{1,2}/g)?.map((byte) => parseInt(byte, 16)) || [])
+  if (signature.length !== 32) return false
+  return crypto.subtle.verify('HMAC', key, signature, encoder.encode(payload))
+}
+
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+  if (!pathname.startsWith('/admin') || pathname.startsWith('/admin/login')) return NextResponse.next()
+
+  const token = request.cookies.get('booth_admin_session')?.value
+  const authenticated = await validSession(token, process.env.ADMIN_PASSWORD)
+
+  if (!authenticated) {
+    const response = NextResponse.redirect(new URL('/admin/login', request.url))
+    response.cookies.delete('booth_admin_session')
+    return response
   }
 
   return NextResponse.next()
