@@ -1,0 +1,1 @@
+Admin login route is connected through the existing app/api/admin/login endpoint. This file is a temporary implementation note.
