@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS leads (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  company TEXT NOT NULL,
+  industry TEXT,
+  team_size TEXT,
+  challenge TEXT,
+  status TEXT NOT NULL DEFAULT 'NEW',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
