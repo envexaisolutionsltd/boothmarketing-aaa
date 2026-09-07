@@ -7,5 +7,17 @@ CREATE TABLE IF NOT EXISTS leads (
   team_size TEXT,
   challenge TEXT,
   status TEXT NOT NULL DEFAULT 'NEW',
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  notes TEXT,
+  website_url TEXT,
+  opportunity_score TEXT,
+  first_impression TEXT,
+  trust_issues TEXT,
+  conversion_issues TEXT,
+  ux_issues TEXT,
+  technical_issues TEXT,
+  ai_search_issues TEXT,
+  recommended_changes TEXT,
+  outreach_angle TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
