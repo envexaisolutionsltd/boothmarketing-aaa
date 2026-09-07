@@ -26,7 +26,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   return (
     <main className="min-h-screen bg-[#090a0b] px-4 py-10 text-[#f4f4f3] sm:px-6 sm:py-12">
       <div className="mx-auto max-w-6xl">
-        <p className="text-xs uppercase tracking-[0.25em] text-[#d8cbb7]">Booth Marketing</p>
+        <div className="flex items-center justify-between gap-4"><p className="text-xs uppercase tracking-[0.25em] text-[#d8cbb7]">Booth Marketing</p><form action="/api/admin/logout" method="post"><button className="rounded-lg border border-white/10 px-3 py-2 text-xs text-white/55 transition hover:bg-white/[0.04] hover:text-white">Log out</button></form></div>
         <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
           <div><h1 className="text-4xl font-semibold tracking-tight">Lead Dashboard</h1><p className="mt-3 text-white/50">Website audit enquiries and pre-sales intelligence.</p></div>
           <span className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/50">{leads.length} total leads</span>
