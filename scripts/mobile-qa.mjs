@@ -74,9 +74,12 @@ async function checkMenu(page, width, label) {
   assert(panelState.rect.left >= -1 && panelState.rect.right <= width + 1, `${label}: drawer exceeds viewport`)
   assert(panelState.centerInsidePanel, `${label}: backdrop or another layer is covering the drawer`)
 
-  for (const text of ['Websites', 'How It Works', 'Automation', 'About', 'Website Audit']) {
+  for (const text of ['Websites', 'How It Works', 'About', 'Website Audit']) {
     await panel.getByRole('link', { name: text, exact: true }).waitFor({ state: 'visible' })
   }
+
+  const obsoleteAutomationLink = panel.getByRole('link', { name: 'Automation', exact: true })
+  assert(await obsoleteAutomationLink.count() === 0, `${label}: obsolete Automation navigation link is still present`)
 
   await page.screenshot({ path: `${outDir}/${label}-menu.png`, fullPage: false })
   await panel.getByRole('button', { name: 'Close menu' }).click()
@@ -136,7 +139,7 @@ try {
   await checkHomepage(browser, viewports[2], instagramUA, '-instagram')
   await checkAudit(browser, viewports[0])
   await checkAudit(browser, viewports[2])
-  console.log('MOBILE_QA_PASS: homepage, menu, Instagram-style browser and audit page passed at all requested widths')
+  console.log('MOBILE_QA_PASS: homepage, website-only menu, Instagram-style browser and audit page passed at all requested widths')
 } finally {
   await browser.close()
 }
