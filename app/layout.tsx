@@ -6,11 +6,11 @@ const SITE_URL = 'https://www.boothmarketing.co.uk'
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: 'Booth Marketing | Conversion-Focused Websites for Established Businesses',
-  description: 'Booth Marketing builds conversion-focused websites for established businesses, designed for faster trust, clearer positioning and stronger action in an AI-assisted buying environment.',
+  description: 'Booth Marketing builds conversion-focused websites and landing pages for established businesses, designed for faster trust, clearer positioning and stronger action in an AI-assisted buying environment.',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'Booth Marketing | Conversion-Focused Websites for Established Businesses',
-    description: 'Conversion-focused websites built for faster trust, clearer positioning and stronger action in an AI-assisted buying environment.',
+    description: 'Conversion-focused websites and landing pages built for faster trust, clearer positioning and stronger action.',
     url: SITE_URL,
     siteName: 'Booth Marketing',
     type: 'website',
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Booth Marketing | Conversion-Focused Websites for Established Businesses',
-    description: 'Conversion-focused websites built for faster trust, clearer positioning and stronger action in an AI-assisted buying environment.',
+    description: 'Conversion-focused websites and landing pages built for faster trust, clearer positioning and stronger action.',
     images: ['/booth-marketing-logo.png'],
   },
   icons: {
@@ -35,7 +35,7 @@ const organizationSchema = {
   name: 'Booth Marketing',
   url: SITE_URL,
   logo: `${SITE_URL}/booth-marketing-logo.png`,
-  description: 'Booth Marketing builds conversion-focused websites and AI automation systems for established businesses.',
+  description: 'Booth Marketing builds conversion-focused websites and landing pages for established businesses.',
 }
 
 const websiteSchema = {
@@ -54,15 +54,6 @@ const websiteServiceSchema = {
   areaServed: 'Worldwide',
 }
 
-const automationServiceSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Service',
-  name: 'AI Automation and Workflow Automation',
-  provider: { '@type': 'Organization', name: 'Booth Marketing', url: SITE_URL },
-  serviceType: ['AI Automation', 'Workflow Automation', 'Business Process Automation', 'Automation Audits'],
-  areaServed: 'Worldwide',
-}
-
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
@@ -71,7 +62,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteServiceSchema) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(automationServiceSchema) }} />
       </body>
     </html>
   )
