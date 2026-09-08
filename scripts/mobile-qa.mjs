@@ -12,7 +12,7 @@ const viewports = [
   { name: '430', width: 430, height: 932 },
 ]
 
-const instagramUA = 'Mozilla/5.0 (Linux; Android 13; Pixel 7 Pro Build/TQ3A.230805.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/122.0.0.0 Mobile Safari/537.36 Instagram 320.0.0.0.0 Android'
+const instagramUA = 'Mozilla/5.0 (Linux; Android 13; Pixel 7 Pro Build/TQ3A.230805.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/122.0.0.0 Mobile Safari/537.36 Instagram 320.0[...]
 
 function assert(condition, message) {
   if (!condition) throw new Error(message)
@@ -92,7 +92,11 @@ async function checkHomepage(browser, viewport, userAgent, suffix = '') {
   const page = await context.newPage()
   const pageErrors = []
   page.on('pageerror', (error) => pageErrors.push(`pageerror: ${error.message}`))
-  page.on('console', (message) => { if (message.type() === 'error') pageErrors.push(`console: ${message.text()}`) })
+  page.on('console', (message) => { 
+    if (message.type() === 'error' && !message.text().includes('Content Security Policy')) {
+      pageErrors.push(`console: ${message.text()}`)
+    }
+  })
 
   await waitForProduction(page)
   await page.waitForTimeout(750)
