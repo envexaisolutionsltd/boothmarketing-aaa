@@ -2,6 +2,9 @@ import Link from 'next/link'
 import AdminShell from '@/components/admin/AdminShell'
 import { getLeads } from '@/lib/leads'
 
+export const dynamic='force-dynamic'
+export const revalidate=0
+
 const label=(value:string)=>value.replaceAll('_',' ')
 export default async function LeadsPage({searchParams}:{searchParams:Promise<{q?:string;status?:string}>}){
  const params=await searchParams; let leads:Awaited<ReturnType<typeof getLeads>>=[]; let healthy=true; try{leads=await getLeads()}catch{healthy=false}
