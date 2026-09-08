@@ -1,69 +1,11 @@
 import Link from 'next/link'
-import { getLeadById, updateLead, LeadStatus } from '@/lib/leads'
 import { revalidatePath } from 'next/cache'
-
-const statuses: LeadStatus[] = ['NEW', 'CONTACTED', 'QUALIFIED', 'CALL_BOOKED', 'CLOSED']
-const scores = ['', 'Low', 'Medium', 'High', 'Very High']
-
-export default async function LeadPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
-  const lead = await getLeadById(id)
-
-  async function updateAnalysis(formData: FormData) {
-    'use server'
-    const status = String(formData.get('status') || '') as LeadStatus
-    const opportunityScore = String(formData.get('opportunityScore') || '')
-    if (!statuses.includes(status) || !scores.includes(opportunityScore)) return
-
-    await updateLead(id, {
-      status,
-      websiteUrl: String(formData.get('websiteUrl') || '').trim().slice(0, 500),
-      opportunityScore,
-      firstImpression: String(formData.get('firstImpression') || '').trim().slice(0, 4000),
-      trustIssues: String(formData.get('trustIssues') || '').trim().slice(0, 4000),
-      conversionIssues: String(formData.get('conversionIssues') || '').trim().slice(0, 4000),
-      uxIssues: String(formData.get('uxIssues') || '').trim().slice(0, 4000),
-      technicalIssues: String(formData.get('technicalIssues') || '').trim().slice(0, 4000),
-      aiSearchIssues: String(formData.get('aiSearchIssues') || '').trim().slice(0, 4000),
-      recommendedChanges: String(formData.get('recommendedChanges') || '').trim().slice(0, 6000),
-      outreachAngle: String(formData.get('outreachAngle') || '').trim().slice(0, 4000),
-    })
-
-    revalidatePath(`/admin/leads/${id}`)
-    revalidatePath('/admin')
-  }
-
-  if (!lead) return <main className="min-h-screen bg-[#090a0b] p-8 text-white">Lead not found</main>
-
-  const field = 'w-full rounded-xl border border-white/10 bg-[#090a0b] p-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-[#d8cbb7]/40'
-  const sections = [
-    ['firstImpression','First impression','What a serious buyer is likely to understand, trust or question immediately.',lead.firstImpression],
-    ['trustIssues','Trust issues','Missing proof, credibility gaps, weak reassurance or reasons to hesitate.',lead.trustIssues],
-    ['conversionIssues','Conversion issues','CTA, offer, messaging and decision-path friction.',lead.conversionIssues],
-    ['uxIssues','UX / mobile issues','Navigation, hierarchy, readability and mobile usability problems.',lead.uxIssues],
-    ['technicalIssues','Technical issues','Performance, broken behaviour or implementation problems actually observed.',lead.technicalIssues],
-    ['aiSearchIssues','AI / search clarity','Issues affecting how clearly the business, services and evidence can be understood.',lead.aiSearchIssues],
-    ['recommendedChanges','Recommended changes','Prioritised improvements supported by the review.',lead.recommendedChanges],
-    ['outreachAngle','Outreach angle','The most relevant, evidence-based way to discuss the opportunity with this lead.',lead.outreachAngle],
-  ]
-
-  return (
-    <main className="min-h-screen bg-[#090a0b] px-4 py-8 text-[#f4f4f3] sm:px-6 sm:py-12">
-      <div className="mx-auto max-w-6xl">
-        <Link href="/admin" className="text-xs text-white/45 transition hover:text-white">← Back to leads</Link>
-        <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-8">
-          <p className="text-xs uppercase tracking-[0.25em] text-[#d8cbb7]">Website Intelligence</p>
-          <div className="mt-4 flex flex-wrap items-start justify-between gap-4"><div><h1 className="text-3xl font-semibold">{lead.name}</h1><p className="mt-2 text-sm text-white/50">{lead.company} · {lead.email}</p>{lead.challenge && <p className="mt-4 max-w-3xl text-sm leading-6 text-white/60">Submitted challenge: {lead.challenge}</p>}</div><span className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/50">{lead.status.replaceAll('_',' ')}</span></div>
-
-          <form action={updateAnalysis} className="mt-8">
-            <div className="grid gap-4 md:grid-cols-3"><label className="text-xs text-white/55">Lead status<select name="status" defaultValue={lead.status} className={`${field} mt-2`}>{statuses.map((status) => <option key={status} value={status}>{status.replaceAll('_', ' ')}</option>)}</select></label><label className="text-xs text-white/55">Opportunity score<select name="opportunityScore" defaultValue={lead.opportunityScore || ''} className={`${field} mt-2`}>{scores.map((score) => <option key={score || 'unset'} value={score}>{score || 'Not scored'}</option>)}</select></label><label className="text-xs text-white/55">Website URL<input name="websiteUrl" type="url" defaultValue={lead.websiteUrl || ''} placeholder="https://" className={`${field} mt-2`} /></label></div>
-
-            <div className="mt-6 grid gap-4 lg:grid-cols-2">{sections.map(([name,label,help,value]) => <label key={name} className="rounded-2xl border border-white/10 bg-black/20 p-4"><span className="text-sm font-medium">{label}</span><span className="mt-1 block text-xs leading-5 text-white/40">{help}</span><textarea name={name} defaultValue={value || ''} rows={6} className={`${field} mt-3 resize-y`} /></label>)}</div>
-
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-3"><p className="max-w-xl text-xs leading-5 text-white/40">Record only findings supported by an actual review of the submitted website. Nothing is generated or inferred automatically.</p><button className="rounded-xl bg-[#efe3cf] px-6 py-3 text-sm font-semibold text-[#151515]">Save Website Analysis</button></div>
-          </form>
-        </div>
-      </div>
-    </main>
-  )
-}
+import AdminShell from '@/components/admin/AdminShell'
+import { getLeadById, updateLead, LeadStatus } from '@/lib/leads'
+const statuses:LeadStatus[]=['NEW','CONTACTED','QUALIFIED','CALL_BOOKED','CLOSED'];const scores=['','Low','Medium','High','Very High']
+export default async function LeadPage({params}:{params:Promise<{id:string}>}){const {id}=await params;let lead=null;try{lead=await getLeadById(id)}catch{};if(!lead)return <AdminShell section="Leads"><div className="mx-auto max-w-4xl rounded-[18px] border border-white/[.075] bg-[#0d0f10] p-10 text-center"><h1 className="text-xl font-semibold">Lead unavailable</h1><p className="mt-2 text-[11px] text-[#66676d]">This record could not be found or the database is temporarily unavailable.</p><Link href="/admin/leads" className="mt-5 inline-block text-[11px] text-[#d8cbb7]">Back to leads</Link></div></AdminShell>
+ async function save(formData:FormData){'use server';const status=String(formData.get('status')||'') as LeadStatus,opportunityScore=String(formData.get('opportunityScore')||'');if(!statuses.includes(status)||!scores.includes(opportunityScore))return;await updateLead(id,{status,websiteUrl:String(formData.get('websiteUrl')||'').trim().slice(0,500),opportunityScore,notes:String(formData.get('notes')||'').trim().slice(0,6000),firstImpression:String(formData.get('firstImpression')||'').trim().slice(0,4000),trustIssues:String(formData.get('trustIssues')||'').trim().slice(0,4000),conversionIssues:String(formData.get('conversionIssues')||'').trim().slice(0,4000),uxIssues:String(formData.get('uxIssues')||'').trim().slice(0,4000),technicalIssues:String(formData.get('technicalIssues')||'').trim().slice(0,4000),aiSearchIssues:String(formData.get('aiSearchIssues')||'').trim().slice(0,4000),recommendedChanges:String(formData.get('recommendedChanges')||'').trim().slice(0,6000),outreachAngle:String(formData.get('outreachAngle')||'').trim().slice(0,4000)});revalidatePath(`/admin/leads/${id}`);revalidatePath('/admin');revalidatePath('/admin/leads');revalidatePath('/admin/audits');revalidatePath('/admin/automation-audits');revalidatePath('/admin/pipeline')}
+ const field='mt-2 w-full rounded-xl border border-white/[.08] bg-[#090a0b] p-3 text-[12px] text-white outline-none focus:border-[#d8cbb7]/35';const sections=[['firstImpression','First impression','What a serious buyer is likely to understand, trust or question immediately.',lead.firstImpression],['trustIssues','Trust issues','Missing proof, credibility gaps, weak reassurance or reasons to hesitate.',lead.trustIssues],['conversionIssues','Conversion issues','CTA, offer, messaging and decision-path friction.',lead.conversionIssues],['uxIssues','UX / mobile','Navigation, hierarchy, readability and mobile usability issues.',lead.uxIssues],['technicalIssues','Technical','Performance, broken behaviour or implementation issues actually observed.',lead.technicalIssues],['aiSearchIssues','AI / search clarity','How clearly the business, services and evidence can be understood.',lead.aiSearchIssues],['recommendedChanges','Recommended changes','Prioritised improvements supported by the review.',lead.recommendedChanges],['outreachAngle','Commercial angle','The most relevant evidence-based way to discuss the opportunity.',lead.outreachAngle]]
+ return <AdminShell section="Leads"><div className="mx-auto max-w-[1180px]"><Link href="/admin/leads" className="text-[10px] text-[#77787e] hover:text-white">← Back to leads</Link><div className="mt-5 flex flex-wrap items-start justify-between gap-5"><div><div className="flex flex-wrap gap-2"><span className="rounded-full border border-[#d92f3c]/15 bg-[#190f11] px-2.5 py-1 text-[8px] uppercase tracking-[.1em] text-[#c9a3a7]">{lead.enquiryType==='AUTOMATION_AUDIT'?'Automation Audit':'Website Audit'}</span><span className="rounded-full border border-white/[.08] px-2.5 py-1 text-[8px] uppercase tracking-[.1em] text-[#8b8c92]">{lead.status.replaceAll('_',' ')}</span></div><h1 className="mt-4 text-[36px] font-semibold tracking-[-.05em]">{lead.company}</h1><p className="mt-2 text-[11px] text-[#77787e]">{lead.name} · {lead.email}</p></div><div className="text-right text-[9px] leading-5 text-[#55565b]"><p>Submitted {new Date(lead.createdAt).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</p>{lead.updatedAt&&<p>Last updated {new Date(lead.updatedAt).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</p>}</div></div>
+ <form action={save} className="mt-7"><section className="rounded-[18px] border border-white/[.075] bg-[#0d0f10] p-5"><div className="grid gap-4 md:grid-cols-3"><label className="text-[10px] text-[#85868c]">Lead status<select name="status" defaultValue={lead.status} className={field}>{statuses.map(s=><option key={s}>{s}</option>)}</select></label><label className="text-[10px] text-[#85868c]">Opportunity score<select name="opportunityScore" defaultValue={lead.opportunityScore||''} className={field}>{scores.map(s=><option key={s||'none'} value={s}>{s||'Not scored'}</option>)}</select></label><label className="text-[10px] text-[#85868c]">Website URL<input name="websiteUrl" type="url" defaultValue={lead.websiteUrl||''} placeholder="https://" className={field}/></label></div>{lead.challenge&&<div className="mt-5 border-t border-white/[.06] pt-5"><p className="text-[9px] font-bold uppercase tracking-[.13em] text-[#55565b]">Submitted enquiry</p><p className="mt-2 whitespace-pre-line text-[11px] leading-6 text-[#8b8c92]">{lead.challenge}</p></div>}</section>
+ <div className="mt-4 grid gap-4 lg:grid-cols-2">{sections.map(([name,title,help,value])=><label key={name} className="rounded-[18px] border border-white/[.075] bg-[#0d0f10] p-5"><span className="text-[13px] font-semibold">{title}</span><span className="mt-1 block text-[9px] leading-5 text-[#5e5f65]">{help}</span><textarea name={name} defaultValue={value||''} rows={5} className={`${field} resize-y`}/></label>)}</div><label className="mt-4 block rounded-[18px] border border-white/[.075] bg-[#0d0f10] p-5"><span className="text-[13px] font-semibold">Internal notes</span><span className="mt-1 block text-[9px] text-[#5e5f65]">Private context, follow-up notes and commercial information.</span><textarea name="notes" defaultValue={lead.notes||''} rows={5} className={`${field} resize-y`}/></label><div className="sticky bottom-3 mt-4 flex flex-wrap items-center justify-between gap-3 rounded-[16px] border border-white/[.09] bg-[#0b0d0e]/95 p-3.5 shadow-2xl backdrop-blur-xl"><p className="max-w-xl text-[9px] leading-5 text-[#5f6066]">Record only findings supported by an actual review. The portal does not invent audit findings automatically.</p><button className="rounded-xl bg-[#efe3cf] px-5 py-3 text-[11px] font-semibold text-[#151515]">Save lead</button></div></form></div></AdminShell>}
