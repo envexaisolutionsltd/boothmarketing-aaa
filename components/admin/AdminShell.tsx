@@ -1,11 +1,12 @@
 import Link from 'next/link'
-import { BarChart3, ExternalLink, FileSearch, LayoutDashboard, LogOut, Settings, Users } from 'lucide-react'
+import { BarChart3, Bot, ExternalLink, FileSearch, LayoutDashboard, LogOut, Settings, Users } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 const nav = [
   { href: '/admin', label: 'Overview', icon: LayoutDashboard },
   { href: '/admin/leads', label: 'Leads', icon: Users },
   { href: '/admin/audits', label: 'Website Audits', icon: FileSearch },
+  { href: '/admin/automation-audits', label: 'Automation Audits', icon: Bot },
   { href: '/admin/pipeline', label: 'Pipeline', icon: BarChart3 },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
