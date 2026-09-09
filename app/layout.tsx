@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import WebMCPTools from '@/components/WebMCPTools'
+import { boothMarketingPublic } from '@/lib/public-company'
 
 const SITE_URL = 'https://www.boothmarketing.co.uk'
 
@@ -32,16 +34,16 @@ export const metadata: Metadata = {
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Booth Marketing',
+  name: boothMarketingPublic.companyName,
   url: SITE_URL,
   logo: `${SITE_URL}/booth-marketing-logo.png`,
-  description: 'Booth Marketing builds conversion-focused websites and landing pages for established businesses.',
+  description: boothMarketingPublic.whatWeDo,
 }
 
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'Booth Marketing',
+  name: boothMarketingPublic.companyName,
   url: SITE_URL,
 }
 
@@ -49,7 +51,7 @@ const websiteServiceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: 'Conversion-Focused Website Design and Development',
-  provider: { '@type': 'Organization', name: 'Booth Marketing', url: SITE_URL },
+  provider: { '@type': 'Organization', name: boothMarketingPublic.companyName, url: SITE_URL },
   serviceType: ['Conversion-Focused Websites', 'Website Strategy', 'Landing Pages', 'Website Conversion Audits', 'Mobile-First Web Development'],
   areaServed: 'Worldwide',
 }
@@ -59,6 +61,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body>
         {children}
+        <WebMCPTools />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteServiceSchema) }} />
