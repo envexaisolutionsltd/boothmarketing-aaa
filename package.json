@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "webmcp:check": "node scripts/webmcp-contract.mjs",
+    "indexing:contract": "node scripts/indexing-contract.mjs",
+    "indexing:check": "node scripts/check-indexing.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.23.12",
