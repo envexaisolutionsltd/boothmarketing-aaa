@@ -1,0 +1,22 @@
+name: WebMCP Build Check
+
+on:
+  push:
+    branches: [webmcp-production-ready]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci
+      - name: Production build and type check
+        env:
+          NEXT_PUBLIC_WEBMCP_ENABLED: 'true'
+        run: npm run build
