@@ -2,7 +2,9 @@ name: WebMCP Build Check
 
 on:
   push:
-    branches: [webmcp-production-ready]
+    branches: [main, webmcp-production-ready, webmcp-resilience]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -15,6 +17,8 @@ jobs:
         with:
           node-version: '20'
       - run: npm install
+      - name: WebMCP contract checks
+        run: node scripts/webmcp-contract.mjs
       - name: Production build and type check
         env:
           NEXT_PUBLIC_WEBMCP_ENABLED: 'true'
