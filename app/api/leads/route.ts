@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { EnquiryType, saveLead } from '@/lib/leads'
+import { EnquiryType, getLeads, saveLead } from '@/lib/leads'
 import { clientIp, hasAllowedJsonSize, isValidHttpUrl, rateLimit, safeText, sameOrigin } from '@/lib/security'
 
 const types:EnquiryType[]=['WEBSITE_AUDIT','CONTACT']
@@ -8,6 +8,20 @@ function normalizeWebsiteUrl(value:string){
  const trimmed=value.trim()
  if(!trimmed)return ''
  return /^https?:\/\//i.test(trimmed)?trimmed:`https://${trimmed}`
+}
+
+async function isRecentDuplicate(email:string,company:string,websiteUrl:string,enquiryType:EnquiryType){
+ try{
+  const cutoff=Date.now()-10*60*1000
+  const leads=await getLeads()
+  return leads.some(lead=>
+   lead.email.toLowerCase()===email &&
+   lead.company.toLowerCase()===company.toLowerCase() &&
+   (lead.websiteUrl||'').toLowerCase()===websiteUrl.toLowerCase() &&
+   (lead.enquiryType||'WEBSITE_AUDIT')===enquiryType &&
+   new Date(lead.createdAt).getTime()>=cutoff
+  )
+ }catch{return false}
 }
 
 export async function POST(request:Request){
@@ -19,12 +33,23 @@ export async function POST(request:Request){
   if(!request.headers.get('content-type')?.includes('application/json')) return NextResponse.json({error:'Unsupported request'},{status:415})
   const body=await request.json()
   if(safeText(body.websiteCompany,100)) return NextResponse.json({success:true})
+
+  const isWebMCP=request.headers.get('x-booth-webmcp')==='1'
+  if(isWebMCP&&body.webmcpConfirmed!==true) return NextResponse.json({error:'Explicit user confirmation is required before an agent can submit an enquiry.'},{status:400})
+
   const name=safeText(body.name,120), email=safeText(body.email,200).toLowerCase(), company=safeText(body.company,160), websiteUrl=normalizeWebsiteUrl(safeText(body.websiteUrl,500)), industry=safeText(body.industry,120), teamSize=safeText(body.teamSize,80)
   const rawChallenge=safeText(body.challenge,1500)
   const enquiryType=types.includes(body.enquiryType as EnquiryType)?body.enquiryType as EnquiryType:'WEBSITE_AUDIT'
   if(!name||!email||!company) return NextResponse.json({error:'Name, email and company are required.'},{status:400})
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return NextResponse.json({error:'Enter a valid email address.'},{status:400})
-  if(!websiteUrl||!isValidHttpUrl(websiteUrl)) return NextResponse.json({error:'Enter a valid website address, for example example.com.'},{status:400})
+  if(enquiryType==='WEBSITE_AUDIT'&&!websiteUrl) return NextResponse.json({error:'A website address is required for a website audit.'},{status:400})
+  if(websiteUrl&&!isValidHttpUrl(websiteUrl)) return NextResponse.json({error:'Enter a valid website address, for example example.com.'},{status:400})
+  if(enquiryType==='CONTACT'&&!rawChallenge) return NextResponse.json({error:'Tell us what you would like help with.'},{status:400})
+
+  if(await isRecentDuplicate(email,company,websiteUrl,enquiryType)){
+   return NextResponse.json({success:true,duplicate:true},{status:200,headers:{'Cache-Control':'no-store'}})
+  }
+
   const lead=await saveLead({id:crypto.randomUUID(),name,email,company,industry,teamSize,challenge:rawChallenge,websiteUrl,status:'NEW',enquiryType,createdAt:new Date().toISOString()})
   return NextResponse.json({success:true,id:lead.id},{status:201,headers:{'Cache-Control':'no-store'}})
  }catch{return NextResponse.json({error:'Unable to submit your request.'},{status:500,headers:{'Cache-Control':'no-store'}})}
