@@ -1,18 +1,21 @@
 import type { MetadataRoute } from 'next'
+import { publicUrls } from '@/lib/public-urls'
 
-const SITE_URL = 'https://www.boothmarketing.co.uk'
-const CONTENT_LAST_MODIFIED = new Date('2026-09-09T00:00:00.000Z')
+const MODIFIED = {
+  core: new Date('2026-09-09T00:00:00.000Z'),
+  legal: new Date('2026-09-09T00:00:00.000Z'),
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
-    { url: SITE_URL, lastModified: CONTENT_LAST_MODIFIED, changeFrequency: 'weekly', priority: 1 },
-    { url: `${SITE_URL}/websites`, lastModified: CONTENT_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${SITE_URL}/website-audit`, lastModified: CONTENT_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.95 },
-    { url: `${SITE_URL}/how-it-works`, lastModified: CONTENT_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${SITE_URL}/about`, lastModified: CONTENT_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${SITE_URL}/agent-info`, lastModified: CONTENT_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${SITE_URL}/llms.txt`, lastModified: CONTENT_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${SITE_URL}/privacy`, lastModified: CONTENT_LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.2 },
-    { url: `${SITE_URL}/terms`, lastModified: CONTENT_LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.2 },
+    { url: publicUrls.home, lastModified: MODIFIED.core, changeFrequency: 'weekly', priority: 1 },
+    { url: publicUrls.websites, lastModified: MODIFIED.core, changeFrequency: 'monthly', priority: 0.9 },
+    { url: publicUrls.websiteAudit, lastModified: MODIFIED.core, changeFrequency: 'monthly', priority: 0.95 },
+    { url: publicUrls.howItWorks, lastModified: MODIFIED.core, changeFrequency: 'monthly', priority: 0.8 },
+    { url: publicUrls.about, lastModified: MODIFIED.core, changeFrequency: 'monthly', priority: 0.6 },
+    { url: publicUrls.agentInfo, lastModified: MODIFIED.core, changeFrequency: 'monthly', priority: 0.7 },
+    { url: publicUrls.llms, lastModified: MODIFIED.core, changeFrequency: 'monthly', priority: 0.7 },
+    { url: publicUrls.privacy, lastModified: MODIFIED.legal, changeFrequency: 'yearly', priority: 0.2 },
+    { url: publicUrls.terms, lastModified: MODIFIED.legal, changeFrequency: 'yearly', priority: 0.2 },
   ]
 }
