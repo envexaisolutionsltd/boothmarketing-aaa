@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { EnquiryType, getLeads, saveLead } from '@/lib/leads'
+import { EnquiryType, hasRecentMatchingLead, saveLead } from '@/lib/leads'
 import { clientIp, hasAllowedJsonSize, isValidHttpUrl, rateLimit, safeText, sameOrigin } from '@/lib/security'
 
 const types:EnquiryType[]=['WEBSITE_AUDIT','CONTACT']
@@ -8,20 +8,6 @@ function normalizeWebsiteUrl(value:string){
  const trimmed=value.trim()
  if(!trimmed)return ''
  return /^https?:\/\//i.test(trimmed)?trimmed:`https://${trimmed}`
-}
-
-async function isRecentDuplicate(email:string,company:string,websiteUrl:string,enquiryType:EnquiryType){
- try{
-  const cutoff=Date.now()-10*60*1000
-  const leads=await getLeads()
-  return leads.some(lead=>
-   lead.email.toLowerCase()===email &&
-   lead.company.toLowerCase()===company.toLowerCase() &&
-   (lead.websiteUrl||'').toLowerCase()===websiteUrl.toLowerCase() &&
-   (lead.enquiryType||'WEBSITE_AUDIT')===enquiryType &&
-   new Date(lead.createdAt).getTime()>=cutoff
-  )
- }catch{return false}
 }
 
 export async function POST(request:Request){
@@ -46,7 +32,7 @@ export async function POST(request:Request){
   if(websiteUrl&&!isValidHttpUrl(websiteUrl)) return NextResponse.json({error:'Enter a valid website address, for example example.com.'},{status:400})
   if(enquiryType==='CONTACT'&&!rawChallenge) return NextResponse.json({error:'Tell us what you would like help with.'},{status:400})
 
-  if(await isRecentDuplicate(email,company,websiteUrl,enquiryType)){
+  if(await hasRecentMatchingLead(email,company,websiteUrl,rawChallenge)){
    return NextResponse.json({success:true,duplicate:true},{status:200,headers:{'Cache-Control':'no-store'}})
   }
 
