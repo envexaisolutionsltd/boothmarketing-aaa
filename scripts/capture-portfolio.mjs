@@ -16,12 +16,18 @@ try {
   for (const project of projects) {
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 })
     const page = await context.newPage()
-    await page.goto(project.url, { waitUntil: 'networkidle', timeout: 60000 })
-    await page.waitForTimeout(1500)
+    const response = await page.goto(project.url, { waitUntil: 'domcontentloaded', timeout: 30000 })
+
+    if (!response || !response.ok()) {
+      throw new Error(`${project.name}: public URL returned HTTP ${response?.status() ?? 'no response'}`)
+    }
+
+    await page.waitForLoadState('load', { timeout: 15000 }).catch(() => {})
+    await page.waitForTimeout(2500)
 
     const title = await page.title()
     const body = (await page.locator('body').innerText()).slice(0, 5000)
-    if (/log in.*vercel|vercel authentication|deployment protection/i.test(`${title}\n${body}`)) {
+    if (/log in.*vercel|vercel authentication|deployment protection|authentication required/i.test(`${title}\n${body}`)) {
       throw new Error(`${project.name}: public URL returned Vercel authentication instead of the website`)
     }
 
