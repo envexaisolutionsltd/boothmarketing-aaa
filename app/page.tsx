@@ -1,4 +1,5 @@
 import { ArrowRight, Check, ChevronRight } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import SiteFooter from '../components/SiteFooter'
 import SiteHeader from '../components/SiteHeader'
@@ -28,7 +29,7 @@ export default function Page() {
       <SiteHeader />
 
       <section className="relative border-b border-white/[0.055]">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_12%,rgba(217,47,60,0.10),transparent_29%),radial-gradient(circle_at_20%_16%,rgba(239,227,207,0.025),transparent_32%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(217,47,60,0.12),transparent_30%),radial-gradient(circle_at_20%_16%,rgba(239,227,207,0.025),transparent_32%)]" />
         <div className="relative mx-auto grid w-[min(1160px,calc(100%-28px))] gap-7 py-9 sm:py-12 lg:min-h-[540px] lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-14">
           <div>
             <div className="inline-flex min-h-8 items-center gap-2.5 rounded-full border border-white/[0.08] bg-[#0d0f10] px-3.5 text-[8.5px] font-extrabold uppercase tracking-[0.22em] text-[#d8cbb7] sm:text-[9.5px]"><span className="h-1.5 w-1.5 rounded-full bg-[#d92f3c] shadow-[0_0_14px_rgba(217,47,60,0.7)]" />Conversion-Focused Websites for Established Businesses</div>
@@ -39,12 +40,17 @@ export default function Page() {
             <p className="mt-3 max-w-[620px] text-[12px] leading-5 text-[#73747a]">No redesign commitment. We start by showing you what the current site is helping, hurting and making harder than it needs to be.</p>
           </div>
 
-          <div className="relative overflow-hidden rounded-[18px] border border-white/[0.08] bg-[#0d0f10] p-4 shadow-[0_20px_70px_rgba(0,0,0,0.28)] sm:p-5">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_86%_8%,rgba(217,47,60,0.14),transparent_36%)]" />
-            <div className="relative flex items-center justify-between border-b border-white/[0.07] pb-3"><span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#a8a9ae]">AI-assisted buying path</span><span className="text-[8px] uppercase tracking-[0.18em] text-[#77787e]">Higher intent, fewer steps</span></div>
-            <div className="relative mt-4 grid grid-cols-5 gap-1.5 sm:gap-2">{['Ask AI', 'Shortlist', 'Website', 'Trust', 'Action'].map((label,index)=><div key={label} className={`flex min-h-[58px] items-center justify-center rounded-lg border px-1 text-center text-[9px] font-semibold leading-4 sm:min-h-[70px] sm:px-2 sm:text-[11px] ${index===2?'border-[#d92f3c]/34 bg-[#190f11] text-[#ead9dc]':'border-white/[0.07] bg-[#0b0d0e] text-[#9d9ea4]'}`}>{label}</div>)}</div>
-            <div className="relative mt-3 grid grid-cols-2 gap-2"><div className="rounded-lg border border-white/[0.065] bg-[#0b0d0e]/72 p-3"><p className="text-[9px] uppercase tracking-[0.16em] text-[#6f7076]">Trust earned</p><p className="mt-1 text-[12px] font-semibold text-[#d9d9dc]">Enquiry / booking</p></div><div className="rounded-lg border border-[#d92f3c]/16 bg-[#190f11]/52 p-3"><p className="text-[9px] uppercase tracking-[0.16em] text-[#8d666a]">Confusion</p><p className="mt-1 text-[12px] font-semibold text-[#c7aeb1]">Back button</p></div></div>
-            <p className="relative mt-3 text-[11px] leading-5 text-[#77787e]">The website is the point where attention has to become confidence.</p>
+          <div className="relative mx-auto flex w-full max-w-[470px] items-center justify-center pt-1 sm:max-w-[520px] lg:max-w-none lg:justify-end lg:pt-0">
+            <div className="pointer-events-none absolute left-1/2 top-[44%] h-[64%] w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#d92f3c]/[0.055] blur-[70px] lg:left-[56%]" />
+            <Image
+              src="/booth-rose-hero.webp"
+              alt="Red rose with butterfly"
+              width={180}
+              height={150}
+              priority
+              sizes="(max-width: 639px) 82vw, (max-width: 1023px) 520px, 470px"
+              className="relative h-auto w-[82%] max-w-[430px] object-contain drop-shadow-[0_28px_60px_rgba(0,0,0,0.36)] sm:w-[76%] lg:w-full lg:max-w-[470px]"
+            />
           </div>
         </div>
       </section>
