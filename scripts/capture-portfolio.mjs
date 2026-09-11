@@ -36,4 +36,4 @@ try {
   await browser.close()
 }
 
-console.log('PORTFOLIO_CAPTURE_PASS')
+console.log('PORTFOLIO_CAPTURE_PASS: three public site previews captured locally')
