@@ -18,6 +18,12 @@ export const boothMarketingPublic = {
       description: 'A diagnostic review of first-impression trust, offer clarity, positioning, mobile usability, calls to action, proof, page structure and performance friction.',
     },
   ],
+  secondaryServices: [
+    {
+      name: 'Practical Business Automation',
+      description: 'Practical automation for established business workflows where repetitive operational work can be simplified. This remains secondary to Booth Marketing\'s website offer.',
+    },
+  ],
   idealCustomer: 'An established B2B business that has grown beyond its current website and needs its digital presence to better reflect its reputation, explain the business clearly, strengthen buyer confidence and support sales conversations.',
   problemsSolved: [
     'A website that no longer reflects the standard of the business',
