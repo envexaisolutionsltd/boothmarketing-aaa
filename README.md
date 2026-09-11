@@ -2,33 +2,44 @@
 
 Production website and private lead-tracking admin for Booth Marketing.
 
-Booth Marketing builds conversion-focused websites and landing pages for established businesses. The site is positioned around a modern buying journey where AI and search can create the shortlist, but the website still has to earn trust and turn attention into action.
+Booth Marketing designs conversion-focused websites and landing pages for established B2B businesses whose current website no longer reflects the company behind it.
 
 ## Positioning
 
-**AI is changing how customers search. Your website still has to earn the decision.**
+**Your business has moved forward. Has your website kept up?**
 
 Core buying journey:
 
-`Ask AI → Shortlist → Website → Trust → Action`
+`Referral or outreach → Website check → Confidence → Conversation`
 
-The public site focuses exclusively on websites and landing pages. Automation services are not part of the current offer or public navigation.
+The website is positioned as the validation and conversion layer around reputation, referrals, outbound activity and other sources of buyer attention. AI-assisted search is supporting context, not the primary reason to buy.
+
+The public site focuses on websites and landing pages. The primary conversion action is **Request Website Audit**.
 
 ## Public website
 
 Primary routes include:
 
-- `/` — homepage and core positioning
-- `/websites` — website service
-- `/how-it-works` — delivery process
-- `/about` — Booth Marketing positioning and founder-led approach
-- `/website-audit` — Website Conversion Audit and lead form
-- `/privacy` — privacy information
-- `/terms` — terms
-
-The primary conversion action is **Request Website Audit**.
+- `/` - homepage and core positioning
+- `/websites` - website service
+- `/work` - selected independent concept work
+- `/how-it-works` - delivery process
+- `/about` - Booth Marketing positioning and founder-led approach
+- `/website-audit` - Website Conversion Audit and lead form
+- `/privacy` - privacy information
+- `/terms` - terms
 
 Website Audit submissions are sent through the lead API and stored for review in the private admin area. Website addresses entered without a protocol are normalized to HTTPS before storage.
+
+## Selected work
+
+The public portfolio uses independent concept work to demonstrate Booth Marketing's approach to positioning, design and conversion. Concept work is disclosed and is not presented as commissioned client work.
+
+Current visible concepts:
+
+- Northstead Commercial Risk
+- Purple Door Leeds
+- Graft Haus Gym
 
 ## Private admin
 
@@ -56,14 +67,14 @@ The established Booth Marketing visual direction is intentionally restrained and
 - modern sans-serif typography
 - muted grey supporting copy
 - cream primary CTA buttons
-- restrained rose/red accents
+- restrained rose and red accents
 - low-contrast borders
 - generous whitespace
 - dark interface cards
 - Booth Marketing script logo with rose
 - responsive layouts designed for desktop, tablet and mobile
 
-The site avoids stereotypical AI imagery, generic agency visuals and excessive gradients.
+The homepage rose is a desktop-only visual and must remain hidden below 1180px. The site avoids stereotypical AI imagery, generic agency visuals, AI-style background grids and excessive gradients.
 
 ## Technology
 
@@ -75,7 +86,7 @@ The site avoids stereotypical AI imagery, generic agency visuals and excessive g
 - Lucide React
 - PostgreSQL via `postgres`
 - Vercel deployment
-- Playwright-based live mobile QA in GitHub Actions
+- Playwright-based live responsive QA
 
 ## Local development
 
@@ -99,9 +110,7 @@ Production requires the relevant database and admin environment variables to be 
 
 ## QA
 
-The repository includes repeatable live mobile QA covering key public experiences at 320px, 375px, 390px and 430px widths, including the mobile navigation, homepage geometry, primary Website Audit CTA, Website Audit page and an Instagram-style mobile browser user agent.
-
-The QA suite reflects the current website-only navigation and explicitly checks that the retired Automation navigation item is not present.
+The repository includes repeatable live QA for the production site. It covers mobile widths, an Instagram-style mobile browser, tablet widths and representative desktop widths. Checks include homepage geometry, the primary Website Audit CTA, responsive navigation, the current B2B positioning, the Website Audit page and the desktop-only rose rule.
 
 ## Deployment
 
@@ -111,6 +120,6 @@ Production domain: `www.boothmarketing.co.uk`
 
 ## Project status
 
-The public website is in production-stage completion. Core positioning, website service pages, responsive navigation, Website Audit conversion flow, lead API, private lead tracking, SEO foundations and automated mobile QA are implemented.
+The public website is production-stage. Core B2B positioning, website service pages, selected work, responsive navigation, Website Audit conversion flow, lead API, private lead tracking, SEO foundations and repeatable production QA are implemented.
 
-A project should only be treated as fully release-verified after the latest production deployment, automated checks and a real Website Audit submission have all completed successfully. This README intentionally does not claim a successful check that has not actually been verified.
+A release should only be treated as verified after the latest production deployment and the current production QA have completed successfully.
