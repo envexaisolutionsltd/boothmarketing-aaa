@@ -31,7 +31,7 @@ export default function Page() {
       <section className="relative border-b border-white/[0.055]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(217,47,60,0.12),transparent_30%),radial-gradient(circle_at_20%_16%,rgba(239,227,207,0.025),transparent_32%)]" />
         <div className="relative mx-auto grid w-[min(1160px,calc(100%-28px))] gap-7 py-9 sm:py-12 lg:min-h-[540px] lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-14">
-          <div>
+          <div className="min-w-0">
             <div className="inline-flex min-h-8 items-center gap-2.5 rounded-full border border-white/[0.08] bg-[#0d0f10] px-3.5 text-[8.5px] font-extrabold uppercase tracking-[0.22em] text-[#d8cbb7] sm:text-[9.5px]"><span className="h-1.5 w-1.5 rounded-full bg-[#d92f3c] shadow-[0_0_14px_rgba(217,47,60,0.7)]" />Conversion-Focused Websites for Established Businesses</div>
             <h1 className="mt-5 max-w-[760px] text-[clamp(39px,10.2vw,64px)] font-semibold leading-[0.99] tracking-[-0.058em]">AI is changing how customers search. <span className="text-[#c8c8cc]">Your website still has to earn the decision.</span></h1>
             <p className="mt-5 max-w-[690px] text-[16px] leading-[1.62] text-[#a7a8ad]">AI-assisted search can shorten the research phase. When a serious buyer reaches your site, clarity, proof and speed matter more than ever.</p>
@@ -40,16 +40,16 @@ export default function Page() {
             <p className="mt-3 max-w-[620px] text-[12px] leading-5 text-[#73747a]">No redesign commitment. We start by showing you what the current site is helping, hurting and making harder than it needs to be.</p>
           </div>
 
-          <div className="relative mx-auto flex w-full max-w-[470px] items-center justify-center pt-1 sm:max-w-[520px] lg:max-w-none lg:justify-end lg:pt-0">
+          <div className="relative mx-auto flex min-w-0 w-full max-w-[470px] items-center justify-center pt-0 sm:max-w-[520px] sm:pt-1 lg:max-w-none lg:justify-end lg:pt-0">
             <div className="pointer-events-none absolute left-1/2 top-[44%] h-[64%] w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#d92f3c]/[0.055] blur-[70px] lg:left-[56%]" />
             <Image
-              src="/booth-rose-hero.webp"
-              alt="Red rose with butterfly"
-              width={180}
-              height={150}
+              src="/ChatGPT_Image_Sep_11,_2026,_05_49_13_PM.png"
+              alt="Red rose"
+              width={1374}
+              height={1145}
               priority
-              sizes="(max-width: 639px) 82vw, (max-width: 1023px) 520px, 470px"
-              className="relative h-auto w-[82%] max-w-[430px] object-contain drop-shadow-[0_28px_60px_rgba(0,0,0,0.36)] sm:w-[76%] lg:w-full lg:max-w-[470px]"
+              sizes="(max-width: 639px) 82vw, (max-width: 1023px) 520px, 820px"
+              className="relative h-auto w-[min(82%,380px)] max-w-[380px] -translate-y-1 object-contain drop-shadow-[0_26px_56px_rgba(0,0,0,0.55)] drop-shadow-[0_0_32px_rgba(217,47,60,0.16)] sm:w-[min(76%,430px)] sm:max-w-[430px] sm:translate-y-0 lg:w-[min(70vw,820px)] lg:max-w-[820px] lg:translate-x-[25%] lg:translate-y-[51px]"
             />
           </div>
         </div>
