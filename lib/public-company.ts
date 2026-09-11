@@ -1,13 +1,13 @@
 export const boothMarketingPublic = {
   companyName: 'Booth Marketing',
   domain: 'https://www.boothmarketing.co.uk',
-  positioning: 'AI is changing how customers search. Your website still has to earn the decision.',
-  buyingJourney: ['Ask AI', 'Shortlist', 'Website', 'Trust', 'Action'],
-  whatWeDo: 'Booth Marketing builds conversion-focused websites, landing pages and practical business automation systems for established businesses. The primary focus is websites and landing pages; practical business automation is a secondary service.',
+  positioning: 'Your business has moved forward. Has your website kept up?',
+  buyingJourney: ['Referral or outreach', 'Website check', 'Confidence', 'Conversation'],
+  whatWeDo: 'Booth Marketing designs conversion-focused websites and landing pages for established B2B businesses whose current website no longer reflects the company behind it.',
   primaryServices: [
     {
       name: 'Conversion-Focused Websites',
-      description: 'Website strategy, page architecture, messaging, responsive design and development built around trust, clarity and conversion.',
+      description: 'Website strategy, positioning, page architecture, messaging, responsive design and development built around clarity, credibility and enquiry.',
     },
     {
       name: 'Landing Pages',
@@ -15,35 +15,29 @@ export const boothMarketingPublic = {
     },
     {
       name: 'Website Conversion Audit',
-      description: 'A diagnostic review of first-impression trust, offer clarity, positioning, mobile usability, calls to action, proof, page structure, performance friction and AI/search clarity.',
+      description: 'A diagnostic review of first-impression trust, offer clarity, positioning, mobile usability, calls to action, proof, page structure and performance friction.',
     },
   ],
-  secondaryServices: [
-    {
-      name: 'Practical Business Automation',
-      description: 'Practical automation systems shaped around established business workflows. This is a secondary Booth Marketing service; no public fixed package, pricing or delivery commitment should be inferred.',
-    },
-  ],
-  idealCustomer: 'Established businesses that need their website to communicate more clearly, earn trust faster and create a stronger path from attention to action, or that have a clearly identified operational workflow suitable for practical automation.',
+  idealCustomer: 'An established B2B business that has grown beyond its current website and needs its digital presence to better reflect its reputation, explain the business clearly, strengthen buyer confidence and support sales conversations.',
   problemsSolved: [
-    'Vague positioning or offer clarity',
+    'A website that no longer reflects the standard of the business',
     'Weak first-impression trust and credibility',
+    'Unclear positioning or service explanation',
+    'A poor validation experience for referred or outbound prospects',
     'Slow or confusing mobile journeys',
-    'Pages that try to serve every visitor intent at once',
-    'Weak calls to action or conversion paths',
+    'Weak calls to action or enquiry paths',
     'A dated website where targeted improvements or a rebuild may be justified',
-    'Clearly identified repetitive business workflows where practical automation may be appropriate',
   ],
   process: [
-    { step: 1, name: 'Understand the buyer', description: 'Clarify who is arriving, what they know, what they compare and what could stop trust.' },
+    { step: 1, name: 'Understand the business', description: 'Clarify what the company sells, who buys, how opportunities are created and why customers choose it.' },
     { step: 2, name: 'Diagnose the current site', description: 'Review clarity, positioning, proof, mobile experience, page structure and the route from attention to action.' },
-    { step: 3, name: 'Design the decision path', description: 'Decide what the buyer needs to see, in what order, and where different offers or audiences need different pages.' },
-    { step: 4, name: 'Build for speed and trust', description: 'Create a fast, mobile-first site that communicates clearly.' },
-    { step: 5, name: 'Measure and improve', description: 'Use real behaviour and conversion data to refine pages after launch.' },
+    { step: 3, name: 'Design the decision path', description: 'Decide what a serious buyer needs to see, in what order, and where different services or audiences need different pages.' },
+    { step: 4, name: 'Build for speed and trust', description: 'Create a fast, mobile-first website that reflects the standard of the company and makes the next step clear.' },
+    { step: 5, name: 'Launch and improve', description: 'Launch the agreed website and use real buyer behaviour to guide future improvements where appropriate.' },
   ],
   callsToAction: [
-    { name: 'Request Website Audit', path: '/website-audit', description: 'Start a website engagement with a diagnostic review of the current website before committing to a rebuild.' },
-    { name: 'Submit Enquiry', path: '/website-audit', description: 'The current public lead infrastructure can receive a deliberate sales enquiry. WebMCP exposes this without exposing admin or CRM data.' },
+    { name: 'Request Website Audit', path: '/website-audit', description: 'Start with a diagnostic review of the current website before deciding whether targeted improvements or a rebuild are justified.' },
+    { name: 'Submit Enquiry', path: '/website-audit', description: 'Send a deliberate website enquiry through Booth Marketing\'s public lead infrastructure.' },
   ],
   engagementNote: 'Work is scoped around the business problem rather than a fixed package. Booth Marketing does not publish prices, guarantees, client claims, case-study results or fixed delivery commitments in the current public content.',
 } as const
