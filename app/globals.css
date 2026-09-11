@@ -28,8 +28,7 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Homepage signature rose. This deliberately replaces only the existing
-   right-hand buying-path panel so the rest of the production site stays intact. */
+/* Homepage signature rose. */
 main > section:first-of-type > div.relative.mx-auto.grid > div:last-child {
   min-height: 470px;
   overflow: visible;
@@ -47,13 +46,13 @@ main > section:first-of-type > div.relative.mx-auto.grid > div:last-child > * {
 main > section:first-of-type > div.relative.mx-auto.grid > div:last-child::before {
   content: "";
   position: absolute;
-  inset: -8% -10% -10% -12%;
+  inset: -12% -18% -15% -18%;
   z-index: 2;
-  background-image: url('/booth-rose-hero.webp');
+  background-image: url('/booth-rose-hero-v2.webp');
   background-repeat: no-repeat;
-  background-position: 50% 50%;
+  background-position: 50% 48%;
   background-size: contain;
-  filter: drop-shadow(0 24px 52px rgba(0, 0, 0, 0.52)) drop-shadow(0 0 30px rgba(217, 47, 60, 0.12));
+  filter: drop-shadow(0 24px 52px rgba(0, 0, 0, 0.52)) drop-shadow(0 0 30px rgba(217, 47, 60, 0.16));
   animation: boothRoseFloat 7s ease-in-out infinite;
   transform-origin: 54% 54%;
 }
@@ -61,11 +60,11 @@ main > section:first-of-type > div.relative.mx-auto.grid > div:last-child::befor
 main > section:first-of-type > div.relative.mx-auto.grid > div:last-child::after {
   content: "";
   position: absolute;
-  inset: 12% 3% 5% 8%;
+  inset: 8% -3% 2% 3%;
   z-index: 1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(217,47,60,0.13) 0%, rgba(91,17,26,0.07) 36%, transparent 70%);
-  filter: blur(24px);
+  background: radial-gradient(circle, rgba(217,47,60,0.16) 0%, rgba(91,17,26,0.07) 38%, transparent 72%);
+  filter: blur(26px);
 }
 
 @keyframes boothRoseFloat {
@@ -78,7 +77,7 @@ main > section:first-of-type > div.relative.mx-auto.grid > div:last-child::after
     min-height: 390px;
   }
   main > section:first-of-type > div.relative.mx-auto.grid > div:last-child::before {
-    inset: -4% 5% -6% 5%;
+    inset: -5% 0 -8% 0;
   }
 }
 
@@ -87,7 +86,7 @@ main > section:first-of-type > div.relative.mx-auto.grid > div:last-child::after
     min-height: 340px;
   }
   main > section:first-of-type > div.relative.mx-auto.grid > div:last-child::before {
-    inset: -2% 7% -8% 7%;
+    inset: -2% 3% -8% 3%;
     animation-duration: 8s;
   }
 }
