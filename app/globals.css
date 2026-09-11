@@ -28,6 +28,76 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Homepage signature rose. This deliberately replaces only the existing
+   right-hand buying-path panel so the rest of the production site stays intact. */
+main > section:first-of-type > div.relative.mx-auto.grid > div:last-child {
+  min-height: 470px;
+  overflow: visible;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  isolation: isolate;
+}
+
+main > section:first-of-type > div.relative.mx-auto.grid > div:last-child > * {
+  display: none;
+}
+
+main > section:first-of-type > div.relative.mx-auto.grid > div:last-child::before {
+  content: "";
+  position: absolute;
+  inset: -8% -10% -10% -12%;
+  z-index: 2;
+  background-image: url('/booth-rose-hero.webp');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: contain;
+  filter: drop-shadow(0 24px 52px rgba(0, 0, 0, 0.52)) drop-shadow(0 0 30px rgba(217, 47, 60, 0.12));
+  animation: boothRoseFloat 7s ease-in-out infinite;
+  transform-origin: 54% 54%;
+}
+
+main > section:first-of-type > div.relative.mx-auto.grid > div:last-child::after {
+  content: "";
+  position: absolute;
+  inset: 12% 3% 5% 8%;
+  z-index: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217,47,60,0.13) 0%, rgba(91,17,26,0.07) 36%, transparent 70%);
+  filter: blur(24px);
+}
+
+@keyframes boothRoseFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-0.5deg); }
+  50% { transform: translate3d(0, -5px, 0) rotate(0.7deg); }
+}
+
+@media (max-width: 1023px) {
+  main > section:first-of-type > div.relative.mx-auto.grid > div:last-child {
+    min-height: 390px;
+  }
+  main > section:first-of-type > div.relative.mx-auto.grid > div:last-child::before {
+    inset: -4% 5% -6% 5%;
+  }
+}
+
+@media (max-width: 639px) {
+  main > section:first-of-type > div.relative.mx-auto.grid > div:last-child {
+    min-height: 340px;
+  }
+  main > section:first-of-type > div.relative.mx-auto.grid > div:last-child::before {
+    inset: -2% 7% -8% 7%;
+    animation-duration: 8s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main > section:first-of-type > div.relative.mx-auto.grid > div:last-child::before {
+    animation: none;
+  }
+}
+
 /* The conversion-jobs rows have three children but use a two-column mobile grid.
    Keep the number in column one, with both the heading and body copy in column two. */
 @media (max-width: 639px) {
