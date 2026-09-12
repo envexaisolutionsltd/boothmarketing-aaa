@@ -8,12 +8,18 @@ body { margin: 0; min-width: 320px; background: #020617; font-family: Inter, ui-
 * { box-sizing: border-box; }
 button, a { -webkit-tap-highlight-color: transparent; }
 
-/* The conversion-jobs rows have three children but use a two-column mobile grid. */
+/* Keep homepage outcome rows as number + full-width content on narrow screens. */
 @media (max-width: 639px) {
-  [class~="grid-cols-[34px_1fr]"][class~="sm:grid-cols-[50px_150px_1fr]"] > p:last-child {
+  [class~="grid-cols-[32px_1fr]"][class~="sm:grid-cols-[46px_160px_1fr]"] {
+    grid-template-columns: 32px minmax(0, 1fr);
+  }
+  [class~="grid-cols-[32px_1fr]"][class~="sm:grid-cols-[46px_160px_1fr]"] > p:nth-child(2),
+  [class~="grid-cols-[32px_1fr]"][class~="sm:grid-cols-[46px_160px_1fr]"] > p:nth-child(3) {
+    min-width: 0;
+  }
+  [class~="grid-cols-[32px_1fr]"][class~="sm:grid-cols-[46px_160px_1fr]"] > p:nth-child(3) {
     grid-column: 2 / -1;
     grid-row: 2;
-    min-width: 0;
     margin-top: .25rem;
     overflow-wrap: normal;
     word-break: normal;
